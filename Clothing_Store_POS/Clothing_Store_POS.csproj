@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Auth\LoginPage.xaml" />
+    <None Remove="Pages\Auth\SignUpPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,9 @@
     <None Update="Assets\clothing_shop_login.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Auth\SignUpPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Page\Auth\LoginPage.xaml">
