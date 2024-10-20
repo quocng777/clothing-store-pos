@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Clothing_Store_POS (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Clothing_Store_POS (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

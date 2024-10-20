@@ -1,0 +1,23 @@
+bin/
+obj/
+out/
+
+
+.vscode/
+.vs/
+*.user
+*.userosscache
+*.suo
+
+packages/
+project.lock.json
+project.fragment.lock.json
+.nuget/
+*.nupkg
+
+# Thông tin môi trường và cache
+*.env
+*.directory
+.cache/
+ipch/
+*.pdb
