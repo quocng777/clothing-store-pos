@@ -15,7 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\clothing_icon.png" />
-    <Content Remove="Assets\clothing_icon.svg" />
+    <Content Remove="Assets\clothing_shop_login.svg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Auth\LoginPage.xaml" />
@@ -36,8 +36,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-rc.2.24474.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-rc.2.24474.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-rc.2.24474.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-rc.2" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0-rc.2.24473.5" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -50,7 +62,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Assets\clothing_icon.svg">
+    <None Update="Assets\clothing_shop_login.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\clothing_icon.png">

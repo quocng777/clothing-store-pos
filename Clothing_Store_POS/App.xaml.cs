@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Clothing_Store_POS.Config;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -32,6 +33,8 @@ namespace Clothing_Store_POS
         /// </summary>
         public App()
         {
+            // connection to the database
+            AppFactory.AppDBContext = new AppDBContext();
             this.InitializeComponent();
         }
 

@@ -1,3 +1,4 @@
+using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,9 +24,11 @@ namespace Clothing_Store_POS.Pages.Products
     /// </summary>
     public sealed partial class ProductPage : Page
     {
+        public ProductsViewModel ViewModel { get; }
         public ProductPage()
         {
             this.InitializeComponent();
+            ViewModel = new ProductsViewModel();
         }
     }
 }
