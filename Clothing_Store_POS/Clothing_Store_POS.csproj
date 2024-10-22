@@ -14,11 +14,15 @@
 	<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\clothing_shop_login.svg" />
+    <Content Remove="Assets\clothing_icon.png" />
+    <Content Remove="Assets\clothing_icon.svg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Auth\LoginPage.xaml" />
+    <None Remove="Pages\Auth\MainLayout.xaml" />
     <None Remove="Pages\Auth\SignUpPage.xaml" />
+    <None Remove="Pages\MainLayout.xaml" />
+    <None Remove="Pages\Products\ProductPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,9 +50,21 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Assets\clothing_shop_login.svg">
+    <None Update="Assets\clothing_icon.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\clothing_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Products\ProductPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\MainLayout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Auth\MainLayout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Auth\SignUpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

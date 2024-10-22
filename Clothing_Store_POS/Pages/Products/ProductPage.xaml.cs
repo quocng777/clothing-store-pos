@@ -1,5 +1,3 @@
-using Clothing_Store_POS.Pages;
-using Clothing_Store_POS.Pages.Auth;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -18,22 +16,16 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Clothing_Store_POS
+namespace Clothing_Store_POS.Pages.Products
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class ProductPage : Page
     {
-        public MainWindow()
+        public ProductPage()
         {
             this.InitializeComponent();
-            this.MainFrame.Navigate(typeof(MainLayout));
-        }
-
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
