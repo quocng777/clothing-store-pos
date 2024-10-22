@@ -9,43 +9,52 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="36">
-            <StackPanel Spacing="20" Background="White" MaxWidth="400" Height="600" Padding="40" CornerRadius="24" VerticalAlignment="Center">
-                <StackPanel MaxWidth="300" Spacing="12">
-                    <TextBlock Text="Username"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
-                        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-                        SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
-                </StackPanel>
-
-                <StackPanel MaxWidth="300" Spacing="12">
-                    <TextBlock Text="Password"/>
-                    <PasswordBox Width="300" AutomationProperties.Name="Simple PasswordBox"/>
-                    <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
-                </StackPanel>
-
-                <StackPanel MaxWidth="300" Spacing="12">
-                    <TextBlock Text="Confirm Password"/>
-                    <PasswordBox Width="300" AutomationProperties.Name="Simple PasswordBox"/>
-                    <TextBlock x:Name="ConfirmPasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
-                </StackPanel>
-
-                <StackPanel MaxWidth="300" Spacing="12">
-                    <TextBlock Text="Email"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
-                        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-                        SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="EmailErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
-                </StackPanel>
-
-                <StackPanel>
-                    <CheckBox Content="I agree to the terms and conditions" />
-                </StackPanel>
-
-                <Button Style="{StaticResource AccentButtonStyle}" Content="Sign Up" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" />
+    <StackPanel VerticalAlignment="Center">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="White" CornerRadius="24">
+            <Grid.RowDefinitions >
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontSize="24" FontWeight="Bold">Sign up an account</TextBlock>
+            <StackPanel MaxWidth="300" Spacing="12" Grid.Row="1" >
+                <TextBlock Text="Name"/>
+                <TextBox AutomationProperties.Name="multi-line TextBox"
+        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+        SelectionHighlightColor="Green"/>
+                <TextBlock x:Name="NameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="1">
+                <TextBlock Text="Username"/>
+                <TextBox AutomationProperties.Name="multi-line TextBox"
+TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+SelectionHighlightColor="Green"/>
+                <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+            </StackPanel>
+
+            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="2">
+                <TextBlock Text="Password"/>
+                <PasswordBox Width="300" AutomationProperties.Name="Simple PasswordBox"/>
+                <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+            </StackPanel>
+
+            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="2">
+                <TextBlock Text="Confirm Password"/>
+                <PasswordBox Width="300" AutomationProperties.Name="Simple PasswordBox"/>
+                <TextBlock x:Name="ConfirmPasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3">
+                <CheckBox Content="I agree to the terms and conditions" />
+            </StackPanel>
+
+            <Button Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource AccentButtonStyle}" Content="Sign Up" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" />
+        </Grid>
+    </StackPanel>
 </Page>
