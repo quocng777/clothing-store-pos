@@ -18,7 +18,7 @@ namespace Clothing_Store_POS.Config
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(c => c.Id);
-                entity.ToTable("cateogries");
+                entity.ToTable("categories");
             });
 
             modelBuilder.Entity<Product>()

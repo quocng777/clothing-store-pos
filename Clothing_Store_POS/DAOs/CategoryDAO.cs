@@ -8,25 +8,24 @@ using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.DAOs
 {
-
-    public class ProductDAO
+    public class CategoryDAO
     {
         private readonly AppDBContext _context;
 
-        public ProductDAO()
+        public CategoryDAO()
         {
             _context = new AppDBContext();
         }
 
-        public void AddProduct(Product product)
+        public void AddCategory(Category category)
         {
-            _context.Products.Add(product);
+            _context.Categories.Add(category);
             _context.SaveChanges();
         }
 
-        public List<Product> GetProducts()
+        public List<Category> GetCategories()
         {
-            return _context.Products.ToList();
+            return _context.Categories.ToList();
         }
     }
 }
