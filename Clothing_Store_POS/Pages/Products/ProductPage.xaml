@@ -13,14 +13,77 @@
         <TextBlock Text="Product Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
         <TextBlock  Text="Product management" FontSize="10"/>
 
+        <StackPanel Margin="0 24" Orientation="Horizontal">
+            <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
+        </StackPanel>
+
         <ListView ItemsSource="{x:Bind ViewModel.Products}">
+            <ListView.Header>
+                <Grid Padding="16,12"
+                  ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Id" />
+                    <TextBlock Grid.Column="1"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Name" />
+                    <TextBlock Grid.Column="2"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Description" />
+                    <TextBlock Grid.Column="3"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Quantity" />
+                    <TextBlock Grid.Column="4"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       Text="Action" />
+                </Grid>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:Product">
-                    <StackPanel>
-                        <TextBlock Text="{x:Bind Name}" ></TextBlock>
-                    </StackPanel>
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{x:Bind Id}" />
+                        <TextBlock Grid.Column="1"
+                               Text="{x:Bind Name}" />
+                        <TextBlock Grid.Column="2"
+                               Text="{x:Bind Price}" />
+                        <TextBlock Grid.Column="3"
+                               Text="{x:Bind Stock}" />
+
+                        <StackPanel Orientation="Horizontal" Grid.Column="4"  Spacing="12">
+                            <Button Style="{StaticResource AccentButtonStyle}"   Background="Red" CommandParameter="{Binding}" Click="DeleteBtn_Click">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <SymbolIcon  Width="18" Symbol="Delete" Foreground="White"/>
+                                </StackPanel>
+                            </Button>
+                            <Button  Style="{StaticResource AccentButtonStyle}" CommandParameter="{Binding}" Click="EditBtn_Click" >
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <SymbolIcon Symbol="Edit" Foreground="White"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}"
+                   TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
+
     </StackPanel>
 </Page>
