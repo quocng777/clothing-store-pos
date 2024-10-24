@@ -1,4 +1,4 @@
-using Clothing_Store_POS.Contracts.DAOs;
+using Clothing_Store_POS.Contracts;
 using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;

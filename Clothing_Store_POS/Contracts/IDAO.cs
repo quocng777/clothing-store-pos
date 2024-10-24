@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clothing_Store_POS.Contracts.DAOs
+namespace Clothing_Store_POS.Contracts
 {
-    public interface IProductDAO
+    public interface IDAO<T>
     {
-        Task<List<Product>> GetAllProducts();
-        Task<bool> Create(Product product);
+        Task<List<T>> GetAll();
+        Task<bool> Create(T entity);
     }
 }

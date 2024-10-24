@@ -1,5 +1,5 @@
 ﻿using Clothing_Store_POS.Config;
-using Clothing_Store_POS.Contracts.DAOs;
+using Clothing_Store_POS.Contracts;
 using Clothing_Store_POS.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Clothing_Store_POS.DAOs
 {
 
-    public class ProductDAO : IProductDAO
+    public class ProductDAO : IDAO<Product>
     {
         private readonly AppDBContext _context;
 
@@ -35,7 +35,7 @@ namespace Clothing_Store_POS.DAOs
             return true;
         }
 
-        public async Task<List<Product>> GetAllProducts()
+        public async Task<List<Product>> GetAll()
         {
             var products = await _context.Products.AsNoTracking()
                                                 .OrderBy(p => p.Id)
