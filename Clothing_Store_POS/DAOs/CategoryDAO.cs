@@ -14,7 +14,7 @@ namespace Clothing_Store_POS.DAOs
 
         public CategoryDAO()
         {
-            _context = new AppDBContext();
+            _context = null;
         }
 
         public void AddCategory(Category category)

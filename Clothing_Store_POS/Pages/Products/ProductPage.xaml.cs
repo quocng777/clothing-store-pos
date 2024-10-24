@@ -1,3 +1,5 @@
+using Clothing_Store_POS.Contracts.DAOs;
+using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
@@ -9,6 +11,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -26,11 +29,21 @@ namespace Clothing_Store_POS.Pages.Products
     /// </summary>
     public sealed partial class ProductPage : Page
     {
-        public ProductsViewModel ViewModel { get; }
+        private ProductsViewModel _viewModel { get; }
+        ObservableCollection<Product> _products;
+
         public ProductPage()
         {
             this.InitializeComponent();
-            ViewModel = new ProductsViewModel();
+            _viewModel = App.GetService<ProductsViewModel>();
+        }
+
+        private async void LoadProducts(object sender, RoutedEventArgs e)
+        {
+            var tempList = await _viewModel.GetAllProducts();
+            _products = new ObservableCollection<Product>(tempList);
+
+            listProducts.ItemsSource = _products;
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)

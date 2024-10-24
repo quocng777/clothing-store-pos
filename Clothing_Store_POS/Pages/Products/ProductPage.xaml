@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:local="using:Clothing_Store_POS.Models"
+    Loaded="LoadProducts"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="24 12">
@@ -17,7 +18,7 @@
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
         </StackPanel>
 
-        <ListView ItemsSource="{x:Bind ViewModel.Products}">
+        <ListView Name="listProducts" ItemsSource="{Binding}">
             <ListView.Header>
                 <Grid Padding="16,12"
                   ColumnSpacing="16">

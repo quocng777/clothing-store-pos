@@ -10,6 +10,8 @@ namespace Clothing_Store_POS.Config
 {
     public class AppDBContext : DbContext
     {
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
@@ -26,7 +28,7 @@ namespace Clothing_Store_POS.Config
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=clothing_store;Username=postgres;Password=123456");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=pos_db;Username=admin;Password=admin123");
         }
 
         public void InitializeDatabase()

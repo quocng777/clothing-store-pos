@@ -1,4 +1,9 @@
 ﻿using Clothing_Store_POS.Config;
+using Clothing_Store_POS.Contracts.DAOs;
+using Clothing_Store_POS.DAOs;
+using Clothing_Store_POS.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -27,15 +32,38 @@ namespace Clothing_Store_POS
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+        public static IServiceProvider ServiceProvider { get; private set; }
+
         public App()
         {
+            // Set connection
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+
+            // Build service provider
+            ServiceProvider = serviceCollection.BuildServiceProvider();
+
             // connection to the database
-            AppFactory.AppDBContext = new AppDBContext();
+            //AppFactory.AppDBContext = new AppDBContext();
             this.InitializeComponent();
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDbContext<AppDBContext>(options =>
+            {
+                options.UseNpgsql("Host=localhost;Database=pos_db;Username=admin;Password=admin123");
+            });
+
+            // Register services
+            services.AddScoped<IProductDAO, ProductDAO>();
+            services.AddScoped<ProductsViewModel>();
+        }
+
+        // 
+        public static T GetService<T>()
+        {
+            return ServiceProvider.GetRequiredService<T>();
         }
 
         /// <summary>

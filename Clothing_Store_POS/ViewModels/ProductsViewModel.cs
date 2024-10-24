@@ -1,4 +1,5 @@
-﻿using Clothing_Store_POS.DAOs;
+﻿using Clothing_Store_POS.Contracts.DAOs;
+using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,18 @@ namespace Clothing_Store_POS.ViewModels
 {
     public class ProductsViewModel
     {
-        public readonly ProductDAO _productDAO;
-        public ObservableCollection<Product> Products { get; set; } = new ObservableCollection<Product>();
+        public readonly IProductDAO _productDAO;
 
-        public ProductsViewModel()
+        public ProductsViewModel(IProductDAO productDAO)
         {
-            this._productDAO = new ProductDAO();
-            LoadProducts();
+            _productDAO = productDAO;
         }
 
-        public async void LoadProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
-            var products = await Task.Run(() => _productDAO.GetProducts());
-            Products = new ObservableCollection<Product>(products);
+            var products = await _productDAO.GetAllProducts();
+
+            return products;
         }
 
     }

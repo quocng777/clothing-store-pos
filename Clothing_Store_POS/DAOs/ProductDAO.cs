@@ -1,5 +1,7 @@
 ﻿using Clothing_Store_POS.Config;
+using Clothing_Store_POS.Contracts.DAOs;
 using Clothing_Store_POS.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +11,41 @@ using System.Threading.Tasks;
 namespace Clothing_Store_POS.DAOs
 {
 
-    public class ProductDAO
+    public class ProductDAO : IProductDAO
     {
         private readonly AppDBContext _context;
 
-        public ProductDAO()
+        public ProductDAO(AppDBContext context)
         {
-            _context = new AppDBContext();
+            _context = context;
         }
 
-        public void AddProduct(Product product)
+        //public void AddProduct(Product product)
+        //{
+        //    _context.Products.Add(product);
+        //    _context.SaveChanges();
+        //}
+
+        public async Task<bool> Create(Product product)
         {
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            var result = await _context.Products.AddAsync(product);
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public List<Product> GetProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
-            return _context.Products.ToList();
+            var products = await _context.Products.AsNoTracking()
+                                                .OrderBy(p => p.Id)
+                                                .ToListAsync();
+            return products;
         }
+
+        //public List<Product> GetProducts()
+        //{
+        //    return _context.Products.ToList();
+        //}
     }
 }
