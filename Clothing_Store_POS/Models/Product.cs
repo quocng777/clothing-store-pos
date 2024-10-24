@@ -25,7 +25,6 @@ namespace Clothing_Store_POS.Models
         [ForeignKey("Category")]
         [Column("category_id")]
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
 
         [Column("size")]
         public string Size { get; set; }
@@ -38,6 +37,8 @@ namespace Clothing_Store_POS.Models
 
         [Column("sale")]
         public float Sale { get; set; }
+#nullable enable
+        public virtual Category? Category { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
     }

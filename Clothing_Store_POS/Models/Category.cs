@@ -14,5 +14,8 @@ namespace Clothing_Store_POS.Models
 
         [Column("name")]
         public string Name { get; set; }
+        // Relationship 1-n with Products
+        public virtual ICollection<Product> Products { get; } = new List<Product>();
+
     }
 }

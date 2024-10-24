@@ -29,7 +29,7 @@ namespace Clothing_Store_POS.Pages.Products
         public CreateProductPage()
         {
             this.InitializeComponent();
-            this.CategoriesViewModel = new CategoriesViewModel();
+            //this.CategoriesViewModel = new CategoriesViewModel();
         }
     }
 }

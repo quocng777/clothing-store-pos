@@ -27,6 +27,7 @@
                         <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
@@ -41,8 +42,11 @@
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                            Text="Quantity" />
                     <TextBlock Grid.Column="4"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Action" />
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Category" />
+                    <TextBlock Grid.Column="5"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="Action" />
                 </Grid>
             </ListView.Header>
             <ListView.ItemTemplate>
@@ -53,6 +57,7 @@
                             <ColumnDefinition Width="120" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="120" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{x:Bind Id}" />
@@ -62,8 +67,10 @@
                                Text="{x:Bind Price}" />
                         <TextBlock Grid.Column="3"
                                Text="{x:Bind Stock}" />
+                        <TextBlock Grid.Column="4"
+                                Text="{x:Bind Category.Name}" />
 
-                        <StackPanel Orientation="Horizontal" Grid.Column="4"  Spacing="12">
+                        <StackPanel Orientation="Horizontal" Grid.Column="5"  Spacing="12">
                             <Button Style="{StaticResource AccentButtonStyle}"   Background="Red" CommandParameter="{Binding}" Click="DeleteBtn_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <SymbolIcon  Width="18" Symbol="Delete" Foreground="White"/>

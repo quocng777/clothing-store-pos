@@ -38,6 +38,7 @@ namespace Clothing_Store_POS.DAOs
         public async Task<List<Product>> GetAll()
         {
             var products = await _context.Products.AsNoTracking()
+                                                .Include(p => p.Category)       // eager loading
                                                 .OrderBy(p => p.Id)
                                                 .ToListAsync();
             return products;

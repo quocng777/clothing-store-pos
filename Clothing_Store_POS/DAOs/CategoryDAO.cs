@@ -1,4 +1,5 @@
 ﻿using Clothing_Store_POS.Config;
+using Clothing_Store_POS.Contracts;
 using Clothing_Store_POS.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.DAOs
 {
-    public class CategoryDAO
+    public class CategoryDAO : IDAO<Category>
     {
         private readonly AppDBContext _context;
 
@@ -21,6 +22,16 @@ namespace Clothing_Store_POS.DAOs
         {
             _context.Categories.Add(category);
             _context.SaveChanges();
+        }
+
+        public Task<bool> Create(Category entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Category>> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public List<Category> GetCategories()

@@ -71,13 +71,13 @@
                     <TextBlock x:Name="SaleErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
-                <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="3">
+                <!--<StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="3">
                     <TextBlock Text="Category"/>
                     <ComboBox ItemsSource="{x:Bind CategoriesViewModel.Categories}"
                       DisplayMemberPath="Name"
                       SelectedItem="{x:Bind Name, Mode=TwoWay}"
                       PlaceholderText="Select a category" />
-                </StackPanel>
+                </StackPanel>-->
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="4">
                     <TextBlock Text="Category"/>
