@@ -30,7 +30,9 @@
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-            <Frame x:Name="MainContent" />
+            <ScrollViewer>
+                <Frame x:Name="MainContent" />
+            </ScrollViewer>
         </NavigationView>
     </Grid>
 </Page>

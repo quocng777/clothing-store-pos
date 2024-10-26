@@ -28,6 +28,5 @@ namespace Clothing_Store_POS.ViewModels
                 Products.Add(product);
             }
         }
-
     }
 }

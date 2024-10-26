@@ -18,10 +18,13 @@ namespace Clothing_Store_POS.DAOs
             _context = new AppDBContext();
         }
 
-        public void AddProduct(Product product)
+        public int AddProduct(Product product)
         {
             _context.Products.Add(product);
             _context.SaveChanges();
+
+
+            return product.Id;
         }
 
         public List<Product> GetProducts()
