@@ -17,7 +17,7 @@
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
         </StackPanel>
 
-        <ListView ItemsSource="{x:Bind ViewModel.Products}">
+        <ListView ItemsSource="{x:Bind ViewModel.Products}" Background="White" Padding="12" CornerRadius="24">
             <ListView.Header>
                 <Grid Padding="16,12"
                   ColumnSpacing="16">
@@ -63,14 +63,14 @@
                                Text="{x:Bind Stock}" />
 
                         <StackPanel Orientation="Horizontal" Grid.Column="4"  Spacing="12">
-                            <Button Style="{StaticResource AccentButtonStyle}"   Background="Red" CommandParameter="{Binding}" Click="DeleteBtn_Click">
+                            <Button   CommandParameter="{Binding}" Click="DeleteBtn_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <SymbolIcon  Width="18" Symbol="Delete" Foreground="White"/>
+                                    <SymbolIcon  Width="18" Symbol="Delete" Foreground="Red"/>
                                 </StackPanel>
                             </Button>
-                            <Button  Style="{StaticResource AccentButtonStyle}" CommandParameter="{Binding}" Click="EditBtn_Click" >
+                            <Button  CommandParameter="{Binding}" Click="EditBtn_Click" >
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <SymbolIcon Symbol="Edit" Foreground="White"/>
+                                    <SymbolIcon Symbol="Edit" Foreground="Blue"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>

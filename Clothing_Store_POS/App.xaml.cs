@@ -49,5 +49,13 @@ namespace Clothing_Store_POS
         }
 
         private Window m_window;
+
+        public Window MainWindow
+        {
+            get
+            {
+                return m_window;
+            }
+        }
     }
 }

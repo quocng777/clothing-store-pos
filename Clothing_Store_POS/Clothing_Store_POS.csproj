@@ -16,6 +16,7 @@
   <ItemGroup>
     <Content Remove="Assets\clothing_icon.png" />
     <Content Remove="Assets\clothing_shop_login.svg" />
+    <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Auth\LoginPage.xaml" />
@@ -67,6 +68,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\clothing_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="Pages\Products\CreateProductPage.xaml">
