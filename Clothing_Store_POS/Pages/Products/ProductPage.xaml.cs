@@ -60,7 +60,10 @@ namespace Clothing_Store_POS.Pages.Products
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
+            var product = button?.CommandParameter as Product;
 
+            Frame.Navigate(typeof(EditProductPage), product);
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)

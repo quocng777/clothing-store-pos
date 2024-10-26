@@ -38,5 +38,16 @@ namespace Clothing_Store_POS.DAOs
             _context.Products.Remove(product);
             _context.SaveChanges();
         }
+
+        public void UpdateProduct(Product product)
+        {
+            _context.Products.Update(product);
+            _context.SaveChanges();
+        }
+
+        public Product findProductById(int productId)
+        {
+            return _context.Products.Find(productId);
+        }
     }
 }

@@ -24,6 +24,7 @@
     <None Remove="Pages\Auth\SignUpPage.xaml" />
     <None Remove="Pages\MainLayout.xaml" />
     <None Remove="Pages\Products\CreateProductPage.xaml" />
+    <None Remove="Pages\Products\EditProductPage.xaml" />
     <None Remove="Pages\Products\ProductPage.xaml" />
   </ItemGroup>
 
@@ -64,6 +65,11 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Assets\product-default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Assets\clothing_shop_login.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -73,6 +79,9 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Products\EditProductPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Products\CreateProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

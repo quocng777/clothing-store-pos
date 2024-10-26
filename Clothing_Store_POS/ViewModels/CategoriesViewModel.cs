@@ -20,9 +20,9 @@ namespace Clothing_Store_POS.ViewModels
             LoadCategories();
         }
 
-        public async void LoadCategories()
+        public void LoadCategories()
         {
-            var categories = await Task.Run(_categoryDAO.GetCategories);
+            var categories = _categoryDAO.GetCategories();
             this.Categories.Clear();
             foreach (var cat in categories)
             {

@@ -67,7 +67,30 @@ namespace Clothing_Store_POS.ViewModels
 
             File.Copy(path, desPath, true);
 
-            return newFileName;
+            return desPath;
+        }
+
+        public void Update()
+        {
+            var savedProduct = _productDAO.findProductById(this.Id);
+            if (savedProduct == null)
+            {
+                throw new Exception("Product not found");
+            }
+
+            savedProduct.Name = this.Name;
+            savedProduct.CategoryId = this.CategoryId;
+            savedProduct.Price = this.Price;
+            savedProduct.Size = this.Size;
+            savedProduct.Stock = this.Stock;
+            savedProduct.Sale = this.Sale;
+
+            if(this.Thumbnail != savedProduct.Thumbnail && this.Thumbnail != null)
+            {
+                savedProduct.Thumbnail = SaveThumbnailImage(Thumbnail);
+            }
+
+            _productDAO.UpdateProduct(savedProduct);
         }
 
         public void Clear()
