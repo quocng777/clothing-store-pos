@@ -33,13 +33,29 @@ namespace Clothing_Store_POS.Pages.Products
             ViewModel = new ProductsViewModel();
         }
 
-        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var product = button?.CommandParameter as Product;
 
             Debug.WriteLine($"Deleting product: {product.Name} with ID: {product.Id}");
 
+            var dialog = new ContentDialog();
+
+            // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Warning";
+            dialog.PrimaryButtonText = "Continue";
+            dialog.CloseButtonText = "Cancel";
+            dialog.Content = $"Do you really want to delete {product.Name}?";
+
+            dialog.PrimaryButtonClick += async (s, args) =>
+            {
+                ViewModel.DeleteAProduct(product.Id);
+            };
+
+            await dialog.ShowAsync();
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)

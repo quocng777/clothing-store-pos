@@ -35,6 +35,12 @@ namespace Clothing_Store_POS.ViewModels
         public int Save()
         {
 
+            // handle saving image
+            if (Thumbnail != null)
+            {
+                Thumbnail = SaveThumbnailImage(Thumbnail);
+            }
+
             var product = new Product
             {
                 Name = this.Name,
@@ -45,12 +51,6 @@ namespace Clothing_Store_POS.ViewModels
                 Sale = this.Sale,
                 Thumbnail = this.Thumbnail
             };
-
-            // handle saving image
-            if (Thumbnail != null)
-            {
-                Thumbnail = SaveThumbnailImage(Thumbnail);
-            }
 
             return this._productDAO.AddProduct(product);
         }
