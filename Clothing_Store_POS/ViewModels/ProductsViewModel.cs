@@ -22,8 +22,11 @@ namespace Clothing_Store_POS.ViewModels
 
         public async void LoadProducts()
         {
-            var products = await Task.Run(() => _productDAO.GetProducts());
-            Products = new ObservableCollection<Product>(products);
+            var products = await Task.Run(_productDAO.GetProducts);
+            Products.Clear();
+            foreach (var product in products) {
+                Products.Add(product);
+            }
         }
 
     }

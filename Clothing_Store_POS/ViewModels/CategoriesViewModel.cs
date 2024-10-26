@@ -22,8 +22,12 @@ namespace Clothing_Store_POS.ViewModels
 
         public async void LoadCategories()
         {
-            var categories = await Task.Run(() => _categoryDAO.GetCategories());
-            this.Categories = new ObservableCollection<Category>(categories);
+            var categories = await Task.Run(_categoryDAO.GetCategories);
+            this.Categories.Clear();
+            foreach (var cat in categories)
+            {
+                this.Categories.Add(cat);
+            }
         }
 
     }
