@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Clothing_Store_POS.Pages.Users.UserPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Clothing_Store_POS.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="LoadUsers"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Padding="24 12">
+        <TextBlock Text="Product Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
+        <TextBlock  Text="Product management" FontSize="10"/>
+
+        <!--<StackPanel Margin="0 24" Orientation="Horizontal">
+            <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
+        </StackPanel>-->
+
+        <ListView Name="listUsers" ItemsSource="{Binding}" Background="White" Padding="12" CornerRadius="24">
+            <ListView.Header>
+                <Grid Padding="16,12"
+              ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       Text="Id" />
+                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="Role" Grid.Column="1"/>
+                    <TextBlock Grid.Column="2"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       Text="Username" />
+                    <TextBlock Grid.Column="3"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       Text="PasswordHash" />
+                    <TextBlock Grid.Column="4"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       Text="Email" />
+                    <TextBlock Grid.Column="5"
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                   Text="Actions" />
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:User">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{x:Bind Id}" />
+                        <TextBlock Grid.Column="1"
+                           Text="{x:Bind Role}" />
+                        <TextBlock Grid.Column="2"
+                           Text="{x:Bind UserName}" />
+                        <TextBlock Grid.Column="3"
+                           Text="{x:Bind PasswordHash}" />
+                        <TextBlock Grid.Column="4"
+                           Text="{x:Bind Email}" />
+
+                        <!--<StackPanel Orientation="Horizontal" Grid.Column="5"  Spacing="12">
+                            <Button   CommandParameter="{Binding}" Click="DeleteBtn_Click">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <SymbolIcon  Width="18" Symbol="Delete" Foreground="Red"/>
+                                </StackPanel>
+                            </Button>
+                            <Button  CommandParameter="{Binding}" Click="EditBtn_Click" >
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <SymbolIcon Symbol="Edit" Foreground="Blue"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>-->
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}"
+               TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+    </StackPanel>
+</Page>

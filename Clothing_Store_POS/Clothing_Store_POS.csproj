@@ -26,6 +26,7 @@
     <None Remove="Pages\Products\CreateProductPage.xaml" />
     <None Remove="Pages\Products\EditProductPage.xaml" />
     <None Remove="Pages\Products\ProductPage.xaml" />
+    <None Remove="Pages\Users\UserPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,6 +80,9 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Users\UserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Products\EditProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,5 @@
-using Clothing_Store_POS.Pages;
-using Clothing_Store_POS.Pages.Auth;
+using Clothing_Store_POS.Models;
+using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -18,23 +19,28 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Clothing_Store_POS
+namespace Clothing_Store_POS.Pages.Users
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class UserPage : Page
     {
-        public MainWindow()
+        private UsersViewModel _viewModel { get; }
+        ObservableCollection<User> _users;
+
+        public UserPage()
         {
             this.InitializeComponent();
-            this.MainFrame.Navigate(typeof(MainLayout));
-            //this.MainFrame.Navigate(typeof(LoginPage));
+            _viewModel = new UsersViewModel();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void LoadUsers(object sender, RoutedEventArgs e)
         {
+            var tempList = _viewModel.GetAllUsers();
+            _users = new ObservableCollection<User>(tempList);
 
+            listUsers.ItemsSource = _users;
         }
     }
 }

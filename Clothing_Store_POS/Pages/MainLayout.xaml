@@ -21,7 +21,7 @@
                         <BitmapIcon UriSource="/Assets/clothing_icon.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Account" Icon="Contact" ToolTipService.ToolTip="Account" Tag="SamplePage2">
+                <NavigationViewItem Content="Users" Icon="Contact" ToolTipService.ToolTip="Account" Tag="users">
                 </NavigationViewItem>
                 <NavigationViewItem Content="Document options" Icon="Page2" ToolTipService.ToolTip="Document options" SelectsOnInvoked="False">
                     <NavigationViewItem.MenuItems>
