@@ -21,5 +21,12 @@ namespace Clothing_Store_POS.ViewModels
         {
             return _userDAO.GetAllUsers();
         }
+
+        public async Task<int> AddUser(User user)
+        {
+            var id = await _userDAO.AddUser(user);
+
+            return id;
+        }
     }
 }

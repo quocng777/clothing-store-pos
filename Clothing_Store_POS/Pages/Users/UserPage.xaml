@@ -11,12 +11,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="24 12">
-        <TextBlock Text="Product Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
-        <TextBlock  Text="Product management" FontSize="10"/>
+        <TextBlock Text="User Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
+        <TextBlock  Text="User management" FontSize="10"/>
 
-        <!--<StackPanel Margin="0 24" Orientation="Horizontal">
+        <StackPanel Margin="0 24" Orientation="Horizontal">
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
-        </StackPanel>-->
+        </StackPanel>
 
         <ListView Name="listUsers" ItemsSource="{Binding}" Background="White" Padding="12" CornerRadius="24">
             <ListView.Header>

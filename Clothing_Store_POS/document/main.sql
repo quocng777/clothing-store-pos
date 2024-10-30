@@ -22,9 +22,9 @@ REFERENCES categories(id);
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,               
+    fullname VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE, 
     password_hash VARCHAR(255) NOT NULL, 
-    password_salt VARCHAR(10) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,  
     user_role VARCHAR(255) NOT NULL,                
     is_active BOOLEAN DEFAULT TRUE,     

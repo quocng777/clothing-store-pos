@@ -1,4 +1,5 @@
 using Clothing_Store_POS.Models;
+using Clothing_Store_POS.Pages.Products;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -21,9 +22,6 @@ using Windows.Foundation.Collections;
 
 namespace Clothing_Store_POS.Pages.Users
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class UserPage : Page
     {
         private UsersViewModel _viewModel { get; }
@@ -41,6 +39,11 @@ namespace Clothing_Store_POS.Pages.Users
             _users = new ObservableCollection<User>(tempList);
 
             listUsers.ItemsSource = _users;
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CreateUserPage));
         }
     }
 }

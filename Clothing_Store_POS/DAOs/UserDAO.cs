@@ -21,5 +21,13 @@ namespace Clothing_Store_POS.DAOs
         {
             return _context.Users.ToList();
         }
+
+        public async Task<int> AddUser(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return user.Id;
+        }
     }
 }

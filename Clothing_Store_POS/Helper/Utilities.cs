@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using BCrypt.Net;
 
 namespace Clothing_Store_POS.Helper
 {
@@ -21,6 +19,18 @@ namespace Clothing_Store_POS.Helper
             }
 
             return sb.ToString();
+        }
+
+        public static string HashPassword(string password)
+        {
+            // Hash password with salt created automatically
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        public static bool VerifyPassword(string password, string hashedPassword)
+        {
+            // Get salt from hashedPassword & check current passwork\d
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }
 }
