@@ -13,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -22,18 +21,37 @@ using Windows.Foundation.Collections;
 
 namespace Clothing_Store_POS.Pages.Users
 {
-    public sealed partial class CreateUserPage : Page
+    public sealed partial class EditUserPage : Page
     {
-        private UsersViewModel _viewModel { get; }
+        public UsersViewModel _viewModel { get; }
         public UserDTO CurrentUser { get; set; }
-
-        public CreateUserPage()
+        public EditUserPage()
         {
             this.InitializeComponent();
-            CurrentUser = new UserDTO();
             _viewModel = new UsersViewModel();
+            CurrentUser = new UserDTO();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is User user)
+            {
+                this.CurrentUser.Id = user.Id;
+                this.CurrentUser.FullName = user.FullName;
+                this.CurrentUser.UserName = user.UserName;
+                this.CurrentUser.Email = user.Email;
+                this.CurrentUser.Role = user.Role;
+                this.CurrentUser.IsActive = user.IsActive;
+            }   
+        }
+
+        private void ReturnBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserPage));
+        }
+        
         private async void ContinueBtn_Click(object sender, RoutedEventArgs e)
         {
             {
@@ -69,14 +87,14 @@ namespace Clothing_Store_POS.Pages.Users
             }
 
             var passwordPattern = @"^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})";
-            if (CurrentUser.Password == null || !Regex.IsMatch(CurrentUser.Password, passwordPattern))
+            if (CurrentUser.Password != null && !Regex.IsMatch(CurrentUser.Password, passwordPattern))
             {
                 PasswordErrorText.Text = "Password must contain at least one digit, one uppercase letter, one special character, and be at least 8 characters long.";
                 PasswordErrorText.Visibility = Visibility.Visible;
                 return;
             }
 
-            if (CurrentUser.ConfirmPassword == null || CurrentUser.ConfirmPassword != CurrentUser.Password)
+            if (CurrentUser.Password != null && CurrentUser.ConfirmPassword != CurrentUser.Password)
             {
                 ConfirmPasswordErrorText.Text = "Passwords do not match";
                 ConfirmPasswordErrorText.Visibility = Visibility.Visible;
@@ -101,15 +119,10 @@ namespace Clothing_Store_POS.Pages.Users
             successDialog.XamlRoot = this.XamlRoot;
 
             // add user to DB
-            await _viewModel.AddUser(CurrentUser);
+            await _viewModel.UpdateUser(CurrentUser);
 
             await successDialog.ShowAsync();
 
-            Frame.Navigate(typeof(UserPage));
-        }
-
-        private void ReturnBtn_Click(object sender, RoutedEventArgs e)
-        {
             Frame.Navigate(typeof(UserPage));
         }
     }

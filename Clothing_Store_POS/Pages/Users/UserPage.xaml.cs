@@ -45,5 +45,18 @@ namespace Clothing_Store_POS.Pages.Users
         {
             Frame.Navigate(typeof(CreateUserPage));
         }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var user = button?.CommandParameter as User;
+
+            Frame.Navigate(typeof(EditUserPage), user);
+        }
+
+        private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

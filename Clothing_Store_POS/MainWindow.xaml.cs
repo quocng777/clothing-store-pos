@@ -28,8 +28,8 @@ namespace Clothing_Store_POS
         public MainWindow()
         {
             this.InitializeComponent();
-            this.MainFrame.Navigate(typeof(MainLayout));
-            //this.MainFrame.Navigate(typeof(LoginPage));
+            //this.MainFrame.Navigate(typeof(MainLayout));
+            this.MainFrame.Navigate(typeof(LoginPage));
         }
 
         private void myButton_Click(object sender, RoutedEventArgs e)

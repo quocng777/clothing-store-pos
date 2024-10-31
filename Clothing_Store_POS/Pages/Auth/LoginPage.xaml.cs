@@ -1,3 +1,5 @@
+using Clothing_Store_POS.Helper;
+using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -18,14 +20,31 @@ using Windows.Foundation.Collections;
 
 namespace Clothing_Store_POS.Pages.Auth
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class LoginPage : Page
     {
+        public UsersViewModel ViewModel { get; }
         public LoginPage()
         {
             this.InitializeComponent();
+            ViewModel = new UsersViewModel();
+        }
+        private async void Login_Click(object sender, RoutedEventArgs e)
+        {
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+
+            var user = await ViewModel.GetUserByUsername(username);
+
+            if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
+            {
+                Frame.Navigate(typeof(LoginPage));
+            }
+            else
+            {
+                Frame.Navigate(typeof(MainLayout));
+            }
+
         }
     }
 }

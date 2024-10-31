@@ -15,7 +15,7 @@
         <TextBlock  Text="User management" FontSize="10"/>
 
         <StackPanel Margin="0 24" Orientation="Horizontal">
-            <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
+            <Button Style="{StaticResource AccentButtonStyle}" Content="Add new user" Click="AddBtn_Click" />
         </StackPanel>
 
         <ListView Name="listUsers" ItemsSource="{Binding}" Background="White" Padding="12" CornerRadius="24">
@@ -69,7 +69,7 @@
                         <TextBlock Grid.Column="4"
                            Text="{x:Bind Email}" />
 
-                        <!--<StackPanel Orientation="Horizontal" Grid.Column="5"  Spacing="12">
+                        <StackPanel Orientation="Horizontal" Grid.Column="5"  Spacing="12">
                             <Button   CommandParameter="{Binding}" Click="DeleteBtn_Click">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <SymbolIcon  Width="18" Symbol="Delete" Foreground="Red"/>
@@ -80,7 +80,7 @@
                                     <SymbolIcon Symbol="Edit" Foreground="Blue"/>
                                 </StackPanel>
                             </Button>
-                        </StackPanel>-->
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

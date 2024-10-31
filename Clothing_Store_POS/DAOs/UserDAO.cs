@@ -1,5 +1,6 @@
 ﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,71 @@ namespace Clothing_Store_POS.DAOs
             return _context.Users.ToList();
         }
 
+        public async Task<User> GetUserByUsername(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+
+            return user;
+        }
+
         public async Task<int> AddUser(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return user.Id;
+        }
+
+        public async Task<int> UpdateUser(User user)
+        {
+            var existedUser = await _context.Users.FindAsync(user.Id);
+
+            
+
+            // Neu 2 value giong nhau thi isModified == false
+            if (string.Equals(user.FullName, existedUser.FullName))
+            {
+                _context.Entry(existedUser).Property(u => u.FullName).IsModified = false;
+            }
+
+            if (string.Equals(user.UserName, existedUser.UserName))
+            {
+                _context.Entry(existedUser).Property(u => u.UserName).IsModified = false;
+            }
+
+            if (string.Equals(user.Email, existedUser.Email))
+            {
+                _context.Entry(existedUser).Property(u => u.Email).IsModified = false;
+            }
+
+            _context.Entry(existedUser).Property(u => u.Id).IsModified = false;
+            _context.Entry(existedUser).Property(u => u.CreatedDate).IsModified = false;
+
+            if (string.IsNullOrEmpty(user.PasswordHash))
+            {
+                _context.Entry(existedUser).Property(u => u.PasswordHash).IsModified = false;
+            }
+
+            // Update fields 
+            existedUser.FullName = user.FullName;
+            existedUser.UserName = user.UserName;
+            existedUser.Email = user.Email;
+            existedUser.Role = user.Role;
+            existedUser.IsActive = user.IsActive;
+
+            await _context.SaveChangesAsync();
+
+            return existedUser.Id;
+        }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
