@@ -24,7 +24,7 @@
             </StackPanel>
 
             <StackPanel>
-                <CheckBox Content="Remember me" />
+                <CheckBox x:Name="RememberMeCheckBox" Content="Remember me" />
             </StackPanel>
 
             <Button Style="{StaticResource AccentButtonStyle}" Content="Login" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" Click="Login_Click" />
