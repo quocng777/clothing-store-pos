@@ -23,10 +23,10 @@
                 <Grid Padding="16,12"
               ColumnSpacing="16">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="70" />
                         <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="180" />
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
@@ -36,13 +36,13 @@
                         Text="Role" Grid.Column="1"/>
                     <TextBlock Grid.Column="2"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Username" />
+                       Text="Full Name" />
                     <TextBlock Grid.Column="3"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="PasswordHash" />
+                       Text="Email" />
                     <TextBlock Grid.Column="4"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Email" />
+                       Text="Active" />
                     <TextBlock Grid.Column="5"
                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                    Text="Actions" />
@@ -52,10 +52,10 @@
                 <DataTemplate x:DataType="local:User">
                     <Grid ColumnSpacing="16">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="70" />
                             <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="180" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -63,11 +63,11 @@
                         <TextBlock Grid.Column="1"
                            Text="{x:Bind Role}" />
                         <TextBlock Grid.Column="2"
-                           Text="{x:Bind UserName}" />
+                           Text="{x:Bind FullName}" />
                         <TextBlock Grid.Column="3"
-                           Text="{x:Bind PasswordHash}" />
-                        <TextBlock Grid.Column="4"
                            Text="{x:Bind Email}" />
+                        <TextBlock Grid.Column="4"
+                           Text="{x:Bind IsActive}" />
 
                         <StackPanel Orientation="Horizontal" Grid.Column="5"  Spacing="12">
                             <Button   CommandParameter="{Binding}" Click="DeleteBtn_Click">

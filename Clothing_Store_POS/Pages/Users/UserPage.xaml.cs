@@ -56,7 +56,39 @@ namespace Clothing_Store_POS.Pages.Users
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
+            var user = button?.CommandParameter as User;
 
+            var warningDialog = new ContentDialog
+            {
+                Title = "Delete User",
+                Content = $"Are you sure you want to delete this user ({user.UserName})? This action cannot be undone.",
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.XamlRoot 
+            };
+
+            var result = await warningDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                // Delete user 
+                await _viewModel.DeleteUser(user.Id);
+
+                var successDialog = new ContentDialog
+                {
+                    Title = "Delete User",
+                    Content = "User has been deleted successfully.",
+                    CloseButtonText = "OK"
+                };
+
+                successDialog.XamlRoot = this.XamlRoot;
+
+                await successDialog.ShowAsync();
+
+                LoadUsers(null, null);
+            }
         }
     }
 }

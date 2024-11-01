@@ -42,8 +42,6 @@ namespace Clothing_Store_POS.DAOs
         {
             var existedUser = await _context.Users.FindAsync(user.Id);
 
-            
-
             // Neu 2 value giong nhau thi isModified == false
             if (string.Equals(user.FullName, existedUser.FullName))
             {
@@ -61,7 +59,7 @@ namespace Clothing_Store_POS.DAOs
             }
 
             _context.Entry(existedUser).Property(u => u.Id).IsModified = false;
-            _context.Entry(existedUser).Property(u => u.CreatedDate).IsModified = false;
+            //_context.Entry(existedUser).Property(u => u.CreatedDate).IsModified = false;
 
             if (string.IsNullOrEmpty(user.PasswordHash))
             {
@@ -74,6 +72,7 @@ namespace Clothing_Store_POS.DAOs
             existedUser.Email = user.Email;
             existedUser.Role = user.Role;
             existedUser.IsActive = user.IsActive;
+            existedUser.CreatedDate = user.CreatedDate;
 
             await _context.SaveChangesAsync();
 

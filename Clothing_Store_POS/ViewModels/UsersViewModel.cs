@@ -64,5 +64,12 @@ namespace Clothing_Store_POS.ViewModels
 
             return id;
         }
+
+        public async Task<bool> DeleteUser(int id)
+        {
+            var result = await _userDAO.DeleteUser(id);
+
+            return result;
+        }
     }
 }

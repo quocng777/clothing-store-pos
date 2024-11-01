@@ -35,7 +35,7 @@ namespace Clothing_Store_POS.Models
         public bool IsActive { get; set; } = true;
 
         [Column("created_date")]
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(7);
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
