@@ -22,7 +22,8 @@
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
         </StackPanel>
 
-        <ListView ItemsSource="{x:Bind ViewModel.Products}" Background="White" Padding="12" CornerRadius="24">
+        <ListView ItemsSource="{x:Bind ViewModel.Products}" Background="White" Padding="12" CornerRadius="24"
+                  IsItemClickEnabled="True">
             <ListView.Header>
                 <Grid Padding="16,12"
                   ColumnSpacing="16">
