@@ -22,6 +22,22 @@
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new product" Click="AddBtn_Click" />
         </StackPanel>
 
+        <StackPanel Margin="0 0 0 20" Orientation="Horizontal" Spacing="10">
+            <TextBox AutomationProperties.Name="simple TextBox"
+                     Text="{x:Bind ViewModel.Keyword, Mode=TwoWay}"
+                     MaxWidth="300" 
+                     HorizontalAlignment="Left" 
+                     MinWidth="200"
+                     PlaceholderText="Search!"/>
+            <Button x:Name="ClearButton" Content="x" Width="30" Grid.Column="1" Visibility="Collapsed" Click="DelTextBtn_Click" />
+
+            <Button CommandParameter="{Binding}" Click="SearchBtn_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE721;" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
         <ListView ItemsSource="{x:Bind ViewModel.Products}" Background="White" Padding="12" CornerRadius="24"
                   IsItemClickEnabled="True">
             <ListView.Header>

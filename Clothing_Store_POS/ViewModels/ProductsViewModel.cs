@@ -17,6 +17,7 @@ namespace Clothing_Store_POS.ViewModels
 
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public string Keyword { get; set; } = "";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -59,7 +60,7 @@ namespace Clothing_Store_POS.ViewModels
 
         public async void LoadProducts(int pageNumber = 1, int pageSize = 10)
         {
-            var pagedResult = await _productDAO.GetListUsers(pageNumber, pageSize);
+            var pagedResult = await _productDAO.GetListUsers(pageNumber, pageSize, Keyword);
             TotalPages = pagedResult.TotalPages;
             CurrentPage = pageNumber;
 

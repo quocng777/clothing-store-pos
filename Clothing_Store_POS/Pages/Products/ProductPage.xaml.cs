@@ -91,5 +91,16 @@ namespace Clothing_Store_POS.Pages.Products
                 ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
             }
         }
+
+        private void SearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+        }
+
+        private void DelTextBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Keyword = "";
+            ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+        }
     }
 }
