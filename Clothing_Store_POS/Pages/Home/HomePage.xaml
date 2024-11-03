@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Clothing_Store_POS.Pages.Home.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Clothing_Store_POS.Models"
+    xmlns:viewmodels="using:Clothing_Store_POS.ViewModels"
+    xmlns:converters="using:Clothing_Store_POS.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:ThumnailPathConverter x:Key="ImageConverter" />
+        <converters:PriceConverter x:Key="PriceConverter" />
+        
+        <!--Product Card Template-->
+        <DataTemplate x:Key="ProductCardTemplate" x:DataType="local:Product">
+            <ItemContainer AutomationProperties.Name="{x:Bind Name}" Width="200">
+                <Border CornerRadius="8" Background="White"
+                        BorderBrush="LightGray" BorderThickness="1">
+                    <StackPanel>
+                        <Image Source="{x:Bind Thumbnail, Converter={StaticResource ImageConverter}}" Height="150" Stretch="UniformToFill" />
+
+                        <Grid HorizontalAlignment="Stretch" Padding="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{x:Bind Name}" FontWeight="Bold" FontSize="14" TextAlignment="Center" Margin="0,0,0,4"
+                                       VerticalAlignment="Top" Grid.Row="0" ToolTipService.ToolTip="{x:Bind Name}"/>
+                            <Grid Grid.Row="1" Margin="0,0,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind Category.Name}" FontSize="12" Foreground="Gray" 
+                                           VerticalAlignment="Center" Grid.Column="0"/>
+                                <TextBlock Text="{x:Bind Price}" FontWeight="Bold" FontSize="18" Foreground="Gray" 
+                                    VerticalAlignment="Center" Grid.Column="1"/>
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+                                <Button HorizontalAlignment="Center" Click="DetailButton_Click" Margin="0,0,8,0"
+                                        Content="Chi tiết" CommandParameter="{x:Bind}"/>
+                                <Button HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource AccentAAFillColorDefaultBrush}"
+                                        Content="Thêm" CommandParameter="{x:Bind}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </ItemContainer>
+        </DataTemplate>
+        
+        <!--Category Card Template-->
+        <DataTemplate x:Key="CategoryCardTemplate" x:DataType="local:Category" >
+            <Border 
+                Padding="8" 
+                Background="{ThemeResource AccentAAFillColorTertiaryBrush}" 
+                CornerRadius="8">
+                <TextBlock 
+                    Text="{x:Bind Name}" 
+                    FontSize="14"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+    
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!--Product List-->
+        <StackPanel Grid.Column="0" Padding="10">
+            <TextBox PlaceholderText="Search" Margin="0,0,0,10"/>
+
+            <ListView ItemsSource="{x:Bind CategoriesViewModel.Categories}"
+                      Padding="0,0,0,4"
+                      Margin="0,0,0,8"
+                      SelectionMode="Single"
+                      IsItemClickEnabled="True" 
+                      ItemClick="CategoryItem_Click" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollMode="Enabled"
+                      ScrollViewer.VerticalScrollMode="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                      ItemTemplate="{StaticResource CategoryCardTemplate}">   
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+
+            <ItemsView HorizontalAlignment="Center"
+                       ItemsSource="{x:Bind ProductsViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource ProductCardTemplate}">
+                <ItemsView.Layout>
+                    <UniformGridLayout MinColumnSpacing="10" MinRowSpacing="10" MaximumRowsOrColumns="4"/>
+                </ItemsView.Layout>
+            </ItemsView>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button Content="Trước" Click="PreviousPage_Click"/>
+                <ComboBox IsEditable="True" Width="200" TextSubmitted="Page_Submitted"/>
+                <Button Content="Sau" Click="NextPage_Click"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <!--Order Detail-->
+        <StackPanel Grid.Column="1" Padding="10" Background="LightGray">
+            <TextBlock Text="Order" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <CalendarDatePicker x:Name="DatePicker" PlaceholderText="Date" />
+                <TextBox PlaceholderText="Customer name"/>
+            </StackPanel>
+
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Background="LightGray" Padding="10">
+                    <TextBlock Text="Image" FontWeight="Bold" Width="60" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Product Name" FontWeight="Bold" Width="160" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Quantity" FontWeight="Bold" Width="80" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Subtotal" FontWeight="Bold" Width="80" HorizontalAlignment="Right"/>
+                </StackPanel>
+
+                <ListView x:Name="OrderListView" ItemsSource="{x:Bind CartItems}" Margin="0,10,0,0">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodels:CartItemViewModel">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{x:Bind Product.Thumbnail, Converter={StaticResource ImageConverter}}" Width="50" Height="50" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Stretch="UniformToFill" Grid.Column="0" />       
+
+                                <TextBlock Text="{x:Bind Product.Name}" FontSize="14" TextWrapping="Wrap"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1"/>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                                    <Button Content="-" Click="DecreaseQuantity_Click" Background="Transparent" FontSize="16" FontWeight="Bold"
+                                            CommandParameter="{Binding}" HorizontalAlignment="Center" Padding="4,0,4,0" BorderThickness="0"/>
+
+                                    <TextBlock Text="{x:Bind Quantity, Mode=OneWay}" 
+                                                Width="40" TextAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+
+                                    <Button Content="+" Click="IncreaseQuantity_Click" Background="Transparent" FontSize="16" FontWeight="Bold"
+                                            CommandParameter="{Binding}" HorizontalAlignment="Center" Padding="4,0,4,0" BorderThickness="0"/>
+                                </StackPanel>
+
+                                <TextBlock Text="{x:Bind TotalPrice, Mode=OneWay}" FontSize="14" 
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
+
+                                <Button BorderThickness="0"
+                                        Click="DeleteItem_Click" CommandParameter="{Binding}" 
+                                        Background="Transparent" Grid.Column="4">
+                                    <FontIcon Glyph="&#xE74D;" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+
+            <TextBox Header="Discount" PlaceholderText="0%" Margin="0,10,0,0"/>
+            <TextBox Header="Tax" PlaceholderText="0%" Margin="0,10,0,0"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Text="Total:" FontWeight="Bold" FontSize="16"/>
+                <TextBlock x:Name="TotalAmountText" Text="{x:Bind TotalAmount, Mode=OneWay}" FontSize="16" Foreground="Red" Margin="10,0,0,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" Spacing="10">
+                <Button Content="Lưu" Click="SaveOrder_Click" Width="100"/>
+                <Button Content="Lưu và In" Click="SaveAndPrintOrder_Click" Width="100"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+
+</Page>

@@ -1,4 +1,5 @@
 using Clothing_Store_POS.Helper;
+using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

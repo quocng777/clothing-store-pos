@@ -29,7 +29,7 @@ namespace Clothing_Store_POS.Helper
 
         public static bool VerifyPassword(string password, string hashedPassword)
         {
-            // Get salt from hashedPassword & check current passwork\d
+            // Get salt from hashedPassword & check current password
             return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }

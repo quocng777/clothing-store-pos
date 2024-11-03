@@ -15,7 +15,7 @@
                         IsTabStop="False"
                         ItemInvoked="NavigationView_ItemInvoked">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home" Tag="SamplePage1"/>
+                <NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home" Tag="home"/>
                 <NavigationViewItem Content="Products" ToolTipService.ToolTip="Home" Tag="products">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="/Assets/clothing_icon.png" />

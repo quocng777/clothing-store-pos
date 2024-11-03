@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Clothing_Store_POS.Pages.Products;
 using Clothing_Store_POS.Pages.Users;
+using Clothing_Store_POS.Pages.Home;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,6 +29,7 @@ namespace Clothing_Store_POS.Pages
         public MainLayout()
         {
             this.InitializeComponent();
+            this.MainContent.Navigate(typeof(HomePage));
         }
 
         private void navigation_Selected(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -41,6 +43,9 @@ namespace Clothing_Store_POS.Pages
             string selectedTag = args.InvokedItemContainer.Tag.ToString();
 
             switch (selectedTag) {
+                case "home":
+                    this.MainContent.Navigate(typeof(HomePage));
+                    break;
                 case "products":
                     this.MainContent.Navigate(typeof(ProductPage));
                     break;
