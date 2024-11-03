@@ -13,6 +13,8 @@ namespace Clothing_Store_POS.Config
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,14 +24,35 @@ namespace Clothing_Store_POS.Config
                 entity.ToTable("categories");
             });
 
-            modelBuilder.Entity<Product>()
-            .ToTable("products");
+            modelBuilder.Entity<Product>().ToTable("products");
 
             modelBuilder.Entity<User>().ToTable("users");
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasKey(o => o.Id);
+                entity.ToTable("orders");
+                entity.HasMany(o => o.OrderItems)
+                      .WithOne(oi => oi.Order)
+                      .HasForeignKey(oi => oi.OrderId);
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasKey(oi => oi.Id);
+                entity.ToTable("order_items");
+                entity.HasOne(oi => oi.Product)
+                      .WithMany()
+                      .HasForeignKey(oi => oi.ProductId);
+            });
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=pos_db;Username=admin;Password=admin123");
+            if(optionsBuilder.IsConfigured == false)
+            {
+                optionsBuilder.UseNpgsql("Host=localhost;Database=pos_db;Username=admin;Password=admin123");
+            }
         }
 
         public void InitializeDatabase()

@@ -38,6 +38,7 @@ namespace Clothing_Store_POS.DAOs
 
         public async Task<User> GetUserByUsername(string username)
         {
+            var users = await _context.Users.ToListAsync();
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
 
             return user;

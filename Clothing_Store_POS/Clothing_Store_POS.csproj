@@ -22,7 +22,9 @@
     <None Remove="Pages\Auth\LoginPage.xaml" />
     <None Remove="Pages\Auth\MainLayout.xaml" />
     <None Remove="Pages\Auth\SignUpPage.xaml" />
+    <None Remove="Pages\Home\HomePage.xaml" />
     <None Remove="Pages\MainLayout.xaml" />
+    <None Remove="Pages\Orders\OrderPage.xaml" />
     <None Remove="Pages\Products\CreateProductPage.xaml" />
     <None Remove="Pages\Products\EditProductPage.xaml" />
     <None Remove="Pages\Products\ProductPage.xaml" />
@@ -83,6 +85,12 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Orders\OrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Home\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Users\EditUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

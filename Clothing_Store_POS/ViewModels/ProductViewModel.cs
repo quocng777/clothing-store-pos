@@ -35,7 +35,6 @@ namespace Clothing_Store_POS.ViewModels
 
         public int Save()
         {
-
             // handle saving image
             if (Thumbnail != null)
             {
@@ -64,7 +63,6 @@ namespace Clothing_Store_POS.ViewModels
             var fileExt = Path.GetExtension(path);
             var newFileName = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString() + fileExt;
             string desPath = Path.Combine(desFolderPath, newFileName);
-
 
             File.Copy(path, desPath, true);
 
