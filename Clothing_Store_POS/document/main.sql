@@ -1,4 +1,6 @@
-﻿CREATE TABLE products (
+﻿\c pos_db;
+
+CREATE TABLE IF NOT EXISTS products (
     id SERIAL PRIMARY KEY,       
     name VARCHAR(255) NOT NULL,  
     price DECIMAL(10, 2) NOT NULL, 
@@ -10,7 +12,7 @@
     thumbnail VARCHAR(255)
 );
 
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,     
     name VARCHAR(255) NOT NULL   
 );
@@ -20,7 +22,7 @@ ADD CONSTRAINT FK_Products_Categories
 FOREIGN KEY (category_id)
 REFERENCES categories(id);
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users  (
     id SERIAL PRIMARY KEY,               
     fullname VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE, 
