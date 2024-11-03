@@ -60,18 +60,6 @@ namespace Clothing_Store_POS.Pages.Home
             this.DataContext = this;
         }
 
-        private async void DetailButton_Click(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Clicked");
-            Debug.WriteLine(sender);
-            if (sender is Button button && button.DataContext is Product product)
-            {
-                SelectedProduct = product;
-                Debug.WriteLine(SelectedProduct.Name);
-                await ProductDetailDialog.ShowAsync();
-            }
-        }
-
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -155,24 +143,34 @@ namespace Clothing_Store_POS.Pages.Home
 
         }
 
-        private void Page_Submitted(object sender, RoutedEventArgs e)
+        private async void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void SaveOrder_Click(object sender, RoutedEventArgs e)
-        {
-            var newOrder = new OrderViewModel
+            var newOrderId = new OrderViewModel().CreateOrder();
+            // save order items
+            foreach (var cartItem in CartItems)
             {
-                CreatedAt = DateTime.UtcNow,
-                OrderItems = CartItems.Select(cartItem => new OrderItemViewModel
+                var orderItem = new OrderItem
                 {
+                    OrderId = newOrderId,
                     ProductId = cartItem.Product.Id,
-                    Quantity = cartItem.Quantity,
-                    Price = cartItem.Product.Price,
-                }).ToList()
-            };
+                    Quantity = cartItem.Quantity
+                };
+                new OrderItemViewModel().AddOrderItem(orderItem);
+            }
+            // create a dialog display saving successfully
+            var dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Saving product successfully.";
+            dialog.PrimaryButtonText = "OK";
+            dialog.SecondaryButtonText = "Cancel";
+            dialog.Content = "Your order has been saved successfully.";
+            dialog.SecondaryButtonClick += (s, args) => Frame.Navigate(typeof(HomePage));
 
+            await dialog.ShowAsync();
+
+            // clear cart items
+            CartItems.Clear();
         }
 
         private void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)

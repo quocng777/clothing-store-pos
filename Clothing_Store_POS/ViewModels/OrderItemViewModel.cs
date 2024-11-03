@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Clothing_Store_POS.DAOs;
+using Clothing_Store_POS.Models;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,60 +12,20 @@ namespace Clothing_Store_POS.ViewModels
 {
     public class OrderItemViewModel
     {
-        private int _id;
-        private int _orderId;
-        private int _productId;
-        private int _quantity;
-        private double _price;
+        private readonly OrderItemDAO _orderItemDAO;
+        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
 
-        public int Id
+        public OrderItemViewModel()
         {
-            get => _id;
-            set
-            {
-                _id = value;
-                OnPropertyChanged(nameof(Id));
-            }
+            _orderItemDAO = new OrderItemDAO();
         }
 
-        public int OrderId
+        public void AddOrderItem(OrderItem orderItem)
         {
-            get => _orderId;
-            set
-            {
-                _orderId = value;
-                OnPropertyChanged(nameof(OrderId));
-            }
-        }
-
-        public int ProductId
-        {
-            get => _productId;
-            set
-            {
-                _productId = value;
-                OnPropertyChanged(nameof(ProductId));
-            }
-        }
-
-        public int Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
-                OnPropertyChanged(nameof(Quantity));
-            }
-        }
-
-        public decimal Price
-        {
-            get => _price;
-            set
-            {
-                _price = value;
-                OnPropertyChanged(nameof(Price));
-            }
+            _orderItemDAO.AddOrderItem(orderItem);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

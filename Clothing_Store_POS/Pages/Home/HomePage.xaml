@@ -44,8 +44,8 @@
                             </Grid>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-                                <Button HorizontalAlignment="Center" Click="DetailButton_Click" Margin="0,0,8,0"
-                                        Content="Chi tiết" CommandParameter="{x:Bind}"/>
+                                <!--<Button HorizontalAlignment="Center" Click="DetailButton_Click" Margin="0,0,8,0"
+                                        Content="Chi tiết" CommandParameter="{x:Bind}"/>-->
                                 <Button HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource AccentAAFillColorDefaultBrush}"
                                         Content="Thêm" CommandParameter="{x:Bind}"/>
                             </StackPanel>
@@ -109,7 +109,12 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                 <Button Content="Trước" Click="PreviousPage_Click"/>
-                <ComboBox IsEditable="True" Width="200" TextSubmitted="Page_Submitted"/>
+                <ComboBox IsEditable="True" Width="200">
+                    <x:String>1</x:String>
+                    <x:String>2</x:String>
+                    <x:String>3</x:String>
+                    <x:String>4</x:String>
+                </ComboBox>
                 <Button Content="Sau" Click="NextPage_Click"/>
             </StackPanel>
         </StackPanel>
