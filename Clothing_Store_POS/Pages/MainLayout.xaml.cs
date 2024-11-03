@@ -14,7 +14,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Clothing_Store_POS.Pages.Products;
 using Clothing_Store_POS.Pages.Users;
+<<<<<<< HEAD
 using Clothing_Store_POS.Pages.Home;
+=======
+using Clothing_Store_POS.Pages.Auth;
+>>>>>>> 528a0dc3b8a89fc4eadf0e3718711c777733648d
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -53,6 +57,11 @@ namespace Clothing_Store_POS.Pages
                     this.MainContent.Navigate(typeof(UserPage));
                     break;
             }
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(LoginPage));
         }
     }
 }

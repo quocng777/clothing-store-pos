@@ -3,19 +3,35 @@ using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.ViewModels
 {
-    public class UsersViewModel
+    public class UsersViewModel : INotifyPropertyChanged
     {
         private readonly UserDAO _userDAO;
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
 
         public UsersViewModel()
         {
             _userDAO = new UserDAO();
+            CurrentPage = 1;
+        }
+
+        public async Task<List<User>> LoadUsers(int pageNumber = 1, int pageSize = 10)
+        {
+            var pagedResult = await _userDAO.GetListUsers(pageNumber, pageSize);
+            TotalPages = pagedResult.TotalPages;
+            CurrentPage = pageNumber;
+
+            return pagedResult.Items;
         }
 
         public List<User> GetAllUsers()

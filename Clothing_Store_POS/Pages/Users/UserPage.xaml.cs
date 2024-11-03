@@ -31,11 +31,13 @@ namespace Clothing_Store_POS.Pages.Users
         {
             this.InitializeComponent();
             _viewModel = new UsersViewModel();
+            this.DataContext = _viewModel;
         }
 
-        private void LoadUsers(object sender, RoutedEventArgs e)
+        private async void LoadUsers(object sender, RoutedEventArgs e)
         {
-            var tempList = _viewModel.GetAllUsers();
+            int pageSize = 6;
+            var tempList = await _viewModel.LoadUsers(_viewModel.CurrentPage, pageSize);
             _users = new ObservableCollection<User>(tempList);
 
             listUsers.ItemsSource = _users;
@@ -87,6 +89,24 @@ namespace Clothing_Store_POS.Pages.Users
 
                 await successDialog.ShowAsync();
 
+                LoadUsers(null, null);
+            }
+        }
+
+        private void PreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.CurrentPage > 1)
+            {
+                _viewModel.CurrentPage--;
+                LoadUsers(null, null);
+            }
+        }
+
+        private void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.CurrentPage < _viewModel.TotalPages)
+            {
+                _viewModel.CurrentPage++;
                 LoadUsers(null, null);
             }
         }
