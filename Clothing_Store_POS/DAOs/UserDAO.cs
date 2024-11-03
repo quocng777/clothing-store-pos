@@ -36,6 +36,11 @@ namespace Clothing_Store_POS.DAOs
             return new PagedResult<User>(users, totalItems, pageSize);
         }
 
+        //public async Task<PagedResult<User>> SearchFilter(string search, int pageNumber, int pageSize)
+        //{
+
+        //}
+
         public async Task<User> GetUserByUsername(string username)
         {
             var users = await _context.Users.ToListAsync();
@@ -83,6 +88,7 @@ namespace Clothing_Store_POS.DAOs
             // Update fields 
             existedUser.FullName = user.FullName;
             existedUser.UserName = user.UserName;
+            existedUser.PasswordHash = user.PasswordHash;
             existedUser.Email = user.Email;
             existedUser.Role = user.Role;
             existedUser.IsActive = user.IsActive;

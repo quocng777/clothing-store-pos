@@ -42,8 +42,29 @@ namespace Clothing_Store_POS.Pages.Auth
         }
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
+            {
+                UsernameErrorText.Visibility = Visibility.Collapsed;    
+                PasswordErrorText.Visibility = Visibility.Collapsed;
+                LoginErrorText.Visibility = Visibility.Collapsed;
+            }
+
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
+
+            // validate input
+            if (username == null || username.Trim() == "")
+            {
+                UsernameErrorText.Text = "Username is required";
+                UsernameErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+
+            if (password == null || password.Trim() == "")
+            {
+                PasswordErrorText.Text = "Password is required";
+                PasswordErrorText.Visibility = Visibility.Visible;
+                return;
+            }
 
             // if `Remember Me` save username & password to localSettings
             if (RememberMeCheckBox.IsChecked == true)
@@ -64,7 +85,10 @@ namespace Clothing_Store_POS.Pages.Auth
 
             if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
             {
-                Frame.Navigate(typeof(LoginPage));
+                LoginErrorText.Visibility = Visibility.Visible;
+                UsernameTextBox.Text = string.Empty;
+                PasswordBox.Password = string.Empty;
+                return;
             }
             else
             {

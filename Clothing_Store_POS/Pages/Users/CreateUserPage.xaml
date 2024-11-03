@@ -62,20 +62,18 @@ SelectionHighlightColor="Green"/>
 
                 <StackPanel Spacing="12" Grid.Row="3" Grid.ColumnSpan="2">
                     <TextBlock Text="Password"/>
-                    <TextBox 
-                    Text="{x:Bind CurrentUser.Password, Mode=TwoWay}"
-                    AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                    <PasswordBox 
+                    Password="{x:Bind CurrentUser.Password, Mode=TwoWay}"
+                    AutomationProperties.Name="Simple PasswordBox"
 SelectionHighlightColor="Green"/>
                     <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel Spacing="12" Grid.ColumnSpan="2" Grid.Row="4">
                     <TextBlock Text="Confirm Password"/>
-                    <TextBox 
-                    Text="{x:Bind CurrentUser.ConfirmPassword, Mode=TwoWay}"
-                    AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                    <PasswordBox 
+                    Password="{x:Bind CurrentUser.ConfirmPassword, Mode=TwoWay}"
+                    AutomationProperties.Name="Simple PasswordBox"
 SelectionHighlightColor="Green"/>
                     <TextBlock x:Name="ConfirmPasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
