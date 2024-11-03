@@ -97,5 +97,14 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
+        <!-- Pagination -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0" Spacing="8">
+            <Button Content="Previous" Click="PreviousPage_Click" />
+            <TextBlock Text="Page" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" Margin="4,0" VerticalAlignment="Center"/>
+            <TextBlock Text="/" VerticalAlignment="Center"/>
+            <TextBlock Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" Margin="4,0" VerticalAlignment="Center"/>
+            <Button Content="Next" Click="NextPage_Click" />
+        </StackPanel>
     </StackPanel>
 </Page>
