@@ -29,11 +29,36 @@ namespace Clothing_Store_POS.Pages.Auth
         {
             this.InitializeComponent();
             ViewModel = new UsersViewModel();
+
+            // check localSettings for Remember Me
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            if (localSettings.Values.ContainsKey("rememberMe"))
+            {
+                UsernameTextBox.Text = localSettings.Values["username"] as string;
+                PasswordBox.Password = localSettings.Values["password"] as string;
+                RememberMeCheckBox.IsChecked = (bool)localSettings.Values["rememberMe"];
+            }
         }
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
+
+            // if `Remember Me` save username & password to localSettings
+            if (RememberMeCheckBox.IsChecked == true)
+            {
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["username"] = username;
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["password"] = password;
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["rememberMe"] = true;
+            }
+            else
+            {
+                // If none, delete in localSettings
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("username");
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("password");
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("rememberMe");
+            }
 
             var user = await ViewModel.GetUserByUsername(username);
 

@@ -23,6 +23,19 @@ namespace Clothing_Store_POS.DAOs
             return _context.Users.ToList();
         }
 
+        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize)
+        {
+            // Count total users
+            int totalItems = await _context.Users.CountAsync();
+
+            var users = await _context.Users.OrderBy(u => u.Id)
+                                            .Skip((pageNumber - 1) * pageSize)
+                                            .Take(pageSize)
+                                            .ToListAsync();
+
+            return new PagedResult<User>(users, totalItems, pageSize);
+        }
+
         public async Task<User> GetUserByUsername(string username)
         {
             var users = await _context.Users.ToListAsync();

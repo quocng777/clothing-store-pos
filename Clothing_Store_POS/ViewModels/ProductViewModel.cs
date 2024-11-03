@@ -29,6 +29,7 @@ namespace Clothing_Store_POS.ViewModels
         public int Stock { get; set; }
         public float Sale { get; set; }
         public string Thumbnail { get; set; }
+        public Category Category { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

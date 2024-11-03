@@ -100,7 +100,7 @@
                 <Image Width="200" Height="150" Grid.Column="1" Grid.Row="4" x:Name="SelectedImage" Source="/Assets/sample_image.jpg"/>
 
                 <StackPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 16 0 0" VerticalAlignment="Center" Spacing="32">
-                    <Button Content="Cancel" Background="Red" Foreground="White" Padding="6.5"/>
+                    <Button Content="Cancel" Background="Red" Foreground="White" Padding="6.5" Click="CancelBtn_Click"/>
                     <Button  Style="{StaticResource AccentButtonStyle}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
                 </StackPanel>
             </Grid>

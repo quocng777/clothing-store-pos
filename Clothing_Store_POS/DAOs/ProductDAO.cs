@@ -1,5 +1,6 @@
 ﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,21 @@ namespace Clothing_Store_POS.DAOs
         public List<Product> GetProducts()
         {
             return _context.Products.ToList();
+        }
+
+        public async Task<PagedResult<Product>> GetListUsers(int pageNumber, int pageSize, string keyword)
+        {
+            // Count total users
+            int totalItems = await _context.Products.CountAsync();
+
+            var products = await _context.Products.OrderBy(p => p.Id)
+                                            .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%")
+                                                || EF.Functions.ILike(p.Id.ToString(), $"%{keyword}%"))
+                                            .Skip((pageNumber - 1) * pageSize)
+                                            .Take(pageSize)
+                                            .ToListAsync();
+
+            return new PagedResult<Product>(products, totalItems, pageSize);
         }
 
         public void DeleteProductById(int productId)
