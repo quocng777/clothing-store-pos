@@ -8,7 +8,6 @@
     stock INT NOT NULL,         
     sale FLOAT,
     thumbnail VARCHAR(255)
-
 );
 
 CREATE TABLE categories (
@@ -20,3 +19,14 @@ ALTER TABLE products
 ADD CONSTRAINT FK_Products_Categories
 FOREIGN KEY (category_id)
 REFERENCES categories(id);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,               
+    fullname VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE, 
+    password_hash VARCHAR(255) NOT NULL, 
+    email VARCHAR(255) NOT NULL UNIQUE,  
+    user_role VARCHAR(255) NOT NULL,                
+    is_active BOOLEAN DEFAULT TRUE,     
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+);

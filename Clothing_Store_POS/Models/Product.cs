@@ -38,7 +38,7 @@ namespace Clothing_Store_POS.Models
         [Column("sale")]
         public float Sale { get; set; }
 
-        [Column("thumnail")]
+        [Column("thumbnail")]
         public string Thumbnail { get; set; }
     }
 }
