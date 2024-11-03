@@ -16,7 +16,7 @@
             <TextBlock  Text="Create new product" FontSize="10"/>
 
             <StackPanel Margin="0 24" Orientation="Horizontal">
-                <Button Style="{StaticResource AccentButtonStyle}" Content="Return" />
+                <Button Style="{StaticResource AccentButtonStyle}" Content="Return" Click="ReturnBtn_Click" />
             </StackPanel>
 
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="White" CornerRadius="24">
@@ -29,27 +29,31 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition MinWidth="200" />
+                    <ColumnDefinition MinWidth="200"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Row="1" >
                     <TextBlock Text="Name"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
+                    <TextBox Text="{x:Bind ProductViewModel.Name, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox"
             TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
             SelectionHighlightColor="Green"/>
                     <TextBlock x:Name="NameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="1">
                     <TextBlock Text="Price"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
+                    <TextBox 
+                        Text="{x:Bind ProductViewModel.Price, Mode=TwoWay}"
+                        AutomationProperties.Name="multi-line TextBox"
     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
     SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    <TextBlock x:Name="PriceErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="2">
                     <TextBlock Text="Size"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
+                    <TextBox 
+                        Text="{x:Bind ProductViewModel.Size, Mode=TwoWay}"
+                        AutomationProperties.Name="multi-line TextBox"
     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
     SelectionHighlightColor="Green"/>
                     <TextBlock x:Name="SizeErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
@@ -57,7 +61,9 @@
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="2">
                     <TextBlock Text="Stock"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
+                    <TextBox 
+                        Text="{x:Bind ProductViewModel.Stock, Mode=TwoWay}"
+                        AutomationProperties.Name="multi-line TextBox"
     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
     SelectionHighlightColor="Green"/>
                     <TextBlock x:Name="StockErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
@@ -65,7 +71,9 @@
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="3">
                     <TextBlock Text="Sale"/>
-                    <TextBox AutomationProperties.Name="multi-line TextBox"
+                    <TextBox 
+                        Text="{x:Bind ProductViewModel.Sale, Mode=TwoWay}"
+                        AutomationProperties.Name="multi-line TextBox"
     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
     SelectionHighlightColor="Green"/>
                     <TextBlock x:Name="SaleErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
@@ -73,21 +81,28 @@
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="3">
                     <TextBlock Text="Category"/>
-                    <ComboBox ItemsSource="{x:Bind CategoriesViewModel.Categories}"
+                    <ComboBox Name="CategoriesComboBox" ItemsSource="{x:Bind CategoriesViewModel.Categories}"
                       DisplayMemberPath="Name"
-                      SelectedItem="{x:Bind Name, Mode=TwoWay}"
-                      PlaceholderText="Select a category" />
+                      PlaceholderText="Select a category"
+                      SelectionChanged="CategoriesBox_SelectionChanged"
+                    />
+                    <TextBlock x:Name="CategoryErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="4">
-                    <TextBlock Text="Category"/>
+                    <TextBlock Text="Thumbnail"/>
                     <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-                        <Button x:Name="PickAPhotoButton" Content="Open a picture" Margin="0,0,0,10"/>
-                        <TextBlock x:Name="PickAPhotoOutputTextBlock" TextWrapping="Wrap" Padding="20,5,0,0"/>
+                        <Button x:Name="PickAPhotoButton" Content="Open a picture" Margin="0,0,0,10" Click="PickAPhotoButton_Click"/>
                     </StackPanel>
+                    <TextBlock x:Name="ThumbnailErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
-                <Button Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource AccentButtonStyle}" Content="Sign Up" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" />
+                <Image Width="200" Height="150" Grid.Column="1" Grid.Row="4" x:Name="SelectedImage" Source="/Assets/sample_image.jpg"/>
+
+                <StackPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 16 0 0" VerticalAlignment="Center" Spacing="32">
+                    <Button Content="Cancel" Background="Red" Foreground="White" Padding="6.5" Click="CancelBtn_Click"/>
+                    <Button  Style="{StaticResource AccentButtonStyle}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
+                </StackPanel>
             </Grid>
         </StackPanel>
     </ScrollViewer>

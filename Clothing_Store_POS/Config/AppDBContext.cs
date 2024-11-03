@@ -12,6 +12,7 @@ namespace Clothing_Store_POS.Config
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,10 +24,12 @@ namespace Clothing_Store_POS.Config
 
             modelBuilder.Entity<Product>()
             .ToTable("products");
+
+            modelBuilder.Entity<User>().ToTable("users");
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=clothing_store;Username=postgres;Password=123456");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=pos_db;Username=admin;Password=admin123");
         }
 
         public void InitializeDatabase()

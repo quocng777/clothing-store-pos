@@ -14,6 +14,15 @@
                         PaneDisplayMode="Left"
                         IsTabStop="False"
                         ItemInvoked="NavigationView_ItemInvoked">
+            <!-- Header -->
+            <NavigationView.PaneHeader>
+                <Button Content="Logout" 
+                    HorizontalAlignment="Right" 
+                    Click="Logout_Click" 
+                    Margin="10,0,10,0"/>
+            </NavigationView.PaneHeader>
+
+            <!-- Navigation --> 
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home" Tag="SamplePage1"/>
                 <NavigationViewItem Content="Products" ToolTipService.ToolTip="Home" Tag="products">
@@ -21,7 +30,7 @@
                         <BitmapIcon UriSource="/Assets/clothing_icon.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Account" Icon="Contact" ToolTipService.ToolTip="Account" Tag="SamplePage2">
+                <NavigationViewItem Content="Users" Icon="Contact" ToolTipService.ToolTip="Account" Tag="users">
                 </NavigationViewItem>
                 <NavigationViewItem Content="Document options" Icon="Page2" ToolTipService.ToolTip="Document options" SelectsOnInvoked="False">
                     <NavigationViewItem.MenuItems>
@@ -30,7 +39,9 @@
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-            <Frame x:Name="MainContent" />
+            <ScrollViewer>
+                <Frame x:Name="MainContent" />
+            </ScrollViewer>
         </NavigationView>
     </Grid>
 </Page>

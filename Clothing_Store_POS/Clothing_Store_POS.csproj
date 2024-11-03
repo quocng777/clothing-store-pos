@@ -16,6 +16,7 @@
   <ItemGroup>
     <Content Remove="Assets\clothing_icon.png" />
     <Content Remove="Assets\clothing_shop_login.svg" />
+    <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Auth\LoginPage.xaml" />
@@ -23,7 +24,11 @@
     <None Remove="Pages\Auth\SignUpPage.xaml" />
     <None Remove="Pages\MainLayout.xaml" />
     <None Remove="Pages\Products\CreateProductPage.xaml" />
+    <None Remove="Pages\Products\EditProductPage.xaml" />
     <None Remove="Pages\Products\ProductPage.xaml" />
+    <None Remove="Pages\Users\CreateUserPage.xaml" />
+    <None Remove="Pages\Users\EditUserPage.xaml" />
+    <None Remove="Pages\Users\UserPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-rc.2.24474.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-rc.2.24474.1">
       <PrivateAssets>all</PrivateAssets>
@@ -63,12 +69,32 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Assets\product-default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Assets\clothing_shop_login.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\clothing_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\sample_image.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Update="Pages\Users\EditUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Users\CreateUserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Users\UserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Products\EditProductPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Products\CreateProductPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
