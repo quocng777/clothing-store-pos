@@ -19,7 +19,7 @@ namespace Clothing_Store_POS.Models
         public string Name { get; set; }
 
         [Column("price")]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         [ForeignKey("Category")]
         [Column("category_id")]
@@ -37,5 +37,8 @@ namespace Clothing_Store_POS.Models
 
         [Column("sale")]
         public float Sale { get; set; }
+
+        [Column("thumbnail")]
+        public string Thumbnail { get; set; }
     }
 }

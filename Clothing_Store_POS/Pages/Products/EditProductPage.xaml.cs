@@ -10,13 +10,14 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,16 +27,36 @@ namespace Clothing_Store_POS.Pages.Products
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CreateProductPage : Page
+    public sealed partial class EditProductPage : Page
     {
-        public CategoriesViewModel CategoriesViewModel ;
-        public ProductViewModel ProductViewModel;
-
-        public CreateProductPage()
+        public ProductViewModel ProductViewModel { get; set; }
+        public CategoriesViewModel CategoriesViewModel { get; set; }
+        public EditProductPage()
         {
             this.InitializeComponent();
-            this.CategoriesViewModel = new CategoriesViewModel();
-            this.ProductViewModel = new ProductViewModel();
+            ProductViewModel = new ProductViewModel();
+            CategoriesViewModel = new CategoriesViewModel();
+        }
+
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is Product product)
+            {
+                // Use the product object
+                Debug.WriteLine($"Navigated to EditProductPage with product: {product.Name}");
+                this.ProductViewModel.Id = product.Id;
+                this.ProductViewModel.Name = product.Name;
+                this.ProductViewModel.Price = product.Price;
+                this.ProductViewModel.CategoryId = product.CategoryId;
+                this.ProductViewModel.Size = product.Size;
+                this.ProductViewModel.Stock = product.Stock;
+                this.ProductViewModel.Sale = product.Sale;
+                this.ProductViewModel.Thumbnail = product.Thumbnail;
+
+                CategoriesComboBox.SelectedValue = ProductViewModel.CategoryId;
+            }
         }
 
         private async void PickAPhotoButton_Click(object sender, RoutedEventArgs e)
@@ -75,17 +96,20 @@ namespace Clothing_Store_POS.Pages.Products
             }
             else
             {
-                
+
             }
         }
 
         private void CategoriesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(CategoriesComboBox.SelectedItem is Category category)
+            Debug.WriteLine(CategoriesComboBox.SelectedItem);
+
+            if (CategoriesComboBox.SelectedItem is int categoryId)
             {
-                if (category != null)
+                Debug.WriteLine(categoryId);
+                if (categoryId > 0)
                 {
-                    this.ProductViewModel.CategoryId = category.Id;
+                    this.ProductViewModel.CategoryId = categoryId;
                 }
             }
         }
@@ -102,7 +126,7 @@ namespace Clothing_Store_POS.Pages.Products
                 ThumbnailErrorText.Visibility = Visibility.Collapsed;
             }
 
-            if(ProductViewModel.Name == null || ProductViewModel.Name.Trim() == "")
+            if (ProductViewModel.Name == null || ProductViewModel.Name.Trim() == "")
             {
                 NameErrorText.Text = "Name is required";
                 NameErrorText.Visibility = Visibility.Visible;
@@ -123,7 +147,8 @@ namespace Clothing_Store_POS.Pages.Products
                 return;
             }
 
-            if (ProductViewModel.Stock < 0) {
+            if (ProductViewModel.Stock < 0)
+            {
                 StockErrorText.Text = "Stock value is invalid";
                 StockErrorText.Visibility = Visibility.Visible;
                 return;
@@ -161,7 +186,7 @@ namespace Clothing_Store_POS.Pages.Products
             savingDialog.ShowAsync();
 
 
-            ProductViewModel.Save();
+            ProductViewModel.Update();
             savingDialog.Hide();
 
 
@@ -175,21 +200,14 @@ namespace Clothing_Store_POS.Pages.Products
             dialog.SecondaryButtonText = "Cancel";
             dialog.Title = "Saving product successfully. ";
             dialog.Title = "Saving product successfully. ";
-            dialog.Content = "Your product has been saved successfully. Do you want to conitnue creating a new product?";
-
-            dialog.PrimaryButtonClick += ContinueCreatingBtn_Click;
+            dialog.Content = "Your product has been saved successfully. Do you want to conitnue update this product?";
             dialog.SecondaryButtonClick += CancelBtn_Click;
 
             await dialog.ShowAsync();
 
         }
 
-        private void ContinueCreatingBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            ProductViewModel.Clear();
-        }
-
-        private void CancelBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        public void CancelBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             Frame.Navigate(typeof(ProductPage));
         }
@@ -200,7 +218,8 @@ namespace Clothing_Store_POS.Pages.Products
 
         }
 
-        private async void CancelBtn_Click(object sender, RoutedEventArgs e)
+
+        private async void CancleEditBtn_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
 

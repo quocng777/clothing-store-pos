@@ -1,3 +1,5 @@
+using Clothing_Store_POS.Helper;
+using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -18,14 +20,56 @@ using Windows.Foundation.Collections;
 
 namespace Clothing_Store_POS.Pages.Auth
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class LoginPage : Page
     {
+        public UsersViewModel ViewModel { get; }
         public LoginPage()
         {
             this.InitializeComponent();
+            ViewModel = new UsersViewModel();
+
+            // check localSettings for Remember Me
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            if (localSettings.Values.ContainsKey("rememberMe"))
+            {
+                UsernameTextBox.Text = localSettings.Values["username"] as string;
+                PasswordBox.Password = localSettings.Values["password"] as string;
+                RememberMeCheckBox.IsChecked = (bool)localSettings.Values["rememberMe"];
+            }
+        }
+        private async void Login_Click(object sender, RoutedEventArgs e)
+        {
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+
+            // if `Remember Me` save username & password to localSettings
+            if (RememberMeCheckBox.IsChecked == true)
+            {
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["username"] = username;
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["password"] = password;
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["rememberMe"] = true;
+            }
+            else
+            {
+                // If none, delete in localSettings
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("username");
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("password");
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("rememberMe");
+            }
+
+            var user = await ViewModel.GetUserByUsername(username);
+
+            if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
+            {
+                Frame.Navigate(typeof(LoginPage));
+            }
+            else
+            {
+                Frame.Navigate(typeof(MainLayout));
+            }
+
         }
     }
 }

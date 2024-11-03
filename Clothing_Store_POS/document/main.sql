@@ -1,20 +1,34 @@
-﻿CREATE TABLE products (
-    id SERIAL PRIMARY KEY,       -- Tạo cột Id với kiểu dữ liệu SERIAL (tự động tăng)
-    name VARCHAR(255) NOT NULL,  -- Tạo cột Name với kiểu dữ liệu VARCHAR
-    price DECIMAL(10, 2) NOT NULL, -- Tạo cột Price với kiểu dữ liệu DECIMAL
-    category_id INT NOT NULL,     -- Tạo cột CategoryId với kiểu dữ liệu INT
-    Size VARCHAR(50),            -- Tạo cột Size với kiểu dữ liệu VARCHAR
-    Color VARCHAR(50),           -- Tạo cột Color với kiểu dữ liệu VARCHAR
-    Stock INT NOT NULL,          -- Tạo cột Stock với kiểu dữ liệu INT
-    Sale FLOAT                   -- Tạo cột Sale với kiểu dữ liệu FLOAT
+﻿\c pos_db;
+
+CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,       
+    name VARCHAR(255) NOT NULL,  
+    price DECIMAL(10, 2) NOT NULL, 
+    category_id INT NOT NULL,     
+    size VARCHAR(50),          
+    color VARCHAR(50),          
+    stock INT NOT NULL,         
+    sale FLOAT,
+    thumbnail VARCHAR(255)
 );
 
-CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,        -- Tạo cột Id với kiểu dữ liệu SERIAL (tự động tăng)
-    name VARCHAR(255) NOT NULL    -- Tạo cột Name với kiểu dữ liệu VARCHAR, không cho phép giá trị NULL
+CREATE TABLE IF NOT EXISTS categories (
+    id SERIAL PRIMARY KEY,     
+    name VARCHAR(255) NOT NULL   
 );
 
 ALTER TABLE products
 ADD CONSTRAINT FK_Products_Categories
 FOREIGN KEY (category_id)
 REFERENCES categories(id);
+
+CREATE TABLE IF NOT EXISTS users  (
+    id SERIAL PRIMARY KEY,               
+    fullname VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE, 
+    password_hash VARCHAR(255) NOT NULL, 
+    email VARCHAR(255) NOT NULL UNIQUE,  
+    user_role VARCHAR(255) NOT NULL,                
+    is_active BOOLEAN DEFAULT TRUE,     
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+);
