@@ -97,6 +97,29 @@ namespace Clothing_Store_POS.ViewModels
             }
         }
 
+        public async void FilterByCategory(int categoryId)
+        {
+            Keyword = "";
+            CurrentPage = 1;
+            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, categoryId);
+            TotalPages = pagedResult.TotalPages;
+
+            // update page numbers
+            PageNumbers.Clear();
+            for (int i = 1; i <= TotalPages; i++)
+            {
+                PageNumbers.Add(i);
+            }
+
+            // update products
+            Products.Clear();
+            foreach (var product in pagedResult.Items)
+            {
+                Products.Add(product);
+            }
+        }
+
+
         public void NextPage()
         {
             if (CurrentPage < TotalPages)

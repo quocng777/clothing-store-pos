@@ -209,9 +209,12 @@ namespace Clothing_Store_POS.Pages.Home
 
         }
 
-        private void CategoryItem_Click(object sender, RoutedEventArgs e)
+        private void CategoryItem_Click(object sender, ItemClickEventArgs e)
         {
-
+            if (e.ClickedItem is Category selectedCategory)
+            {
+                ProductsViewModel.FilterByCategory(selectedCategory.Id);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Gaming.Input.ForceFeedback;
 
 namespace Clothing_Store_POS.DAOs
 {
@@ -33,19 +34,29 @@ namespace Clothing_Store_POS.DAOs
             return _context.Products.ToList();
         }
 
-        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword)
+        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword, int categoryId = 0)
         {
+            var query = _context.Products.AsQueryable();
 
-            var filteredProductsQuery = _context.Products
-                .Include(p => p.Category) // eager load category
-                .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Id.ToString(), $"%{keyword}%"));
+            if (categoryId != 0)
+            {
+                query = query
+                    .Where(p => p.CategoryId == categoryId);
+            }
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query
+                    .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Id.ToString(), $"%{keyword}%"));
+            }
             
-            int totalItems = await filteredProductsQuery.CountAsync();
+            int totalItems = await query.CountAsync();
             
-            var products = await filteredProductsQuery
+            var products = await query
                 .OrderBy(p => p.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
+                .Include(p => p.Category)
                 .ToListAsync();
 
             return new PagedResult<Product>(products, totalItems, pageSize);
