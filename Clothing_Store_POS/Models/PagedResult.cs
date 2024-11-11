@@ -9,11 +9,13 @@ namespace Clothing_Store_POS.Models
     public class PagedResult<T>
     {
         public List<T> Items { get; set; }
+        public int TotalItems { get; set; }
         public int TotalPages { get; set; }
 
         public PagedResult(List<T> items, int count, int pageSize)
         {
             Items = items;
+            TotalItems = count;
             // Math.Ceiling la`m tr`on len
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);  
         }

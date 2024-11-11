@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,27 +14,41 @@ namespace Clothing_Store_POS.ViewModels
     public class ProductsViewModel : INotifyPropertyChanged
     {
         public readonly ProductDAO _productDAO;
-        public ObservableCollection<Product> Products { get; set; } = new ObservableCollection<Product>();
-
-        public int CurrentPage { get; set; }
+        public ObservableCollection<Product> Products { get; set; }
+        public ObservableCollection<int> PageNumbers { get; set; }
         public int TotalPages { get; set; }
-        public string Keyword { get; set; } = "";
+        public string Keyword { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private int _currentPage;
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                _currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
+            }
+        }
+
+        private int _perPage;
+        public int PerPage
+        {
+            get => _perPage;
+            set
+            {
+                _perPage = value;
+                OnPropertyChanged(nameof(PerPage));
+            }
+        }
 
         public ProductsViewModel()
         {
             this._productDAO = new ProductDAO();
-            LoadProducts(1, 6);
-        }
-
-        public async void LoadProducts()
-        {
-            var products = await Task.Run(_productDAO.GetProducts);
-            Products.Clear();
-            foreach (var product in products) {
-                Products.Add(product);
-            }
+            CurrentPage = 1;
+            PerPage = 10;
+            Products = new ObservableCollection<Product>();
+            PageNumbers = new ObservableCollection<int>();
+            _ = LoadProducts();
         }
 
         public void DeleteAProduct(int productId)
@@ -58,17 +73,75 @@ namespace Clothing_Store_POS.ViewModels
             Products.Remove(product);
         }
 
-        public async void LoadProducts(int pageNumber = 1, int pageSize = 10)
+        public async Task LoadProducts()
         {
-            var pagedResult = await _productDAO.GetListUsers(pageNumber, pageSize, Keyword);
+            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword);
             TotalPages = pagedResult.TotalPages;
-            CurrentPage = pageNumber;
+            if (CurrentPage > TotalPages)
+            {
+                CurrentPage = TotalPages;
+            }
 
+            // update page numbers
+            PageNumbers.Clear();
+            for (int i = 1; i <= TotalPages; i++)
+            {
+                PageNumbers.Add(i);
+            }
+
+            // update products
             Products.Clear();
             foreach (var product in pagedResult.Items)
             {
                 Products.Add(product);
             }
+        }
+
+        public async void FilterByCategory(int categoryId)
+        {
+            Keyword = "";
+            CurrentPage = 1;
+            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, categoryId);
+            TotalPages = pagedResult.TotalPages;
+
+            // update page numbers
+            PageNumbers.Clear();
+            for (int i = 1; i <= TotalPages; i++)
+            {
+                PageNumbers.Add(i);
+            }
+
+            // update products
+            Products.Clear();
+            foreach (var product in pagedResult.Items)
+            {
+                Products.Add(product);
+            }
+        }
+
+
+        public void NextPage()
+        {
+            if (CurrentPage < TotalPages)
+            {
+                CurrentPage++;
+                _ = LoadProducts();
+            }
+        }
+
+        public void PreviousPage()
+        {
+            if (CurrentPage > 1)
+            {
+                CurrentPage--;
+                _ = LoadProducts();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

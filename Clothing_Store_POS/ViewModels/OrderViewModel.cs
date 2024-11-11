@@ -12,12 +12,14 @@ namespace Clothing_Store_POS.ViewModels
     public class OrderViewModel : INotifyPropertyChanged
     {
         private readonly OrderDAO _orderDAO;
+        private readonly OrderItemDAO _orderItemDAO;
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public OrderViewModel()
         {
             _orderDAO = new OrderDAO();
+            _orderItemDAO = new OrderItemDAO();
         }
 
         public int CreateOrder()
@@ -28,6 +30,11 @@ namespace Clothing_Store_POS.ViewModels
             };
             int orderId = _orderDAO.AddOrder(order);
             return orderId;
+        }
+
+        public void AddOrderItem(OrderItem orderItem)
+        {
+            _orderItemDAO.AddOrderItem(orderItem);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

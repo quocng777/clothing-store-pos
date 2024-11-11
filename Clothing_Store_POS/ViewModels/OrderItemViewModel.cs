@@ -23,11 +23,6 @@ namespace Clothing_Store_POS.ViewModels
             _orderItemDAO = new OrderItemDAO();
         }
 
-        public void AddOrderItem(OrderItem orderItem)
-        {
-            _orderItemDAO.AddOrderItem(orderItem);
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
