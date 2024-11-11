@@ -1,4 +1,4 @@
-using Clothing_Store_POS.DAOs;
+﻿using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
@@ -32,18 +32,8 @@ namespace Clothing_Store_POS.Pages.Home
     {
         public ProductsViewModel ProductsViewModel { get; set; }
         public CategoriesViewModel CategoriesViewModel { get; set; }
+        public OrderViewModel OrderViewModel { get; set; }
         public ObservableCollection<CartItemViewModel> CartItems { get; set; }
-
-        private Product _selectedProduct;
-        public Product SelectedProduct
-        {
-            get => _selectedProduct;
-            set
-            {
-                _selectedProduct = value;
-                OnPropertyChanged(nameof(SelectedProduct));
-            }
-        }
 
         public double TotalAmount
         {
@@ -54,10 +44,15 @@ namespace Clothing_Store_POS.Pages.Home
         {
             ProductsViewModel = new ProductsViewModel();
             CategoriesViewModel = new CategoriesViewModel();
-            CartItems = new ObservableCollection<CartItemViewModel>();
+            OrderViewModel = new OrderViewModel();
+
+            CartItems = [];
             CartItems.CollectionChanged += CartItems_CollectionChanged;
             this.InitializeComponent();
-            this.DataContext = this;
+            this.DataContext = ProductsViewModel;
+
+            PerPageComboBox.SelectedIndex = 0;
+            CurrentPageComboBox.SelectedIndex = 0;
         }
 
         private void AddToCart_Click(object sender, RoutedEventArgs e)
@@ -65,12 +60,12 @@ namespace Clothing_Store_POS.Pages.Home
             var button = sender as Button;
             var product = button?.CommandParameter as Product;
             Debug.WriteLine($"Adding product to cart: {product.Name}");
+
             if (product != null) {
                 var existingCartItem = CartItems.FirstOrDefault(item => item.Product.Id == product.Id);
 
                 if (existingCartItem != null)
                 {
-                    Debug.WriteLine(existingCartItem.Quantity);
                     existingCartItem.IncreaseQuantity();
                 }
                 else
@@ -133,19 +128,54 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        private void PerPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox && comboBox.SelectedItem is string selectedValue)
+            {
+                int perPage = int.Parse(selectedValue);
+                ProductsViewModel.PerPage = perPage;
+                ProductsViewModel.CurrentPage = 1;
+                _ = ProductsViewModel.LoadProducts();
+            }
+        }
+
         private void PreviousPage_Click(object sender, RoutedEventArgs e)
         {
-
+            ProductsViewModel.PreviousPage();
         }
 
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
+            ProductsViewModel.NextPage();
+        }
 
+        private void Page_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox && comboBox.SelectedItem is int selectedValue)
+            {
+                ProductsViewModel.CurrentPage = selectedValue;
+                _ = ProductsViewModel.LoadProducts();
+            }
+        }
+
+        private void SearchTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                ProductsViewModel.Keyword = SearchTextBox.Text;
+                _ = ProductsViewModel.LoadProducts();
+            }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ = ProductsViewModel.LoadProducts();
         }
 
         private async void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
-            var newOrderId = new OrderViewModel().CreateOrder();
+            int newOrderId = OrderViewModel.CreateOrder();
+
             // save order items
             foreach (var cartItem in CartItems)
             {
@@ -155,8 +185,9 @@ namespace Clothing_Store_POS.Pages.Home
                     ProductId = cartItem.Product.Id,
                     Quantity = cartItem.Quantity
                 };
-                new OrderItemViewModel().AddOrderItem(orderItem);
+                OrderViewModel.AddOrderItem(orderItem);
             }
+
             // create a dialog display saving successfully
             var dialog = new ContentDialog();
             dialog.XamlRoot = this.XamlRoot;

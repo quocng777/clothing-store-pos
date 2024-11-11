@@ -33,17 +33,20 @@ namespace Clothing_Store_POS.DAOs
             return _context.Products.ToList();
         }
 
-        public async Task<PagedResult<Product>> GetListUsers(int pageNumber, int pageSize, string keyword)
+        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword)
         {
-            // Count total users
-            int totalItems = await _context.Products.CountAsync();
 
-            var products = await _context.Products.OrderBy(p => p.Id)
-                                            .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%")
-                                                || EF.Functions.ILike(p.Id.ToString(), $"%{keyword}%"))
-                                            .Skip((pageNumber - 1) * pageSize)
-                                            .Take(pageSize)
-                                            .ToListAsync();
+            var filteredProductsQuery = _context.Products
+                .Include(p => p.Category) // eager load category
+                .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Id.ToString(), $"%{keyword}%"));
+            
+            int totalItems = await filteredProductsQuery.CountAsync();
+            
+            var products = await filteredProductsQuery
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
             return new PagedResult<Product>(products, totalItems, pageSize);
         }

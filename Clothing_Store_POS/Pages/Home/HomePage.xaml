@@ -9,7 +9,7 @@
     xmlns:viewmodels="using:Clothing_Store_POS.ViewModels"
     xmlns:converters="using:Clothing_Store_POS.Converters"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
 
     <Page.Resources>
         <converters:ThumnailPathConverter x:Key="ImageConverter" />
@@ -17,9 +17,9 @@
         
         <!--Product Card Template-->
         <DataTemplate x:Key="ProductCardTemplate" x:DataType="local:Product">
-            <ItemContainer AutomationProperties.Name="{x:Bind Name}" Width="200">
-                <Border CornerRadius="8" Background="White"
-                        BorderBrush="LightGray" BorderThickness="1">
+            <ItemContainer AutomationProperties.Name="{x:Bind Name}" Width="200" >
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    CornerRadius="8" BorderThickness="1">
                     <StackPanel>
                         <Image Source="{x:Bind Thumbnail, Converter={StaticResource ImageConverter}}" Height="150" Stretch="UniformToFill" />
 
@@ -44,10 +44,8 @@
                             </Grid>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-                                <!--<Button HorizontalAlignment="Center" Click="DetailButton_Click" Margin="0,0,8,0"
-                                        Content="Chi tiết" CommandParameter="{x:Bind}"/>-->
-                                <Button HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource AccentAAFillColorDefaultBrush}"
-                                        Content="Thêm" CommandParameter="{x:Bind}"/>
+                                <Button HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+                                        Content="Add to cart" CommandParameter="{x:Bind}"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -59,7 +57,7 @@
         <DataTemplate x:Key="CategoryCardTemplate" x:DataType="local:Category" >
             <Border 
                 Padding="8" 
-                Background="{ThemeResource AccentAAFillColorTertiaryBrush}" 
+                Background="{ThemeResource SystemFillColorAttentionBrush}" 
                 CornerRadius="8">
                 <TextBlock 
                     Text="{x:Bind Name}" 
@@ -71,15 +69,25 @@
     </Page.Resources>
     
     
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1.75*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
         <!--Product List-->
         <StackPanel Grid.Column="0" Padding="10">
-            <TextBox PlaceholderText="Search" Margin="0,0,0,10"/>
+            <Grid VerticalAlignment="Center" ColumnSpacing="16" Margin="16,0,16,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="SearchTextBox" Grid.Column="0" PlaceholderText="Search" KeyDown="SearchTextBox_KeyDown" 
+                         Text="{x:Bind ProductsViewModel.Keyword, Mode=TwoWay}"/>
+                <Button Grid.Column="1" Click="SearchButton_Click">
+                    <FontIcon Glyph="&#xE721;"/>
+                </Button>
+            </Grid>
 
             <ListView ItemsSource="{x:Bind CategoriesViewModel.Categories}"
                       Padding="0,0,0,4"
@@ -103,58 +111,91 @@
             <ItemsView HorizontalAlignment="Center"
                        ItemsSource="{x:Bind ProductsViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource ProductCardTemplate}">
                 <ItemsView.Layout>
-                    <UniformGridLayout MinColumnSpacing="10" MinRowSpacing="10" MaximumRowsOrColumns="4"/>
+                    <UniformGridLayout MinColumnSpacing="12" MinRowSpacing="12" MaximumRowsOrColumns="4"/>
                 </ItemsView.Layout>
             </ItemsView>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                <Button Content="Trước" Click="PreviousPage_Click"/>
-                <ComboBox IsEditable="True" Width="200">
-                    <x:String>1</x:String>
-                    <x:String>2</x:String>
-                    <x:String>3</x:String>
-                    <x:String>4</x:String>
-                </ComboBox>
-                <Button Content="Sau" Click="NextPage_Click"/>
-            </StackPanel>
+            <Grid Margin="16" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <ComboBox x:Name="PerPageComboBox" IsEditable="True"
+                              SelectionChanged="PerPage_SelectionChanged">
+                        <x:String>6</x:String>
+                        <x:String>10</x:String>
+                        <x:String>20</x:String>
+                        <x:String>50</x:String> 
+                    </ComboBox>
+                    <TextBlock Text="items per page" Margin="8"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Click="PreviousPage_Click">
+                            <FontIcon Glyph="&#xE892;" FontSize="14"/>
+                        </Button>
+                        <TextBlock Margin="16,0,16,0" FontSize="14" FontWeight="Medium">
+                            Page <Run Text="{x:Bind ProductsViewModel.CurrentPage, Mode=OneWay}"/> / <Run Text="{x:Bind ProductsViewModel.TotalPages, Mode=OneWay}"/>
+                        </TextBlock>
+                        <Button Click="NextPage_Click">
+                            <FontIcon Glyph="&#xE893;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
+                    <ComboBox x:Name="CurrentPageComboBox" IsEditable="True"
+                              VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                              ItemsSource="{x:Bind ProductsViewModel.PageNumbers}"
+                              SelectionChanged="Page_SelectionChanged"
+                              SelectedValue="{x:Bind ProductsViewModel.CurrentPage}">
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
         </StackPanel>
         
         <!--Order Detail-->
-        <StackPanel Grid.Column="1" Padding="10" Background="LightGray">
+        <StackPanel Grid.Column="1" Padding="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
             <TextBlock Text="Order" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                <CalendarDatePicker x:Name="DatePicker" PlaceholderText="Date" />
-                <TextBox PlaceholderText="Customer name"/>
-            </StackPanel>
+            <Grid Margin="0,0,0,8" ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CalendarDatePicker x:Name="DatePicker" PlaceholderText="Date" HorizontalAlignment="Stretch" />
+                <TextBox Grid.Column="1" PlaceholderText="Customer name" HorizontalAlignment="Stretch" />
+            </Grid>
 
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Background="LightGray" Padding="10">
-                    <TextBlock Text="Image" FontWeight="Bold" Width="60" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Product Name" FontWeight="Bold" Width="160" HorizontalAlignment="Left"/>
-                    <TextBlock Text="Quantity" FontWeight="Bold" Width="80" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Subtotal" FontWeight="Bold" Width="80" HorizontalAlignment="Right"/>
-                </StackPanel>
+                <Grid Background="{ThemeResource LayerFillColorAltBrush}" Padding="12" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Image" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
+                    <TextBlock Text="Product Name" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1"/>
+                    <TextBlock Text="Quantity" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"/>
+                    <TextBlock Text="Subtotal" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
+                </Grid>
 
                 <ListView x:Name="OrderListView" ItemsSource="{x:Bind CartItems}" Margin="0,10,0,0">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Padding" Value="5"/>
-                            <Setter Property="BorderBrush" Value="LightGray"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:CartItemViewModel">
-                            <Grid>
+                            <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="160"/>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Source="{x:Bind Product.Thumbnail, Converter={StaticResource ImageConverter}}" Width="50" Height="50" 
+                                <Image Source="{x:Bind Product.Thumbnail, Converter={StaticResource ImageConverter}}" MaxWidth="50" MaxHeight="50" 
                                        HorizontalAlignment="Center" VerticalAlignment="Center" 
                                        Stretch="UniformToFill" Grid.Column="0" />       
 
@@ -162,24 +203,36 @@
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1"/>
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
-                                    <Button Content="-" Click="DecreaseQuantity_Click" Background="Transparent" FontSize="16" FontWeight="Bold"
-                                            CommandParameter="{Binding}" HorizontalAlignment="Center" Padding="4,0,4,0" BorderThickness="0"/>
+                                    <Button Click="DecreaseQuantity_Click" Background="Transparent" FontWeight="Bold" VerticalAlignment="Center"
+                                            CommandParameter="{Binding}" HorizontalAlignment="Center" BorderThickness="0" Padding="4" ToolTipService.ToolTip="Decrease quantity">
+                                        <FontIcon Glyph="&#xEF2D;" FontSize="14"/>
+                                    </Button>
 
-                                    <TextBlock Text="{x:Bind Quantity, Mode=OneWay}" 
+                                    <TextBlock Text="{x:Bind Quantity, Mode=OneWay}"
                                                 Width="40" TextAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
 
-                                    <Button Content="+" Click="IncreaseQuantity_Click" Background="Transparent" FontSize="16" FontWeight="Bold"
-                                            CommandParameter="{Binding}" HorizontalAlignment="Center" Padding="4,0,4,0" BorderThickness="0"/>
+                                    <Button Click="IncreaseQuantity_Click" Background="Transparent" FontWeight="Bold" VerticalAlignment="Center"
+                                            CommandParameter="{Binding}" HorizontalAlignment="Center" BorderThickness="0" Padding="4" ToolTipService.ToolTip="Increase quantity">
+                                        <FontIcon Glyph="&#xF8AA;" FontSize="14"/>
+                                    </Button>
                                 </StackPanel>
 
                                 <TextBlock Text="{x:Bind TotalPrice, Mode=OneWay}" FontSize="14" 
-                                           HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3"/>
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3"/>
 
-                                <Button BorderThickness="0"
-                                        Click="DeleteItem_Click" CommandParameter="{Binding}" 
-                                        Background="Transparent" Grid.Column="4">
-                                    <FontIcon Glyph="&#xE74D;" />
-                                </Button>
+                                <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Center">
+                                    <Button BorderThickness="0"
+                                            CommandParameter="{Binding}" 
+                                            Background="Transparent" ToolTipService.ToolTip="Edit discount">          
+                                        <FontIcon Glyph="&#xE94C;" FontSize="14"/>
+                                    </Button>
+                                    <Button BorderThickness="0"
+                                            Click="DeleteItem_Click" CommandParameter="{Binding}" 
+                                            Background="Transparent" ToolTipService.ToolTip="Remove from cart">
+                                        <FontIcon Glyph="&#xE74D;" FontSize="14"/>
+                                    </Button>
+                                    
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -191,12 +244,12 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <TextBlock Text="Total:" FontWeight="Bold" FontSize="16"/>
-                <TextBlock x:Name="TotalAmountText" Text="{x:Bind TotalAmount, Mode=OneWay}" FontSize="16" Foreground="Red" Margin="10,0,0,0"/>
+                <TextBlock x:Name="TotalAmountText" Text="{x:Bind TotalAmount, Mode=OneWay}" FontSize="16" Foreground="{ThemeResource SystemFillColorCriticalBrush}" Margin="10,0,0,0"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" Spacing="10">
-                <Button Content="Lưu" Click="SaveOrder_Click" Width="100"/>
-                <Button Content="Lưu và In" Click="SaveAndPrintOrder_Click" Width="100"/>
+                <Button Content="Save" Click="SaveOrder_Click"/>
+                <Button Content="Save and Print" Click="SaveAndPrintOrder_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
