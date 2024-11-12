@@ -29,7 +29,7 @@ namespace Clothing_Store_POS.Models
         [Column("quantity")]
         public int Quantity { get; set; }
 
-        [Column("discount_amount")]
-        public double DiscountAmount { get; set; }
+        [Column("discount_percentage")]
+        public float DiscountPercentage { get; set; }
     }
 }

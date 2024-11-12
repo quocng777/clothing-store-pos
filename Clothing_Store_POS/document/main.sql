@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS users  (
 
 CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
+    discount_percentage DECIMAL(5, 2) DEFAULT 0,
+    tax_percentage DECIMAL(5, 2) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
@@ -43,7 +45,7 @@ CREATE TABLE IF NOT EXISTS order_items (
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
-    discount_amount DECIMAL(10, 2) DEFAULT 0,
+    discount_percentage DECIMAL(5, 2) DEFAULT 0,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) 
 );

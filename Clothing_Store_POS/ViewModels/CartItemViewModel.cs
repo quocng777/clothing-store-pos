@@ -28,8 +28,8 @@ namespace Clothing_Store_POS.ViewModels
         public double OriginalPrice => this.Product.Price * this.Quantity;
 
         // Discount options
-        private double _discountPercentage;
-        public double DiscountPercentage
+        private float _discountPercentage;
+        public float DiscountPercentage
         {
             get => _discountPercentage;
             set

@@ -37,7 +37,12 @@ namespace Clothing_Store_POS.Pages.Home
 
         public double TotalAmount
         {
-            get => CartItems.Sum(item => item.TotalPrice);
+            get
+            {
+                double originalTotal = CartItems.Sum(item => item.TotalPrice);
+                return originalTotal * (1 + (OrderViewModel.TaxPercentage - OrderViewModel.DiscountPercentage) / 100);
+            }
+                
         }
 
         public ComboBox DiscountTypeComboBox;
@@ -138,17 +143,18 @@ namespace Clothing_Store_POS.Pages.Home
         {
             if (PercentageBox.IsEnabled && sender is TextBox textBox && textBox.DataContext is CartItemViewModel cartItem)
             {
-                if (double.TryParse(PercentageBox.Text, out double percentage))
+                if (float.TryParse(PercentageBox.Text, out float percentage))
                 {
                     double fixedDiscount = cartItem.OriginalPrice * (percentage / 100);
                     FixedBox.Text = fixedDiscount.ToString("0.00");
                 }
+
+                OnPropertyChanged(nameof(TotalAmount));
             }
         }
 
         private void FixedBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Debug.WriteLine(DataContext);
             if (FixedBox.IsEnabled && sender is TextBox textBox && textBox.DataContext is CartItemViewModel cartItem)
             {
                 if (double.TryParse(FixedBox.Text, out double fixedAmount))
@@ -156,6 +162,8 @@ namespace Clothing_Store_POS.Pages.Home
                     double percentage = (fixedAmount / cartItem.OriginalPrice) * 100;
                     PercentageBox.Text = percentage.ToString("0.00");
                 }
+
+                OnPropertyChanged(nameof(TotalAmount));
             }
         }
 
@@ -163,7 +171,7 @@ namespace Clothing_Store_POS.Pages.Home
         {
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
             {
-                if(double.TryParse(PercentageBox.Text, out double discountPercentage)
+                if(float.TryParse(PercentageBox.Text, out float discountPercentage)
                     && double.TryParse(FixedBox.Text, out double discountFixed))
                 {
                     cartItem.DiscountPercentage = discountPercentage;
@@ -259,8 +267,41 @@ namespace Clothing_Store_POS.Pages.Home
         }
 
         // save
+        private void DiscountBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (OverviewDiscountBox.Text == "")
+            {
+                OrderViewModel.DiscountPercentage = 0;
+                OnPropertyChanged(nameof(TotalAmount));
+            }
+            else if (float.TryParse(OverviewDiscountBox.Text, out float percentage))
+            {
+                OrderViewModel.DiscountPercentage = percentage;
+                OnPropertyChanged(nameof(TotalAmount));
+            }
+        }
+
+        private void TaxBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (OverviewTaxBox.Text == "")
+            {
+                OrderViewModel.TaxPercentage = 0;
+                OnPropertyChanged(nameof(TotalAmount));
+            }
+            else if(float.TryParse(OverviewTaxBox.Text, out float percentage))
+            {
+                OrderViewModel.TaxPercentage = percentage;
+                OnPropertyChanged(nameof(TotalAmount));
+            }
+        }
+
         private async void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
+            if(CartItems.Count == 0)
+            {
+                return;
+            }
+
             int newOrderId = OrderViewModel.CreateOrder();
 
             // save order items
@@ -271,7 +312,7 @@ namespace Clothing_Store_POS.Pages.Home
                     OrderId = newOrderId,
                     ProductId = cartItem.Product.Id,
                     Quantity = cartItem.Quantity,
-                    DiscountAmount = cartItem.DiscountFixed
+                    DiscountPercentage = cartItem.DiscountPercentage
                 };
                 OrderViewModel.AddOrderItem(orderItem);
             }

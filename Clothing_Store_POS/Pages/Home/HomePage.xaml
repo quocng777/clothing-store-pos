@@ -226,10 +226,10 @@
                                                         <ComboBoxItem Content="Fixed Amount" Tag="Fixed"/>
                                                     </ComboBox>
 
-                                                    <TextBox x:Name="PercentageBox" Header="Discount Percentage" PlaceholderText="Enter percentage" 
+                                                    <TextBox x:Name="PercentageBox" Header="Discount %" PlaceholderText="Enter percentage" 
                                                              Text="{x:Bind DiscountPercentage, Mode=OneWay}"
                                                              IsEnabled="True" TextChanged="PercentageBox_TextChanged"/>
-                                                    <TextBox x:Name="FixedBox" Header="Discount Fixed Amount" PlaceholderText="Enter fixed amount" 
+                                                    <TextBox x:Name="FixedBox" Header="Discount Fixed" PlaceholderText="Enter fixed amount" 
                                                              Text="{x:Bind DiscountFixed, Mode=OneWay}"
                                                              IsEnabled="False" TextChanged="FixedBox_TextChanged"/>
 
@@ -251,8 +251,12 @@
                 </ListView>
             </StackPanel>
 
-            <TextBox Header="Discount" PlaceholderText="0%" Margin="0,10,0,0"/>
-            <TextBox Header="Tax" PlaceholderText="0%" Margin="0,10,0,0"/>
+            <TextBox x:Name="OverviewDiscountBox" Header="Discount (%)" PlaceholderText="0%" Margin="0,10,0,0" 
+                     Text="{x:Bind OrderViewModel.DiscountPercentage, Mode=OneWay}"
+                     TextChanged="DiscountBox_TextChanged"/>
+            <TextBox x:Name="OverviewTaxBox" Header="Tax (%)" PlaceholderText="0%" Margin="0,10,0,0" 
+                     Text="{x:Bind OrderViewModel.TaxPercentage, Mode=OneWay}"
+                     TextChanged="TaxBox_TextChanged"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <TextBlock Text="Total:" FontWeight="Bold" FontSize="16"/>
