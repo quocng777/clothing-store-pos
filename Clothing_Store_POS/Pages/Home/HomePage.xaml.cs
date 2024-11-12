@@ -40,6 +40,10 @@ namespace Clothing_Store_POS.Pages.Home
             get => CartItems.Sum(item => item.TotalPrice);
         }
 
+        public ComboBox DiscountTypeComboBox;
+        public TextBox PercentageBox;
+        public TextBox FixedBox;
+
         public HomePage()
         {
             ProductsViewModel = new ProductsViewModel();
@@ -49,12 +53,13 @@ namespace Clothing_Store_POS.Pages.Home
             CartItems = [];
             CartItems.CollectionChanged += CartItems_CollectionChanged;
             this.InitializeComponent();
-            this.DataContext = ProductsViewModel;
+            //this.DataContext = this;
 
             PerPageComboBox.SelectedIndex = 0;
             CurrentPageComboBox.SelectedIndex = 0;
         }
 
+        // Cart actions
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -76,6 +81,7 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        // handle cart items
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
@@ -100,6 +106,79 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        // flyout for discount of each cart item
+        private void Flyout_Opened(object sender, object e)
+        {
+            if (sender is Flyout flyout && flyout.Content is StackPanel panel)
+            {
+                if (flyout.Target is Button button && button.CommandParameter is CartItemViewModel cartItem)
+                {
+                    panel.DataContext = cartItem;
+                }
+
+                DiscountTypeComboBox = panel.Children.OfType<ComboBox>().FirstOrDefault();
+                PercentageBox = panel.Children.OfType<TextBox>().FirstOrDefault(tb => tb.Name == "PercentageBox");
+                FixedBox = panel.Children.OfType<TextBox>().FirstOrDefault(tb => tb.Name == "FixedBox");
+
+                DiscountTypeComboBox.SelectedIndex = 0;
+            }
+        }
+
+        private void DiscountTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DiscountTypeComboBox.SelectedItem is ComboBoxItem selectedItem)
+            {
+                var selectedTag = selectedItem.Tag.ToString();
+                PercentageBox.IsEnabled = selectedTag == "Percentage";
+                FixedBox.IsEnabled = selectedTag == "Fixed";
+            }
+        }
+
+        private void PercentageBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (PercentageBox.IsEnabled && sender is TextBox textBox && textBox.DataContext is CartItemViewModel cartItem)
+            {
+                if (double.TryParse(PercentageBox.Text, out double percentage))
+                {
+                    double fixedDiscount = cartItem.OriginalPrice * (percentage / 100);
+                    FixedBox.Text = fixedDiscount.ToString("0.00");
+                }
+            }
+        }
+
+        private void FixedBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Debug.WriteLine(DataContext);
+            if (FixedBox.IsEnabled && sender is TextBox textBox && textBox.DataContext is CartItemViewModel cartItem)
+            {
+                if (double.TryParse(FixedBox.Text, out double fixedAmount))
+                {
+                    double percentage = (fixedAmount / cartItem.OriginalPrice) * 100;
+                    PercentageBox.Text = percentage.ToString("0.00");
+                }
+            }
+        }
+
+        private void ApplyDiscount_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
+            {
+                if(double.TryParse(PercentageBox.Text, out double discountPercentage)
+                    && double.TryParse(FixedBox.Text, out double discountFixed))
+                {
+                    cartItem.DiscountPercentage = discountPercentage;
+                    cartItem.DiscountFixed = discountFixed;
+                } else
+                {
+                    cartItem.DiscountPercentage = 0;
+                    cartItem.DiscountFixed = 0;
+                }
+
+                OnPropertyChanged(nameof(TotalAmount));
+            }
+        }
+
+        // notify when cart items changed
         private void CartItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
@@ -128,6 +207,8 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        // Product list actions
+        // pagination
         private void PerPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox && comboBox.SelectedItem is string selectedValue)
@@ -161,6 +242,7 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        // search
         private void SearchTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -176,6 +258,7 @@ namespace Clothing_Store_POS.Pages.Home
             _ = ProductsViewModel.LoadProducts();
         }
 
+        // save
         private async void SaveOrder_Click(object sender, RoutedEventArgs e)
         {
             int newOrderId = OrderViewModel.CreateOrder();
@@ -213,6 +296,7 @@ namespace Clothing_Store_POS.Pages.Home
 
         }
 
+        // category filter
         private void CategoryToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is ToggleButton toggleButton && toggleButton.DataContext is CategoryViewModel selectedCategory)
