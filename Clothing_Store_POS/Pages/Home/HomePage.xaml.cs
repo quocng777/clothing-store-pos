@@ -153,8 +153,11 @@ namespace Clothing_Store_POS.Pages.Home
         {
             if (sender is ComboBox comboBox && comboBox.SelectedItem is int selectedValue)
             {
-                ProductsViewModel.CurrentPage = selectedValue;
-                _ = ProductsViewModel.LoadProducts();
+                if (ProductsViewModel.PageNumbers.Contains(selectedValue))
+                {
+                    ProductsViewModel.CurrentPage = selectedValue;
+                    _ = ProductsViewModel.LoadProducts();
+                }
             }
         }
 
@@ -169,6 +172,7 @@ namespace Clothing_Store_POS.Pages.Home
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            ProductsViewModel.CurrentPage = 1;
             _ = ProductsViewModel.LoadProducts();
         }
 
@@ -209,11 +213,29 @@ namespace Clothing_Store_POS.Pages.Home
 
         }
 
-        private void CategoryItem_Click(object sender, ItemClickEventArgs e)
+        private void CategoryToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (e.ClickedItem is Category selectedCategory)
+            if (sender is ToggleButton toggleButton && toggleButton.DataContext is CategoryViewModel selectedCategory)
             {
-                ProductsViewModel.FilterByCategory(selectedCategory.Id);
+                if (!ProductsViewModel.SelectedCategoryIds.Contains(selectedCategory.Id))
+                {
+                    ProductsViewModel.SelectedCategoryIds.Add(selectedCategory.Id);
+                }
+
+                _ = ProductsViewModel.LoadProducts();
+            }
+        }
+
+        private void CategoryToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleButton toggleButton && toggleButton.DataContext is CategoryViewModel selectedCategory)
+            {
+                if (ProductsViewModel.SelectedCategoryIds.Contains(selectedCategory.Id))
+                {
+                    ProductsViewModel.SelectedCategoryIds.Remove(selectedCategory.Id);
+                }
+
+                _ = ProductsViewModel.LoadProducts();
             }
         }
 

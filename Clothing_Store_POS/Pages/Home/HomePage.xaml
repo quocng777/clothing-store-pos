@@ -54,18 +54,19 @@
         </DataTemplate>
         
         <!--Category Card Template-->
-        <DataTemplate x:Key="CategoryCardTemplate" x:DataType="local:Category" >
+        <!--<DataTemplate x:Key="CategoryCardTemplate" x:DataType="local:CategoryViewModel" >
             <Border 
                 Padding="8" 
                 Background="{ThemeResource SystemFillColorAttentionBrush}" 
                 CornerRadius="8">
-                <TextBlock 
-                    Text="{x:Bind Name}" 
-                    FontSize="14"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
+                <ToggleButton Content="{x:Bind Name}" 
+                              IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"
+                              Background="{Binding IsSelected, Converter={StaticResource BoolToBrushConverter}}">
+                </ToggleButton>
             </Border>
-        </DataTemplate>
+        </DataTemplate>-->
     </Page.Resources>
     
     
@@ -88,8 +89,9 @@
                     <FontIcon Glyph="&#xE721;"/>
                 </Button>
             </Grid>
-
-            <ListView ItemsSource="{x:Bind CategoriesViewModel.Categories}"
+            
+            <!--Category List-->
+            <!--<ListView ItemsSource="{x:Bind CategoriesViewModel.CategoryViewModels}"
                       Padding="0,0,0,4"
                       Margin="0,0,0,8"
                       SelectionMode="Single"
@@ -106,10 +108,34 @@
                         <ItemsStackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
+            </ListView>-->
+
+            <ListView ItemsSource="{x:Bind CategoriesViewModel.CategoryViewModels}"
+                      Padding="0,0,0,4"
+                      Margin="0,0,0,8"
+                      SelectionMode="None"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollMode="Enabled"
+                      ScrollViewer.VerticalScrollMode="Disabled"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:CategoryViewModel">
+                        <ToggleButton Content="{x:Bind Name}"
+                          IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                          Checked="CategoryToggleButton_Checked"
+                          Unchecked="CategoryToggleButton_Unchecked"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
 
             <ItemsView HorizontalAlignment="Center"
-                       ItemsSource="{x:Bind ProductsViewModel.Products, Mode=OneWay}" ItemTemplate="{StaticResource ProductCardTemplate}">
+                       ItemsSource="{x:Bind ProductsViewModel.Products, Mode=OneWay}" 
+                       ItemTemplate="{StaticResource ProductCardTemplate}">
                 <ItemsView.Layout>
                     <UniformGridLayout MinColumnSpacing="12" MinRowSpacing="12" MaximumRowsOrColumns="4"/>
                 </ItemsView.Layout>
