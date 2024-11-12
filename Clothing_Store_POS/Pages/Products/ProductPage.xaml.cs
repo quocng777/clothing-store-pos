@@ -76,31 +76,24 @@ namespace Clothing_Store_POS.Pages.Products
 
         private void PreviousPage_Click(object sender, RoutedEventArgs e)
         {
-            //if (ViewModel.CurrentPage > 1)
-            //{
-            //    ViewModel.CurrentPage--;
-            //    ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
-            //}
+            ViewModel.PreviousPage();
         }
 
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            //if (ViewModel.CurrentPage < ViewModel.TotalPages)
-            //{
-            //    ViewModel.CurrentPage++;
-            //    ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
-            //}
+            ViewModel.NextPage();
         }
 
         private void SearchBtn_Click(object sender, RoutedEventArgs e)
         {
-            //ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+            ViewModel.CurrentPage = 1;
+            _ = ViewModel.LoadProducts();
         }
 
         private void DelTextBtn_Click(object sender, RoutedEventArgs e)
         {
-            //ViewModel.Keyword = "";
-            //ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+            ViewModel.Keyword = "";
+            _ = ViewModel.LoadProducts();
         }
     }
 }
