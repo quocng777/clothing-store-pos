@@ -270,7 +270,8 @@ namespace Clothing_Store_POS.Pages.Home
                 {
                     OrderId = newOrderId,
                     ProductId = cartItem.Product.Id,
-                    Quantity = cartItem.Quantity
+                    Quantity = cartItem.Quantity,
+                    DiscountAmount = cartItem.DiscountFixed
                 };
                 OrderViewModel.AddOrderItem(orderItem);
             }
