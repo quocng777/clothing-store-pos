@@ -22,6 +22,8 @@
     <None Remove="Pages\Auth\LoginPage.xaml" />
     <None Remove="Pages\Auth\MainLayout.xaml" />
     <None Remove="Pages\Auth\SignUpPage.xaml" />
+    <None Remove="Pages\Customers\CustomerPage.xaml" />
+    <None Remove="Pages\Customers\SendMailPage.xaml" />
     <None Remove="Pages\Home\HomePage.xaml" />
     <None Remove="Pages\MainLayout.xaml" />
     <None Remove="Pages\Orders\OrderPage.xaml" />
@@ -86,6 +88,12 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Customers\SendMailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Customers\CustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Orders\OrderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
