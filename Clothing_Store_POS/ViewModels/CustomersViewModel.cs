@@ -109,5 +109,18 @@ namespace Clothing_Store_POS.ViewModels
             _customerDAO.DeleteCustomerById(customerId);
             Customers.Remove(customer);
         }
+
+        public async void LoadCustomers(int pageNumber = 1, int pageSize = 10)
+        {
+            var pagedResult = await _customerDAO.GetCustomers(pageNumber, pageSize, Keyword);
+            TotalPages = pagedResult.TotalPages;
+            CurrentPage = pageNumber;
+
+            Customers.Clear();
+            foreach (var customer in pagedResult.Items)
+            {
+                Customers.Add(customer);
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Clothing_Store_POS.DAOs
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query
-                    .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Email, $"%{keyword}%"));
+                    .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Email, $"%{keyword}%") || EF.Functions.ILike(p.Phone, $"%{keyword}%"));
             }
 
             int totalItems = await query.CountAsync();

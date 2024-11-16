@@ -76,31 +76,31 @@ namespace Clothing_Store_POS.Pages.Customers
 
         private void PreviousPage_Click(object sender, RoutedEventArgs e)
         {
-            //if (ViewModel.CurrentPage > 1)
-            //{
-            //    ViewModel.CurrentPage--;
-            //    ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
-            //}
+            if (ViewModel.CurrentPage > 1)
+            {
+                ViewModel.CurrentPage--;
+                ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+            }
         }
 
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            //if (ViewModel.CurrentPage < ViewModel.TotalPages)
-            //{
-            //    ViewModel.CurrentPage++;
-            //    ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
-            //}
+            if (ViewModel.CurrentPage < ViewModel.TotalPages)
+            {
+                ViewModel.CurrentPage++;
+                ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+            }
         }
 
         private void SearchBtn_Click(object sender, RoutedEventArgs e)
         {
-            //ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+            ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
         }
 
         private void DelTextBtn_Click(object sender, RoutedEventArgs e)
         {
-            //ViewModel.Keyword = "";
-            //ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+            ViewModel.Keyword = "";
+            ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
         }
 
         private void SendMailBtn_Click(object sender, RoutedEventArgs e)
