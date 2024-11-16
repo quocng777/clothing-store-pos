@@ -87,5 +87,27 @@ namespace Clothing_Store_POS.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void DeleteACustomer(int customerId)
+        {
+
+            Customer customer = null;
+            foreach (var c in Customers)
+            {
+                if (c.Id == customerId)
+                {
+                    customer = c;
+                    break;
+                }
+            }
+
+            if (customer == null)
+            {
+                return;
+            }
+
+            _customerDAO.DeleteCustomerById(customerId);
+            Customers.Remove(customer);
+        }
     }
 }

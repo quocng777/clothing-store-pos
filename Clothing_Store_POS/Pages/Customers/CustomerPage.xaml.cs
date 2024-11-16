@@ -38,9 +38,9 @@ namespace Clothing_Store_POS.Pages.Customers
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button?.CommandParameter as Product;
+            var customer = button?.CommandParameter as Customer;
 
-            Debug.WriteLine($"Deleting product: {product.Name} with ID: {product.Id}");
+            Debug.WriteLine($"Deleting customer: {customer.Name} with ID: {customer.Id}");
 
             var dialog = new ContentDialog();
 
@@ -50,10 +50,11 @@ namespace Clothing_Store_POS.Pages.Customers
             dialog.Title = "Warning";
             dialog.PrimaryButtonText = "Continue";
             dialog.CloseButtonText = "Cancel";
-            dialog.Content = $"Do you really want to delete {product.Name}?";
+            dialog.Content = $"Do you really want to delete {customer.Name}?";
 
             dialog.PrimaryButtonClick += async (s, args) =>
             {
+                ViewModel.DeleteACustomer(customer.Id);
             };
 
             await dialog.ShowAsync();

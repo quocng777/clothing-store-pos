@@ -54,5 +54,12 @@ namespace Clothing_Store_POS.DAOs
 
             return customer.Id;
         }
+
+        public void DeleteCustomerById(int customerId)
+        {
+            var customer = _context.Customers.Find(customerId);
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();
+        }
     }
 }
