@@ -87,5 +87,40 @@ namespace Clothing_Store_POS.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void DeleteACustomer(int customerId)
+        {
+
+            Customer customer = null;
+            foreach (var c in Customers)
+            {
+                if (c.Id == customerId)
+                {
+                    customer = c;
+                    break;
+                }
+            }
+
+            if (customer == null)
+            {
+                return;
+            }
+
+            _customerDAO.DeleteCustomerById(customerId);
+            Customers.Remove(customer);
+        }
+
+        public async void LoadCustomers(int pageNumber = 1, int pageSize = 10)
+        {
+            var pagedResult = await _customerDAO.GetCustomers(pageNumber, pageSize, Keyword);
+            TotalPages = pagedResult.TotalPages;
+            CurrentPage = pageNumber;
+
+            Customers.Clear();
+            foreach (var customer in pagedResult.Items)
+            {
+                Customers.Add(customer);
+            }
+        }
     }
 }

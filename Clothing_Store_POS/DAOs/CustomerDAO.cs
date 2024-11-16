@@ -32,7 +32,7 @@ namespace Clothing_Store_POS.DAOs
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query
-                    .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Email, $"%{keyword}%"));
+                    .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Email, $"%{keyword}%") || EF.Functions.ILike(p.Phone, $"%{keyword}%"));
             }
 
             int totalItems = await query.CountAsync();
@@ -44,6 +44,33 @@ namespace Clothing_Store_POS.DAOs
                 .ToListAsync();
 
             return new PagedResult<Customer>(customers, totalItems, pageSize);
+        }
+
+        public int AddCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+
+            return customer.Id;
+        }
+
+        public void DeleteCustomerById(int customerId)
+        {
+            var customer = _context.Customers.Find(customerId);
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();
+        }
+
+        public Customer FindCustomerById(int customerId)
+        {
+            return _context.Customers.Find(customerId);
+        }
+
+        public void UpdateCustomer(Customer customer)
+        {
+            _context.Customers.Update(customer);
+            _context.SaveChanges();
         }
     }
 }

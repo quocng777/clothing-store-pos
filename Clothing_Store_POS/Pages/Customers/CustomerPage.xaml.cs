@@ -38,9 +38,9 @@ namespace Clothing_Store_POS.Pages.Customers
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button?.CommandParameter as Product;
+            var customer = button?.CommandParameter as Customer;
 
-            Debug.WriteLine($"Deleting product: {product.Name} with ID: {product.Id}");
+            Debug.WriteLine($"Deleting customer: {customer.Name} with ID: {customer.Id}");
 
             var dialog = new ContentDialog();
 
@@ -50,10 +50,11 @@ namespace Clothing_Store_POS.Pages.Customers
             dialog.Title = "Warning";
             dialog.PrimaryButtonText = "Continue";
             dialog.CloseButtonText = "Cancel";
-            dialog.Content = $"Do you really want to delete {product.Name}?";
+            dialog.Content = $"Do you really want to delete {customer.Name}?";
 
             dialog.PrimaryButtonClick += async (s, args) =>
             {
+                ViewModel.DeleteACustomer(customer.Id);
             };
 
             await dialog.ShowAsync();
@@ -62,44 +63,44 @@ namespace Clothing_Store_POS.Pages.Customers
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button?.CommandParameter as Product;
+            var customer = button?.CommandParameter as Customer;
 
-            Frame.Navigate(typeof(EditProductPage), product);
+            Frame.Navigate(typeof(EditCustomerPage), customer);
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateProductPage));
+            Frame.Navigate(typeof(CreateCustomerPage));
         }
 
 
         private void PreviousPage_Click(object sender, RoutedEventArgs e)
         {
-            //if (ViewModel.CurrentPage > 1)
-            //{
-            //    ViewModel.CurrentPage--;
-            //    ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
-            //}
+            if (ViewModel.CurrentPage > 1)
+            {
+                ViewModel.CurrentPage--;
+                ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+            }
         }
 
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            //if (ViewModel.CurrentPage < ViewModel.TotalPages)
-            //{
-            //    ViewModel.CurrentPage++;
-            //    ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
-            //}
+            if (ViewModel.CurrentPage < ViewModel.TotalPages)
+            {
+                ViewModel.CurrentPage++;
+                ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+            }
         }
 
         private void SearchBtn_Click(object sender, RoutedEventArgs e)
         {
-            //ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+            ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
         }
 
         private void DelTextBtn_Click(object sender, RoutedEventArgs e)
         {
-            //ViewModel.Keyword = "";
-            //ViewModel.LoadProducts(ViewModel.CurrentPage, 6);
+            ViewModel.Keyword = "";
+            ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
         }
 
         private void SendMailBtn_Click(object sender, RoutedEventArgs e)

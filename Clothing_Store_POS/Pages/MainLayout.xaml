@@ -34,12 +34,6 @@
                 </NavigationViewItem>
                 <NavigationViewItem Content="Customer" Icon="Mail" ToolTipService.ToolTip="Customer" Tag="customers">
                 </NavigationViewItem>
-                <NavigationViewItem Content="Document options" Icon="Page2" ToolTipService.ToolTip="Document options" SelectsOnInvoked="False">
-                    <NavigationViewItem.MenuItems>
-                        <NavigationViewItem Content="Create new" Icon="NewFolder" ToolTipService.ToolTip="Create new" Tag="SamplePage5"/>
-                        <NavigationViewItem Content="Upload file" Icon="OpenLocal" ToolTipService.ToolTip="Upload file" Tag="SamplePage6"/>
-                    </NavigationViewItem.MenuItems>
-                </NavigationViewItem>
             </NavigationView.MenuItems>
             <ScrollViewer>
                 <Frame x:Name="MainContent" />
