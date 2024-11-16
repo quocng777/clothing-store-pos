@@ -25,6 +25,7 @@
     <None Remove="Pages\Auth\SignUpPage.xaml" />
     <None Remove="Pages\Customers\CreateCustomerPage.xaml" />
     <None Remove="Pages\Customers\CustomerPage.xaml" />
+    <None Remove="Pages\Customers\EditCustomerPage.xaml" />
     <None Remove="Pages\Customers\SendMailPage.xaml" />
     <None Remove="Pages\Home\HomePage.xaml" />
     <None Remove="Pages\MainLayout.xaml" />
@@ -94,6 +95,9 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Customers\EditCustomerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Customers\CreateCustomerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

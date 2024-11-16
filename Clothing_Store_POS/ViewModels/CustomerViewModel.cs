@@ -45,5 +45,20 @@ namespace Clothing_Store_POS.ViewModels
             Email = String.Empty;
             Phone = String.Empty;
         }
+
+        public void Update()
+        {
+            var savedCustomer = _customerDAO.FindCustomerById(this.Id);
+            if (savedCustomer == null)
+            {
+                throw new Exception("Customer not found");
+            }
+
+            savedCustomer.Name = this.Name;
+            savedCustomer.Email = this.Email;
+            savedCustomer.Phone = this.Phone;
+
+            _customerDAO.UpdateCustomer(savedCustomer);
+        }
     }
 }

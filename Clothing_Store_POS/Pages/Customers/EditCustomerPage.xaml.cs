@@ -14,9 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Windows.Storage.Pickers;
-using Windows.Storage;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,15 +24,28 @@ namespace Clothing_Store_POS.Pages.Customers
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CreateCustomerPage : Page
+    public sealed partial class EditCustomerPage : Page
     {
         public CustomerViewModel ViewModel;
-
-        public CreateCustomerPage()
+        public EditCustomerPage()
         {
             this.InitializeComponent();
             this.ViewModel = new CustomerViewModel();
         }
+
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is Customer customer)
+            {
+                this.ViewModel.Id = customer.Id;
+                this.ViewModel.Name = customer.Name;
+                this.ViewModel.Email = customer.Email;
+                this.ViewModel.Phone = customer.Phone;
+            }
+        }
+
 
         private async void ContinueBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -61,7 +72,7 @@ namespace Clothing_Store_POS.Pages.Customers
             savingDialog.ShowAsync();
 
 
-            ViewModel.Save();
+            ViewModel.Update();
             savingDialog.Hide();
 
 
@@ -73,7 +84,7 @@ namespace Clothing_Store_POS.Pages.Customers
             dialog.PrimaryButtonText = "OK";
             dialog.SecondaryButtonText = "Cancel";
             dialog.Title = "Saving customer successfully. ";
-            dialog.Content = "Your customer has been saved successfully. Do you want to conitnue creating a new customer?";
+            dialog.Content = "Your customer has been saved successfully. Do you want to conitnue editing this customer?";
 
             dialog.PrimaryButtonClick += ContinueCreatingBtn_Click;
             dialog.SecondaryButtonClick += CancelBtn_Click;
@@ -115,4 +126,5 @@ namespace Clothing_Store_POS.Pages.Customers
             await dialog.ShowAsync();
         }
     }
+
 }
