@@ -32,6 +32,8 @@
                 </NavigationViewItem>
                 <NavigationViewItem Content="Users" Icon="Contact" ToolTipService.ToolTip="Account" Tag="users">
                 </NavigationViewItem>
+                <NavigationViewItem Content="Customer" Icon="Mail" ToolTipService.ToolTip="Customer" Tag="customers">
+                </NavigationViewItem>
                 <NavigationViewItem Content="Document options" Icon="Page2" ToolTipService.ToolTip="Document options" SelectsOnInvoked="False">
                     <NavigationViewItem.MenuItems>
                         <NavigationViewItem Content="Create new" Icon="NewFolder" ToolTipService.ToolTip="Create new" Tag="SamplePage5"/>

@@ -97,6 +97,19 @@ namespace Clothing_Store_POS.ViewModels
             }
         }
 
+        public async void LoadProducts(int pageNumber = 1, int pageSize = 10)
+        {
+            var pagedResult = await _productDAO.GetListProducts(pageNumber, pageSize, Keyword);
+            TotalPages = pagedResult.TotalPages;
+            CurrentPage = pageNumber;
+
+            Products.Clear();
+            foreach (var product in pagedResult.Items)
+            {
+                Products.Add(product);
+            }
+        }
+
         public async void FilterByCategory(int categoryId)
         {
             Keyword = "";
