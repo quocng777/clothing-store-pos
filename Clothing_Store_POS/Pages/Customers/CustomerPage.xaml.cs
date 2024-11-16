@@ -69,7 +69,7 @@ namespace Clothing_Store_POS.Pages.Customers
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateProductPage));
+            Frame.Navigate(typeof(CreateCustomerPage));
         }
 
 

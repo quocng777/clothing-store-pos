@@ -45,5 +45,14 @@ namespace Clothing_Store_POS.DAOs
 
             return new PagedResult<Customer>(customers, totalItems, pageSize);
         }
+
+        public int AddCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+
+            return customer.Id;
+        }
     }
 }
