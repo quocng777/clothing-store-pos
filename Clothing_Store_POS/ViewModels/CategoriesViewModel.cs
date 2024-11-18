@@ -12,22 +12,29 @@ namespace Clothing_Store_POS.ViewModels
     public class CategoriesViewModel
     {
         public readonly CategoryDAO _categoryDAO;
-        public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
+        public ObservableCollection<CategoryViewModel> CategoryViewModels { get; set; }
 
         public CategoriesViewModel()
         {
             this._categoryDAO = new CategoryDAO();
+            CategoryViewModels = new ObservableCollection<CategoryViewModel>();
             LoadCategories();
         }
 
         public void LoadCategories()
         {
             var categories = _categoryDAO.GetCategories();
-            this.Categories.Clear();
-            foreach (var cat in categories)
+            this.CategoryViewModels.Clear();
+            foreach (var category in categories)
             {
-                this.Categories.Add(cat);
+                CategoryViewModels.Add(new CategoryViewModel
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    IsSelected = false
+                });
             }
+
         }
 
     }

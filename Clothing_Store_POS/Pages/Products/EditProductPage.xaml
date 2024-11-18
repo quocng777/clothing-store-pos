@@ -85,7 +85,7 @@ SelectionHighlightColor="Green"/>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="3">
                 <TextBlock Text="Category"/>
-                <ComboBox Name="CategoriesComboBox" ItemsSource="{x:Bind CategoriesViewModel.Categories, Mode=TwoWay}"
+                <ComboBox Name="CategoriesComboBox" ItemsSource="{x:Bind CategoriesViewModel.CategoryViewModels, Mode=TwoWay}"
                   SelectedValuePath="Id"
                   SelectedValue="{x:Bind ProductViewModel.CategoryId, Mode=TwoWay}"
                   DisplayMemberPath="Name"

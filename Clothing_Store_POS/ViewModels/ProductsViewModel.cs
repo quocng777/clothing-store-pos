@@ -16,8 +16,10 @@ namespace Clothing_Store_POS.ViewModels
         public readonly ProductDAO _productDAO;
         public ObservableCollection<Product> Products { get; set; }
         public ObservableCollection<int> PageNumbers { get; set; }
+        public List<int> SelectedCategoryIds { get; set; }
         public int TotalPages { get; set; }
         public string Keyword { get; set; }
+        public int CategoryId { get; set; }
 
         private int _currentPage;
         public int CurrentPage
@@ -48,6 +50,7 @@ namespace Clothing_Store_POS.ViewModels
             PerPage = 10;
             Products = new ObservableCollection<Product>();
             PageNumbers = new ObservableCollection<int>();
+            SelectedCategoryIds = new List<int>();
             _ = LoadProducts();
         }
 
@@ -75,11 +78,14 @@ namespace Clothing_Store_POS.ViewModels
 
         public async Task LoadProducts()
         {
-            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword);
+            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds);
             TotalPages = pagedResult.TotalPages;
+
             if (CurrentPage > TotalPages)
             {
-                CurrentPage = TotalPages;
+                CurrentPage = 1;
+                pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds);
+                TotalPages = pagedResult.TotalPages;
             }
 
             // update page numbers
@@ -96,42 +102,6 @@ namespace Clothing_Store_POS.ViewModels
                 Products.Add(product);
             }
         }
-
-        public async void LoadProducts(int pageNumber = 1, int pageSize = 10)
-        {
-            var pagedResult = await _productDAO.GetListProducts(pageNumber, pageSize, Keyword);
-            TotalPages = pagedResult.TotalPages;
-            CurrentPage = pageNumber;
-
-            Products.Clear();
-            foreach (var product in pagedResult.Items)
-            {
-                Products.Add(product);
-            }
-        }
-
-        public async void FilterByCategory(int categoryId)
-        {
-            Keyword = "";
-            CurrentPage = 1;
-            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, categoryId);
-            TotalPages = pagedResult.TotalPages;
-
-            // update page numbers
-            PageNumbers.Clear();
-            for (int i = 1; i <= TotalPages; i++)
-            {
-                PageNumbers.Add(i);
-            }
-
-            // update products
-            Products.Clear();
-            foreach (var product in pagedResult.Items)
-            {
-                Products.Add(product);
-            }
-        }
-
 
         public void NextPage()
         {

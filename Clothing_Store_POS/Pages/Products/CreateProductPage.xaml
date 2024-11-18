@@ -81,7 +81,7 @@
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="3">
                     <TextBlock Text="Category"/>
-                    <ComboBox Name="CategoriesComboBox" ItemsSource="{x:Bind CategoriesViewModel.Categories}"
+                    <ComboBox Name="CategoriesComboBox" ItemsSource="{x:Bind CategoriesViewModel.CategoryViewModels}"
                       DisplayMemberPath="Name"
                       PlaceholderText="Select a category"
                       SelectionChanged="CategoriesBox_SelectionChanged"

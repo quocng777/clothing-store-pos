@@ -3,6 +3,7 @@ using Clothing_Store_POS.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,17 +16,23 @@ namespace Clothing_Store_POS.ViewModels
         private readonly OrderItemDAO _orderItemDAO;
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
+        public float DiscountPercentage { get; set; }
+        public float TaxPercentage { get; set; }
 
         public OrderViewModel()
         {
             _orderDAO = new OrderDAO();
             _orderItemDAO = new OrderItemDAO();
+            DiscountPercentage = 0;
+            TaxPercentage = 0;
         }
 
         public int CreateOrder()
         {
             var order = new Order
             {
+                DiscountPercentage = DiscountPercentage,
+                TaxPercentage = TaxPercentage,
                 CreatedAt = DateTime.UtcNow
             };
             int orderId = _orderDAO.AddOrder(order);

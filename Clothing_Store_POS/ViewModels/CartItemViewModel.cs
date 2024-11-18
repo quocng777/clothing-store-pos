@@ -24,7 +24,47 @@ namespace Clothing_Store_POS.ViewModels
                 }
             }
         }
-        public double TotalPrice => this.Product.Price * this.Quantity;
+
+        public double OriginalPrice => this.Product.Price * this.Quantity;
+
+        // Discount options
+        private float _discountPercentage;
+        public float DiscountPercentage
+        {
+            get => _discountPercentage;
+            set
+            {
+                if (_discountPercentage != value)
+                {
+                    _discountPercentage = value;
+                    OnPropertyChanged(nameof(TotalPrice));
+                }
+            }
+        }
+
+        private double _discountFixed;
+        public double DiscountFixed
+        {
+            get => _discountFixed;
+            set
+            {
+                if (_discountFixed != value)
+                {
+                    _discountFixed = value;
+                    OnPropertyChanged(nameof(TotalPrice));
+                }
+            }
+        }
+
+        public double TotalPrice
+        {
+            get
+            {
+                double discountAmount = DiscountFixed > 0 ? DiscountFixed : OriginalPrice * (DiscountPercentage / 100);
+                return Math.Max(OriginalPrice - discountAmount, 0);
+            }
+        }
+
 
         public CartItemViewModel(Product product, int quantity)
         {

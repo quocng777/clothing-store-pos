@@ -15,6 +15,12 @@ namespace Clothing_Store_POS.Models
         [Column("id")]
         public int Id { get; set; }
 
+        [Column("discount_percentage")]
+        public float DiscountPercentage;
+
+        [Column("tax_percentage")]
+        public float TaxPercentage;
+
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

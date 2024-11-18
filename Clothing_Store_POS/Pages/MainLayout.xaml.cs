@@ -17,6 +17,7 @@ using Clothing_Store_POS.Pages.Users;
 using Clothing_Store_POS.Pages.Home;
 using Clothing_Store_POS.Pages.Auth;
 using Clothing_Store_POS.Pages.Customers;
+using Clothing_Store_POS.Pages.Orders;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -56,6 +57,8 @@ namespace Clothing_Store_POS.Pages
                     break;
                 case "customers":;
                     this.MainContent.Navigate(typeof(CustomerPage));
+                case "orders":
+                    this.MainContent.Navigate(typeof(OrderPage));
                     break;
             }
         }

@@ -34,14 +34,14 @@ namespace Clothing_Store_POS.DAOs
             return _context.Products.ToList();
         }
 
-        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword, int categoryId = 0)
+        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword, List<int> categoryIds = null)
         {
             var query = _context.Products.AsQueryable();
 
-            if (categoryId != 0)
+            if (categoryIds != null && categoryIds.Any())
             {
                 query = query
-                    .Where(p => p.CategoryId == categoryId);
+                    .Where(p => categoryIds.Contains(p.CategoryId));
             }
 
             if (!string.IsNullOrEmpty(keyword))
