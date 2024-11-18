@@ -16,6 +16,8 @@ namespace Clothing_Store_POS.Config
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>(entity =>
@@ -45,6 +47,8 @@ namespace Clothing_Store_POS.Config
                       .WithMany()
                       .HasForeignKey(oi => oi.ProductId);
             });
+
+            modelBuilder.Entity<Customer>().ToTable("customers");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

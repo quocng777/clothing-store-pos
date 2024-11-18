@@ -88,7 +88,6 @@ namespace Clothing_Store_POS.ViewModels
                 TotalPages = pagedResult.TotalPages;
             }
 
-
             // update page numbers
             PageNumbers.Clear();
             for (int i = 1; i <= TotalPages; i++)
