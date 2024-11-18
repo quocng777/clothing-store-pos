@@ -57,6 +57,7 @@ namespace Clothing_Store_POS.Pages
                     break;
                 case "customers":;
                     this.MainContent.Navigate(typeof(CustomerPage));
+                    break;
                 case "orders":
                     this.MainContent.Navigate(typeof(OrderPage));
                     break;
