@@ -234,6 +234,6 @@ namespace Clothing_Store_POS.Pages.Products
             dialog.PrimaryButtonClick += CancelBtn_Click;
 
             await dialog.ShowAsync();
-        }
+        }   
     }
 }

@@ -17,6 +17,7 @@
     <Content Remove="Assets\clothing_icon.png" />
     <Content Remove="Assets\clothing_shop_login.svg" />
     <Content Remove="Assets\email_background.svg" />
+    <Content Remove="Assets\logo.png" />
     <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +91,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\email_background.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\sample_image.jpg">

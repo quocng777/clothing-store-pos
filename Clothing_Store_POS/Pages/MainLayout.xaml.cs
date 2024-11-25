@@ -35,11 +35,6 @@ namespace Clothing_Store_POS.Pages
             this.MainContent.Navigate(typeof(HomePage));
         }
 
-        private void navigation_Selected(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-
-        }
-
         // handle page selected event
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
@@ -57,6 +52,7 @@ namespace Clothing_Store_POS.Pages
                     break;
                 case "customers":;
                     this.MainContent.Navigate(typeof(CustomerPage));
+                    break;
                 case "orders":
                     this.MainContent.Navigate(typeof(OrderPage));
                     break;

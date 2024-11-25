@@ -6,8 +6,7 @@
     xmlns:local="using:Clothing_Store_POS.Pages.Auth"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Center">
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="White" CornerRadius="24">

@@ -7,89 +7,103 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Loaded="LoadUsers"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Loaded="LoadUsers">
 
-    <StackPanel Padding="24 12">
-        <TextBlock Text="User Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
-        <TextBlock  Text="User management" FontSize="10"/>
+    <StackPanel Padding="16" Margin="16,0,16,0">
+        <TextBlock Text="User Management" FontWeight="SemiBold" FontSize="28"/>
 
         <StackPanel Margin="0 24" Orientation="Horizontal">
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new user" Click="AddBtn_Click" />
         </StackPanel>
 
-        <ListView Name="listUsers" ItemsSource="{Binding}" Background="White" Padding="12" CornerRadius="24">
+        <ListView Name="listUsers" ItemsSource="{Binding}" 
+                  Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
+                  CornerRadius="12"
+                  IsItemClickEnabled="True"
+                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                  BorderThickness="1">
             <ListView.Header>
-                <Grid Padding="16,12"
-              ColumnSpacing="16">
+                <Grid Padding="20"
+                      ColumnSpacing="16"
+                      Background="{StaticResource AcrylicBackgroundFillColorBaseBrush}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Id" />
-                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Text="Role" Grid.Column="1"/>
+                    <TextBlock Grid.Column="0" 
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Id" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" 
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Role"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Column="2"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Full Name" />
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Full Name" 
+                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <TextBlock Grid.Column="3"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Email" />
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Email" 
+                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <TextBlock Grid.Column="4"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Text="Active" />
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Active" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Column="5"
-                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                   Text="Actions" />
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Actions" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:User">
-                    <Grid ColumnSpacing="16">
+                    <Grid Padding="20,12,20,12" ColumnSpacing="16" Margin="-12,0,-12,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="180" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{x:Bind Id}" />
+                        <TextBlock Grid.Column="0"
+                                   Text="{x:Bind Id}" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBlock Grid.Column="1"
-                           Text="{x:Bind Role}" />
+                                   Text="{x:Bind Role}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBlock Grid.Column="2"
-                           Text="{x:Bind FullName}" />
+                                   Text="{x:Bind FullName}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <TextBlock Grid.Column="3"
-                           Text="{x:Bind Email}" />
+                                   Text="{x:Bind Email}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <TextBlock Grid.Column="4"
-                           Text="{x:Bind IsActive}" />
+                                   Text="{x:Bind IsActive}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                        <StackPanel Orientation="Horizontal" Grid.Column="5"  Spacing="12">
-                            <Button   CommandParameter="{Binding}" Click="DeleteBtn_Click">
+                        <StackPanel Orientation="Horizontal" Grid.Column="5" Spacing="12"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button CommandParameter="{Binding}" Click="DeleteBtn_Click"
+                                    Background="Transparent" BorderBrush="Transparent">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <SymbolIcon  Width="18" Symbol="Delete" Foreground="Red"/>
+                                    <SymbolIcon  Width="18" Symbol="Delete" Foreground="{StaticResource SystemFillColorCriticalBrush}"/>
                                 </StackPanel>
                             </Button>
-                            <Button  CommandParameter="{Binding}" Click="EditBtn_Click" >
+                            <Button  CommandParameter="{Binding}" Click="EditBtn_Click" Background="Transparent" BorderBrush="Transparent">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <SymbolIcon Symbol="Edit" Foreground="Blue"/>
+                                    <SymbolIcon Symbol="Edit" Foreground="{StaticResource SystemColorHotlightColor}"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource DefaultListViewItemStyle}"
-               TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
         </ListView>
 
         <!-- Pagination -->

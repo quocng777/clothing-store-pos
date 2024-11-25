@@ -6,41 +6,48 @@
     xmlns:local="using:Clothing_Store_POS.Pages.Customers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <StackPanel Padding="24 12">
+        <StackPanel Padding="16" Margin="16,0,16,0">
 
-            <TextBlock Text="Customer Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
-            <TextBlock  Text="Send email" FontSize="10"/>
-
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="16">
+                <Button Content="Customer Management" FontSize="28" 
+                        Background="Transparent" BorderBrush="Transparent" Padding="0"
+                        Click="ReturnBtn_Click" />
+                <TextBlock Text=" > " VerticalAlignment="Center" FontSize="28" />
+                <TextBlock Text="Send email" FontSize="28" VerticalAlignment="Center" FontWeight="SemiBold"/>
+            </StackPanel>
             <StackPanel Margin="0 24" Orientation="Horizontal">
-                <Button Style="{StaticResource AccentButtonStyle}" Content="Return" Click="ReturnBtn_Click" />
+                <Button Style="{StaticResource AccentButtonStyle}" Click="ReturnBtn_Click">
+                    <FontIcon Glyph="&#xE72B;" />
+                </Button>
             </StackPanel>
 
-            <StackPanel HorizontalAlignment="Center" Margin="0 0 4 0">
-                <Image Source="/Assets/email_background.svg" Height="80"/>
+            <StackPanel HorizontalAlignment="Center" Margin="4">
+                <Image Source="/Assets/email_background.svg" MaxHeight="100"/>
             </StackPanel>
 
-            <StackPanel Spacing="12" Margin="10">
-                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                    <TextBlock>Subject: </TextBlock>
+            <StackPanel Spacing="12" Margin="10" HorizontalAlignment="Center">
+                <StackPanel Spacing="10" VerticalAlignment="Center">
+                    <TextBlock Text="Subject:" VerticalAlignment="Center" FontSize="14" />
                     <TextBox AutomationProperties.Name="multi-line TextBox"
-    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-    SelectionHighlightColor="Green" MinWidth="600" MaxWidth="800" Name="mailSubjectInput"/>
+                             TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                             MinWidth="600" MaxWidth="800" Name="mailSubjectInput"
+                             FontSize="14"
+                             Margin="0,0,0,10"/>
                 </StackPanel>
                 <StackPanel Spacing="12">
                     <TextBlock>Content: </TextBlock>
                     <TextBox AutomationProperties.Name="multi-line TextBox" MinHeight="200"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-                     CanBeScrollAnchor="True"
-SelectionHighlightColor="Green" MinWidth="600" MaxWidth="800"  Name="mailContentInput"/>
+                             TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                             CanBeScrollAnchor="True"
+                             MinWidth="600" MaxWidth="800" Name="mailContentInput"/>
                  
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
-                    <Button Style="{StaticResource AccentButtonStyle}" Background="Red" Content="Cancel" Click="CancelBtn_Click" />
-                    <Button Style="{StaticResource AccentButtonStyle}" Content="Send email" Click="SendEmail_Click"  />
+                    <Button Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100" Content="Cancel" Click="CancelBtn_Click" />
+                    <Button Background="{StaticResource AccentFillColorDefaultBrush}" MinWidth="100" Content="Send email" Click="SendEmail_Click"  />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
