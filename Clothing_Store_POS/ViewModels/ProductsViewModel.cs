@@ -18,6 +18,7 @@ namespace Clothing_Store_POS.ViewModels
         public ObservableCollection<int> PageNumbers { get; set; }
         public List<int> SelectedCategoryIds { get; set; }
         public int TotalPages { get; set; }
+        public int TotalItems { get; set; }
         public string Keyword { get; set; }
         public int CategoryId { get; set; }
 
@@ -80,6 +81,7 @@ namespace Clothing_Store_POS.ViewModels
         {
             var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds);
             TotalPages = pagedResult.TotalPages;
+            TotalItems = pagedResult.TotalItems;
 
             if (CurrentPage > TotalPages)
             {

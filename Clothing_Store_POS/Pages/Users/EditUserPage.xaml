@@ -6,20 +6,25 @@
     xmlns:local="using:Clothing_Store_POS.Pages.Users"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <StackPanel VerticalAlignment="Center" Padding="24 12" >
+        <StackPanel Padding="16" Margin="16,0,16,0" >
 
-            <TextBlock Text="User Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
-            <TextBlock  Text="Edit user" FontSize="10"/>
-
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="16">
+                <Button Content="User Management" FontSize="28" 
+                        Background="Transparent" BorderBrush="Transparent" Padding="0"
+                        Click="ReturnBtn_Click" />
+                <TextBlock Text=" > " VerticalAlignment="Center" FontSize="28" />
+                <TextBlock Text="Edit user" FontSize="28" VerticalAlignment="Center" FontWeight="SemiBold"/>
+            </StackPanel>
             <StackPanel Margin="0 24" Orientation="Horizontal">
-                <Button Style="{StaticResource AccentButtonStyle}" Content="Return" Click="ReturnBtn_Click" />
+                <Button Style="{StaticResource AccentButtonStyle}" Click="ReturnBtn_Click">
+                    <FontIcon Glyph="&#xE72B;" />
+                </Button>
             </StackPanel>
 
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="White" CornerRadius="24" MaxWidth="600">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="{StaticResource CardBackgroundFillColorDefault}" CornerRadius="24" MaxWidth="600">
                 <Grid.RowDefinitions >
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -33,27 +38,27 @@
                     <ColumnDefinition MinWidth="200" />
                     <ColumnDefinition MinWidth="200"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="0" >
-                    <TextBlock Text="Id"/>
-                    <TextBox Text="{x:Bind CurrentUser.Id}" AutomationProperties.Name="multi-line TextBox"
-        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-        SelectionHighlightColor="Green"/>   
-                </StackPanel>
+                <Grid MaxWidth="300" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"/>
+                    <TextBox Text="{x:Bind CurrentUser.Id}" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
+                </Grid>
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="1" >
                     <TextBlock Text="Fullname"/>
                     <TextBox Text="{x:Bind CurrentUser.FullName, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox"
-        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-        SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="FullnameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                            TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                    <TextBlock x:Name="FullnameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
                 </StackPanel>
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="1">
                     <TextBlock Text="Username"/>
                     <TextBox 
                     Text="{x:Bind CurrentUser.UserName, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                    <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel Spacing="12" Grid.Row="2" Grid.ColumnSpan="2">
@@ -61,37 +66,32 @@ SelectionHighlightColor="Green"/>
                     <TextBox 
                     Text="{x:Bind CurrentUser.Email, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="EmailErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                    <TextBlock x:Name="EmailErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel Spacing="12" Grid.Row="3" Grid.ColumnSpan="2">
                     <TextBlock Text="Password"/>
                     <PasswordBox 
                     Password="{x:Bind CurrentUser.Password, Mode=TwoWay}"
-                    AutomationProperties.Name="Simple PasswordBox"
-SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    AutomationProperties.Name="Simple PasswordBox"/>
+                    <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel Spacing="12" Grid.ColumnSpan="2" Grid.Row="4">
                     <TextBlock Text="Confirm Password"/>
                     <PasswordBox 
-                    Password="{x:Bind CurrentUser.ConfirmPassword, Mode=TwoWay}"
-                    AutomationProperties.Name="Simple PasswordBox"
-SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="ConfirmPasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                                Password="{x:Bind CurrentUser.ConfirmPassword, Mode=TwoWay}"
+                                AutomationProperties.Name="Simple PasswordBox"/>
+                    <TextBlock x:Name="ConfirmPasswordErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="5">
                     <TextBlock Text="Role"/>
-                    <TextBox 
-                    Text="{x:Bind CurrentUser.Role, Mode=TwoWay}"   
-                    AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                    <TextBlock x:Name="RoleErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    <TextBox Text="{x:Bind CurrentUser.Role, Mode=TwoWay}"   
+                            AutomationProperties.Name="multi-line TextBox"
+                            TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                    <TextBlock x:Name="RoleErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
                 </StackPanel>
 
                 <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="5">
@@ -102,8 +102,8 @@ SelectionHighlightColor="Green"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 16 0 0" VerticalAlignment="Center" Spacing="32">
-                    <Button Content="Cancel" Background="Red" Foreground="White" Padding="6.5"/>
-                    <Button  Style="{StaticResource AccentButtonStyle}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
+                    <Button Content="Cancel" Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100" Click="CancleEditBtn_Click"/>
+                    <Button Background="{StaticResource AccentFillColorDefaultBrush}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
                 </StackPanel>
             </Grid>
         </StackPanel>

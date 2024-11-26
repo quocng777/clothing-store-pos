@@ -6,12 +6,11 @@
     xmlns:local="using:Clothing_Store_POS.Pages.Auth"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="36">
         
-        <StackPanel Spacing="20" Background="White" MaxWidth="400" Height="400" Padding="40" CornerRadius="24" VerticalAlignment="Center">
+        <StackPanel Spacing="20" Background="{StaticResource CardBackgroundFillColorDefault}" MaxWidth="400" Height="400" Padding="40" CornerRadius="24" VerticalAlignment="Center">
             <TextBlock x:Name="LoginErrorText" 
                 Foreground="Red" 
                 FontSize="14" 

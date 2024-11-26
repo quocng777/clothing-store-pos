@@ -197,7 +197,6 @@ namespace Clothing_Store_POS.Pages.Products
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ProductPage));
-
         }
 
         private async void CancelBtn_Click(object sender, RoutedEventArgs e)

@@ -6,13 +6,13 @@
     xmlns:local="using:Clothing_Store_POS.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
+    mc:Ignorable="d">
 
     <Grid>
-        <NavigationView x:Name="nvSample8" Grid.Row="1"
+        <NavigationView x:Name="nvSample8"
                         PaneDisplayMode="Left"
                         IsTabStop="False"
+                        IsBackButtonVisible="Collapsed"
                         ItemInvoked="NavigationView_ItemInvoked">
             <!-- Header -->
             <NavigationView.PaneHeader>

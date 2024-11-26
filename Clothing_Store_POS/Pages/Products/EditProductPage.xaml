@@ -7,24 +7,30 @@
     xmlns:converter="using:Clothing_Store_POS.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <converter:ThumnailPathConverter x:Key="ImageConverter" />
     </Page.Resources>
 
-    <StackPanel VerticalAlignment="Center" Padding="24 12">
+    <StackPanel Padding="16" Margin="16,0,16,0">
 
-        <TextBlock Text="Product Page" FontWeight="SemiBold" FontSize="18" Margin="0 0 0 4"/>
-        <TextBlock  Text="Edit product" FontSize="10"/>
-
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="16">
+            <Button Content="Product Management" FontSize="28" 
+                    Background="Transparent" BorderBrush="Transparent" Padding="0"
+                    Click="ReturnBtn_Click" />  
+            <TextBlock Text=" > " VerticalAlignment="Center" FontSize="28" />
+            <TextBlock Text="Edit product" FontSize="28" VerticalAlignment="Center" FontWeight="SemiBold"/>
+        </StackPanel>
         <StackPanel Margin="0 24" Orientation="Horizontal">
-            <Button Style="{StaticResource AccentButtonStyle}" Content="Return" Click="ReturnBtn_Click" />
+            <Button Style="{StaticResource AccentButtonStyle}" Click="ReturnBtn_Click">
+                <FontIcon Glyph="&#xE72B;" />
+            </Button>
         </StackPanel>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="White" CornerRadius="24">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="{StaticResource CardBackgroundFillColorDefault}" CornerRadius="24">
             <Grid.RowDefinitions >
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -36,21 +42,27 @@
                 <ColumnDefinition MinWidth="200" />
                 <ColumnDefinition MinWidth="200"/>
             </Grid.ColumnDefinitions>
-            <StackPanel MaxWidth="300" Spacing="12" Grid.Row="1" >
+            <Grid MaxWidth="300" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"/>
+                <TextBox Text="{x:Bind ProductViewModel.Id}" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
+            </Grid>
+            <StackPanel MaxWidth="300" Spacing="12" Grid.Row="1">
                 <TextBlock Text="Name"/>
                 <TextBox Text="{x:Bind ProductViewModel.Name, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox"
-        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-        SelectionHighlightColor="Green"/>
-                <TextBlock x:Name="NameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                         TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                <TextBlock x:Name="NameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="1">
                 <TextBlock Text="Price"/>
                 <TextBox 
                     Text="{x:Bind ProductViewModel.Price, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                <TextBlock x:Name="PriceErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                <TextBlock x:Name="PriceErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="2">
@@ -58,9 +70,8 @@ SelectionHighlightColor="Green"/>
                 <TextBox 
                     Text="{x:Bind ProductViewModel.Size, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                <TextBlock x:Name="SizeErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                <TextBlock x:Name="SizeErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="2">
@@ -68,9 +79,8 @@ SelectionHighlightColor="Green"/>
                 <TextBox 
                     Text="{x:Bind ProductViewModel.Stock, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                <TextBlock x:Name="StockErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                <TextBlock x:Name="StockErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="3">
@@ -78,9 +88,8 @@ SelectionHighlightColor="Green"/>
                 <TextBox 
                     Text="{x:Bind ProductViewModel.Sale, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
-TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-SelectionHighlightColor="Green"/>
-                <TextBlock x:Name="SaleErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                <TextBlock x:Name="SaleErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="3">
@@ -92,7 +101,7 @@ SelectionHighlightColor="Green"/>
                   PlaceholderText="Select a category"
                   SelectionChanged="CategoriesBox_SelectionChanged"
                 />
-                <TextBlock x:Name="CategoryErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                <TextBlock x:Name="CategoryErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="4">
@@ -100,14 +109,14 @@ SelectionHighlightColor="Green"/>
                 <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                     <Button x:Name="PickAPhotoButton" Content="Open a picture" Margin="0,0,0,10" Click="PickAPhotoButton_Click"/>
                 </StackPanel>
-                <TextBlock x:Name="ThumbnailErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                <TextBlock x:Name="ThumbnailErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <Image Width="200" Height="150" Grid.Column="1" Grid.Row="4" x:Name="SelectedImage" Source="{x:Bind ProductViewModel.Thumbnail, Converter={StaticResource ImageConverter}}"/>
 
-            <StackPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 16 0 0" VerticalAlignment="Center" Spacing="32">
-                <Button Content="Cancel" Background="Red" Foreground="White" Padding="6.5" Click="CancleEditBtn_Click"/>
-                <Button  Style="{StaticResource AccentButtonStyle}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
+            <StackPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center" Spacing="32">
+                <Button Content="Cancel" Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100" Click="CancleEditBtn_Click"/>
+                <Button Background="{StaticResource AccentFillColorDefaultBrush}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
             </StackPanel>
         </Grid>
     </StackPanel>
