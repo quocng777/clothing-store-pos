@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     discount_percentage DECIMAL(5, 2) DEFAULT 0,
     tax_percentage DECIMAL(5, 2) DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS order_items (

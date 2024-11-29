@@ -1,3 +1,4 @@
+using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
@@ -92,6 +93,7 @@ namespace Clothing_Store_POS.Pages.Auth
             }
             else
             {
+                AppSession.CurrentUser = user;
                 Frame.Navigate(typeof(MainLayout));
             }
 

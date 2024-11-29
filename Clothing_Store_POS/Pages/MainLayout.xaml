@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <NavigationView x:Name="nvSample8"
+        <NavigationView x:Name="navigation_bar"
                         PaneDisplayMode="Left"
                         IsTabStop="False"
                         IsBackButtonVisible="Collapsed"
@@ -23,7 +23,7 @@
             </NavigationView.PaneHeader>
 
             <!-- Navigation --> 
-            <NavigationView.MenuItems>
+            <!--<NavigationView.MenuItems>
                 <NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home" Tag="home"/>
                 <NavigationViewItem Content="Products" ToolTipService.ToolTip="Products" Tag="products">
                     <NavigationViewItem.Icon>
@@ -31,7 +31,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Content="Orders" ToolTipService.ToolTip="Orders" Tag="orders">
-                    <NavigationViewItem.Icon>
+                    <NavigationViewItem.Icon>   
                         <FontIcon Glyph="&#xE719;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
@@ -39,7 +39,7 @@
                 </NavigationViewItem>
                 <NavigationViewItem Content="Customer" Icon="Mail" ToolTipService.ToolTip="Customer" Tag="customers">
                 </NavigationViewItem>
-            </NavigationView.MenuItems>
+            </NavigationView.MenuItems>-->
             <ScrollViewer>
                 <Frame x:Name="MainContent" />
             </ScrollViewer>
