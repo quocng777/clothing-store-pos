@@ -1,4 +1,5 @@
 ﻿using Clothing_Store_POS.Config;
+using Clothing_Store_POS.Pages.Auth;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -27,10 +28,8 @@ namespace Clothing_Store_POS
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+        public static Frame MainFrame { get; private set; }
+
         public App()
         {
             // connection to the database
@@ -38,13 +37,16 @@ namespace Clothing_Store_POS
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
+
+            MainFrame = new Frame();
+            m_window.Content = MainFrame;
+
+            // Default Page
+            MainFrame.Navigate(typeof(LoginPage));
+
             m_window.Activate();
         }
 

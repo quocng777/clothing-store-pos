@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using BCrypt.Net;
 
@@ -31,6 +32,17 @@ namespace Clothing_Store_POS.Helper
         {
             // Get salt from hashedPassword & check current password
             return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+        }
+
+        public static string GenerateToken()
+        {
+            var tokenBytes = new byte[32];
+            using (var random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(tokenBytes);
+            }
+
+            return Convert.ToBase64String(tokenBytes);
         }
     }
 }

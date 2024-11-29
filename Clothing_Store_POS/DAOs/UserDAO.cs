@@ -43,8 +43,14 @@ namespace Clothing_Store_POS.DAOs
 
         public async Task<User> GetUserByUsername(string username)
         {
-            var users = await _context.Users.ToListAsync();
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+
+            return user;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             return user;
         }
@@ -62,33 +68,27 @@ namespace Clothing_Store_POS.DAOs
             var existedUser = await _context.Users.FindAsync(user.Id);
 
             // Neu 2 value giong nhau thi isModified == false
-            if (string.Equals(user.FullName, existedUser.FullName))
-            {
-                _context.Entry(existedUser).Property(u => u.FullName).IsModified = false;
-            }
+            //if (string.Equals(user.FullName, existedUser.FullName))
+            //{
+            //    _context.Entry(existedUser).Property(u => u.FullName).IsModified = false;
+            //}
 
-            if (string.Equals(user.UserName, existedUser.UserName))
-            {
-                _context.Entry(existedUser).Property(u => u.UserName).IsModified = false;
-            }
-
-            if (string.Equals(user.Email, existedUser.Email))
-            {
-                _context.Entry(existedUser).Property(u => u.Email).IsModified = false;
-            }
+            //if (string.Equals(user.UserName, existedUser.UserName))
+            //{
+            //    _context.Entry(existedUser).Property(u => u.UserName).IsModified = false;
+            //}
+            
+            //if (string.Equals(user.Email, existedUser.Email))
+            //{
+            //    _context.Entry(existedUser).Property(u => u.Email).IsModified = false;
+            //}
 
             _context.Entry(existedUser).Property(u => u.Id).IsModified = false;
-            //_context.Entry(existedUser).Property(u => u.CreatedDate).IsModified = false;
-
-            if (string.IsNullOrEmpty(user.PasswordHash))
-            {
-                _context.Entry(existedUser).Property(u => u.PasswordHash).IsModified = false;
-            }
 
             // Update fields 
             existedUser.FullName = user.FullName;
             existedUser.UserName = user.UserName;
-            existedUser.PasswordHash = user.PasswordHash;
+            existedUser.PasswordHash = string.IsNullOrEmpty(user.PasswordHash) ? existedUser.PasswordHash : user.PasswordHash;
             existedUser.Email = user.Email;
             existedUser.Role = user.Role;
             existedUser.IsActive = user.IsActive;

@@ -44,3 +44,7 @@ MSSV: 21120317-21120331-21120359
 1. Tạo các nhánh feature để thực hiện các chức năng
 Link github: https://github.com/quocng777/clothing-store-pos/branches
 2. Tạo các pull request để review code, trước khi merge vào nhánh main
+
+## Account Test
+- Username: `admin`
+- Password: `Passw0rd!!`

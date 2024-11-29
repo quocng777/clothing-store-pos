@@ -15,8 +15,9 @@ INSERT INTO products (name, price, category_id, size, color, stock, sale) VALUES
 INSERT INTO users (fullname, username, password_hash, email, user_role, is_active, created_date) VALUES
     ('admin', 'admin', '$2a$11$SFExVrqW6dW8I/bzMyRKdeoG49HMk/xAu39lZ2x/HxPJQHHKzcr5S', 'admin@gmail.com', 'admin', TRUE, CURRENT_TIMESTAMP),
     ('John Sena', 'johnsena', '$2a$11$ygrhLkennieuLLcm/RBLlefPMWEigNb1PAdo6/yTknmgsDjYAl51.', 'johnsena@gmail.com', 'admin', TRUE, CURRENT_TIMESTAMP),
-    ('Tyanin Poo', 'tyanipo', '$2a$11$KXJxNbhY607P9qY/g9DafO0.HoD2DPStza4ryE3TbsQphCL0MoFE.', 'tyanipo@gmail.com', 'admin', TRUE, CURRENT_TIMESTAMP),
+    ('Tyanin Poo', 'tyanipo', '$2a$11$KXJxNbhY607P9qY/g9DafO0.HoD2DPStza4ryE3TbsQphCL0MoFE.', 'tyanipo@gmail.com', 'staff', TRUE, CURRENT_TIMESTAMP),
     ('Kim Jong Un', 'kimjongun', '$2a$11$iY3rc9rfeUQoCyMUc9cQ6O58PzAar1cuC2GrhxRmtjPZfSK.m.N9C', 'kimjongun@gmail.com', 'admin', TRUE, CURRENT_TIMESTAMP);
+    ('tyanfarm', 'tyanfarm', '$2a$11$vm7DVQGuYAidJiAR30bQv.B6gVen3LPj9B9h9iVQ2pKcBPjEm7W3W', 'phamquangtuyen.nt@gmail.com', 'staff', TRUE, CURRENT_TIMESTAMP);
 
 
 INSERT INTO customers (name, email, phone) VALUES

@@ -1,3 +1,4 @@
+using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
@@ -81,6 +82,9 @@ namespace Clothing_Store_POS.Pages.Auth
                 Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("rememberMe");
             }
 
+            // Show ProgressRing
+            Overlay.Visibility = Visibility.Visible;
+
             var user = await ViewModel.GetUserByUsername(username);
 
             if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
@@ -92,9 +96,19 @@ namespace Clothing_Store_POS.Pages.Auth
             }
             else
             {
+                AppSession.CurrentUser = user;
+
+                // Hide ProgressRing
+                Overlay.Visibility = Visibility.Collapsed;
+
                 Frame.Navigate(typeof(MainLayout));
             }
 
+        }
+
+        private void ForgotPass_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ForgotPasswordPage));
         }
     }
 }
