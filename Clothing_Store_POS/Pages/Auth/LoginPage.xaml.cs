@@ -98,5 +98,10 @@ namespace Clothing_Store_POS.Pages.Auth
             }
 
         }
+
+        private void ForgotPass_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ForgotPasswordPage));
+        }
     }
 }

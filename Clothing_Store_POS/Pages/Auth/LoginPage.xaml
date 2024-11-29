@@ -31,12 +31,21 @@
                 <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
             </StackPanel>
 
-            <StackPanel>
-                <CheckBox x:Name="RememberMeCheckBox" Content="Remember me" />
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Remember Me Checkbox -->
+                <CheckBox x:Name="RememberMeCheckBox" Content="Remember me" Grid.Column="0" HorizontalAlignment="Left" />
+
+                <!-- Forgot Password Link -->
+                <HyperlinkButton Content="Forgot Password" Grid.Column="1" HorizontalAlignment="Right" Click="ForgotPass_Click"/>
+            </Grid>
 
             <Button Style="{StaticResource AccentButtonStyle}" Content="Login" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" Click="Login_Click" />
-            <TextBlock FontSize="10" Foreground="Gray" Margin="0 10 0 0">If you forgot your password. Please contact to the admin.</TextBlock>
+            <!--<TextBlock FontSize="10" Foreground="Gray" Margin="0 10 0 0">If you forgot your password. Please contact to the admin.</TextBlock>-->
         </StackPanel>
         <StackPanel VerticalAlignment="Center">
             <Image Source="/Assets/clothing_shop_login.svg" Width="300"/>

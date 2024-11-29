@@ -21,6 +21,7 @@
     <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Pages\Auth\ForgotPasswordPage.xaml" />
     <None Remove="Pages\Auth\LoginPage.xaml" />
     <None Remove="Pages\Auth\MainLayout.xaml" />
     <None Remove="Pages\Auth\SignUpPage.xaml" />
@@ -99,6 +100,9 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Auth\ForgotPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Customers\EditCustomerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
