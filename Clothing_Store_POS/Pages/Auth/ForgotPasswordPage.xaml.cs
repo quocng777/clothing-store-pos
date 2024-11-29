@@ -59,9 +59,11 @@ namespace Clothing_Store_POS.Pages.Auth
 
             try
             {
+                var token = Utilities.GenerateToken();
+
+                // Send email
                 await Task.Run(() =>
                 {
-                    var token = Utilities.GenerateToken();
 
                     // Email Context
                     var emailSubject = "Forgot Password";
@@ -123,7 +125,7 @@ namespace Clothing_Store_POS.Pages.Auth
         <div class=""verify-content"">
             <p>Dear User,</p>
             <p>Here is your private token:</p>
-            <p>""#token#""</p>
+            <p>#token#</p>
             <p>If you did not create an account with us, no further action is required.</p>
         </div>
         <p class=""footer"">This email was sent automatically. Please do not reply to this email.</p>
@@ -149,8 +151,10 @@ namespace Clothing_Store_POS.Pages.Auth
                 };
                 await successDialog.ShowAsync();
 
+                AppSession.SaveToken(token, email);
+
                 // Back to LoginPage
-                Frame.Navigate(typeof(LoginPage));
+                Frame.Navigate(typeof(VerifyResetPasswordTokenPage));
             }
             catch (Exception ex)
             {

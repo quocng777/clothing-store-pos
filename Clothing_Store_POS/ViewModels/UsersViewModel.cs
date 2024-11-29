@@ -63,6 +63,16 @@ namespace Clothing_Store_POS.ViewModels
             return id;
         }
 
+        public async Task<int> ResetPassword(string email, string password)
+        {
+            var user = await _userDAO.GetUserByEmail(email);
+
+            user.PasswordHash = Utilities.HashPassword(password);
+
+            var id = await _userDAO.UpdateUser(user);
+
+            return id;
+        }
 
         public async Task<int> UpdateUser(UserDTO userDto)
         {

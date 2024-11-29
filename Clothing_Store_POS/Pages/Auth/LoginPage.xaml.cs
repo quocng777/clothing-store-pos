@@ -82,6 +82,9 @@ namespace Clothing_Store_POS.Pages.Auth
                 Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("rememberMe");
             }
 
+            // Show ProgressRing
+            Overlay.Visibility = Visibility.Visible;
+
             var user = await ViewModel.GetUserByUsername(username);
 
             if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
@@ -94,6 +97,10 @@ namespace Clothing_Store_POS.Pages.Auth
             else
             {
                 AppSession.CurrentUser = user;
+
+                // Hide ProgressRing
+                Overlay.Visibility = Visibility.Collapsed;
+
                 Frame.Navigate(typeof(MainLayout));
             }
 

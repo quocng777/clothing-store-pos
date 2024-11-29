@@ -17,5 +17,27 @@ namespace Clothing_Store_POS.Config
             // Expiry 15 minutes
             tokenStore[token] = (email, DateTime.Now.AddMinutes(15));
         }
+
+        public static bool IsTokenValid(string token, out string email)
+        {
+            email = null;
+
+            if (!tokenStore.ContainsKey(token))
+            {
+                return false;
+            }
+
+            var (storedEmail, expiry) = tokenStore[token];
+
+            if (DateTime.Now > expiry)
+            {
+                return false;
+            }
+
+            email = storedEmail;
+
+            return true;
+        }
+
     }
 }

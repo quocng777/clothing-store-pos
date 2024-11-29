@@ -21,10 +21,13 @@
     <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Pages\Auth\BackToLoginButton.xaml" />
     <None Remove="Pages\Auth\ForgotPasswordPage.xaml" />
     <None Remove="Pages\Auth\LoginPage.xaml" />
     <None Remove="Pages\Auth\MainLayout.xaml" />
+    <None Remove="Pages\Auth\ResetPasswordPage.xaml" />
     <None Remove="Pages\Auth\SignUpPage.xaml" />
+    <None Remove="Pages\Auth\VerifyResetPasswordTokenPage.xaml" />
     <None Remove="Pages\Customers\CreateCustomerPage.xaml" />
     <None Remove="Pages\Customers\CustomerPage.xaml" />
     <None Remove="Pages\Customers\EditCustomerPage.xaml" />
@@ -100,6 +103,15 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Auth\BackToLoginButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Auth\VerifyResetPasswordTokenPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Auth\ResetPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Auth\ForgotPasswordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

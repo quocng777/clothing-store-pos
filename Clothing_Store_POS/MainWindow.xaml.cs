@@ -27,7 +27,6 @@ namespace Clothing_Store_POS
             this.SetTitleBar(AppTitleBar);
 
             TrySetSystemBackdrop();
-            this.MainFrame.Navigate(typeof(LoginPage));
         }
 
         private void myButton_Click(object sender, RoutedEventArgs e)
