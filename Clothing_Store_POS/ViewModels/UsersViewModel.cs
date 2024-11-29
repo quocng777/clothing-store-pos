@@ -63,6 +63,7 @@ namespace Clothing_Store_POS.ViewModels
             return id;
         }
 
+
         public async Task<int> UpdateUser(UserDTO userDto)
         {
             var user = new User
@@ -87,5 +88,6 @@ namespace Clothing_Store_POS.ViewModels
 
             return result;
         }
+
     }
 }

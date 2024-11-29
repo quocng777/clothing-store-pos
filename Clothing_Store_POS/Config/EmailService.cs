@@ -35,7 +35,7 @@ namespace Clothing_Store_POS.Config
 
             var bodyBuilder = new BodyBuilder
             {
-                TextBody = body
+                HtmlBody = body
             };
 
             message.Body = bodyBuilder.ToMessageBody();
