@@ -26,18 +26,20 @@ namespace Clothing_Store_POS.Pages.Users
     {
         private UsersViewModel _viewModel { get; }
         ObservableCollection<User> _users;
+        public string Keyword { get; set; } = string.Empty;
 
         public UserPage()
         {
             this.InitializeComponent();
             _viewModel = new UsersViewModel();
+
+            // DataContext help UserPage auto find attribute of UserViewModel
             this.DataContext = _viewModel;
         }
 
         private async void LoadUsers(object sender, RoutedEventArgs e)
         {
-            int pageSize = 6;
-            var tempList = await _viewModel.LoadUsers(_viewModel.CurrentPage, pageSize);
+            var tempList = await _viewModel.LoadUsers();
             _users = new ObservableCollection<User>(tempList);
 
             listUsers.ItemsSource = _users;
@@ -54,6 +56,15 @@ namespace Clothing_Store_POS.Pages.Users
             var user = button?.CommandParameter as User;
 
             Frame.Navigate(typeof(EditUserPage), user);
+        }
+
+        private async void SearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CurrentPage = 1;
+            var tempList = await _viewModel.LoadUsers();
+            _users = new ObservableCollection<User>(tempList);
+
+            listUsers.ItemsSource = _users;
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)

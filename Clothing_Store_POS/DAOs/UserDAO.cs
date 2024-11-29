@@ -23,12 +23,20 @@ namespace Clothing_Store_POS.DAOs
             return _context.Users.ToList();
         }
 
-        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize)
+        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize, string keyword)
         {
-            // Count total users
-            int totalItems = await _context.Users.CountAsync();
+            var query = _context.Users.AsQueryable();
 
-            var users = await _context.Users.OrderBy(u => u.Id)
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query
+                    .Where(u => EF.Functions.ILike(u.Email, $"%{keyword}%") || EF.Functions.ILike(u.Id.ToString(), $"%{keyword}%"));
+            }
+
+            // Count total users
+            int totalItems = await query.CountAsync();
+
+            var users = await query.OrderBy(u => u.Id)
                                             .Skip((pageNumber - 1) * pageSize)
                                             .Take(pageSize)
                                             .ToListAsync();

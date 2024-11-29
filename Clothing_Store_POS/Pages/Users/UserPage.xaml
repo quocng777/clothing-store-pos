@@ -16,6 +16,21 @@
             <Button Style="{StaticResource AccentButtonStyle}" Content="Add new user" Click="AddBtn_Click" />
         </StackPanel>
 
+        <StackPanel Margin="0 0 0 20" Orientation="Horizontal" Spacing="10">
+            <TextBox AutomationProperties.Name="simple TextBox"
+             Text="{Binding Keyword, Mode=TwoWay}"
+             MaxWidth="300" 
+             HorizontalAlignment="Left" 
+             MinWidth="200"
+             PlaceholderText="Search"/>
+
+            <Button CommandParameter="{Binding}" Click="SearchBtn_Click">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE721;" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
         <ListView Name="listUsers" ItemsSource="{Binding}" 
                   Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
                   CornerRadius="12"
