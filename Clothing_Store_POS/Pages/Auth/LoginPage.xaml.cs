@@ -89,9 +89,13 @@ namespace Clothing_Store_POS.Pages.Auth
 
             if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
             {
+                // Hide ProgressRing
+                Overlay.Visibility = Visibility.Collapsed;
+
                 LoginErrorText.Visibility = Visibility.Visible;
                 UsernameTextBox.Text = string.Empty;
                 PasswordBox.Password = string.Empty;
+
                 return;
             }
             else
