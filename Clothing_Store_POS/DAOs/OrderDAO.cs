@@ -1,5 +1,6 @@
 ﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,6 +29,32 @@ namespace Clothing_Store_POS.DAOs
         public List<Order> GetOrders()
         {
             return _context.Orders.ToList();
+        }
+
+        public Task<PagedResult<Order>> GetListOrders(int pageNumber, int pageSize, string keyword)
+        {
+            var query = _context.Orders.AsQueryable();
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query
+                    .Where(o => o.Id.ToString().Contains(keyword) 
+                    || o.Customer.Name.Contains(keyword)
+                    || o.User.UserName.Contains(keyword));
+
+            }
+
+            int totalItems = query.Count();
+
+            var orders = query
+                .OrderBy(o => o.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Include(o => o.Customer)
+                .Include(o => o.User)
+                .ToList();
+
+            return Task.FromResult(new PagedResult<Order>(orders, totalItems, pageSize));
         }
 
         public Order GetOrderById(int orderId)

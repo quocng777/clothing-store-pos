@@ -1,5 +1,6 @@
 ﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,10 @@ namespace Clothing_Store_POS.DAOs
 
         public List<OrderItem> GetOrderItemsByOrderId(int orderId)
         {
-            return _context.OrderItems.Where(oi => oi.OrderId == orderId).ToList();
+            return _context.OrderItems
+                .Where(oi => oi.OrderId == orderId)
+                .Include(oi => oi.Product)
+                .ToList();
         }
 
         public void DeleteOrderItemById(int orderItemId)

@@ -10,17 +10,24 @@ using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.ViewModels
 {
-    public class OrderItemViewModel
+    public class OrderItemViewModel : INotifyPropertyChanged
     {
-        private readonly OrderItemDAO _orderItemDAO;
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public int ProductId { get; set; }
+        public Product Product { get; set; }
         public int Quantity { get; set; }
-
-        public OrderItemViewModel()
+        public float DiscountPercentage { get; set; }
+        public double TotalPrice
         {
-            _orderItemDAO = new OrderItemDAO();
+            get => Quantity * Product.Price * (1 - DiscountPercentage / 100);
+        }
+
+        public OrderItemViewModel(OrderItem orderItem)
+        {
+            Id = orderItem.Id;
+            OrderId = orderItem.OrderId;
+            Product = orderItem.Product;
+            Quantity = orderItem.Quantity;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
