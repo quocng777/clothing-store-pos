@@ -46,7 +46,11 @@ namespace Clothing_Store_POS.DAOs
                                             .Take(pageSize)
                                             .ToListAsync();
 
+            // delete passwordHash
+            users.ForEach(u => u.PasswordHash = null);
+
             //_fileService.ExportCsv(users, "users.csv");
+            _fileService.ExportPdf(users, "users.pdf");
 
             return new PagedResult<User>(users, totalItems, pageSize);
         }
