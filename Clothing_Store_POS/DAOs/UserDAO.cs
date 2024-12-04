@@ -3,6 +3,7 @@ using Clothing_Store_POS.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +13,19 @@ namespace Clothing_Store_POS.DAOs
     public class UserDAO
     {
         private readonly AppDBContext _context;
+        private FileService _fileService;
 
         public UserDAO()
         {
             _context = new AppDBContext();
+            _fileService = new FileService();
         }
 
         public List<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            var users = _context.Users.ToList();
+
+            return users;
         }
 
         public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize, string keyword)
@@ -40,6 +45,8 @@ namespace Clothing_Store_POS.DAOs
                                             .Skip((pageNumber - 1) * pageSize)
                                             .Take(pageSize)
                                             .ToListAsync();
+
+            //_fileService.ExportCsv(users, "users.csv");
 
             return new PagedResult<User>(users, totalItems, pageSize);
         }
