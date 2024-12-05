@@ -9,19 +9,24 @@ namespace Clothing_Store_POS.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is double price)
-            {
-                CultureInfo vietnameseCulture = new CultureInfo("vi-VN");
-                string formattedPrice = price.ToString("N0", vietnameseCulture);
-                return $"{formattedPrice} đ";
-            }
-
-            return "";
+            return convertToVND(value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException("ConvertBack is not supported.");
+        }
+
+        public static string convertToVND(object price)
+        {
+            if(price is double number)
+            {
+                CultureInfo vietnameseCulture = new CultureInfo("vi-VN");
+                string formattedPrice = number.ToString("N0", vietnameseCulture);
+                return $"{formattedPrice} đ";
+            }
+
+            return "";
         }
     }
 }

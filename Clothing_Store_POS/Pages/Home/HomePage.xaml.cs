@@ -1,5 +1,6 @@
 ﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Models;
+using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -310,7 +311,6 @@ namespace Clothing_Store_POS.Pages.Home
                 return;
             }
 
-            // create a dialog display saving successfully
             var dialog = new ContentDialog();
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
@@ -324,7 +324,6 @@ namespace Clothing_Store_POS.Pages.Home
                 int userId = AppSession.CurrentUser.Id;
                 int newOrderId = OrderViewModel.CreateOrder(customerId, userId);
 
-                // save order items
                 foreach (var cartItem in CartItems)
                 {
                     var orderItem = new OrderItem
@@ -340,13 +339,48 @@ namespace Clothing_Store_POS.Pages.Home
 
             await dialog.ShowAsync();
 
-            // clear cart items
             CartItems.Clear();
         }
 
-        private void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)
+        private async void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)
         {
+            if (CartItems.Count == 0)
+            {
+                return;
+            }
 
+            var dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Saving and Printing confirmation";
+            dialog.PrimaryButtonText = "OK";
+            dialog.SecondaryButtonText = "Cancel";
+            dialog.Content = "Do you want to save this order and print its invoice?";
+            dialog.PrimaryButtonClick += async (s, args) =>
+            {
+                int customerId = ChosenCustomer != null ? ChosenCustomer.Id : -1;
+                int userId = AppSession.CurrentUser.Id;
+                int newOrderId = OrderViewModel.CreateOrder(customerId, userId);
+
+                foreach (var cartItem in CartItems)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = newOrderId,
+                        ProductId = cartItem.Product.Id,
+                        Quantity = cartItem.Quantity,
+                        DiscountPercentage = cartItem.DiscountPercentage
+                    };
+                    OrderViewModel.AddOrderItem(orderItem);
+                }
+
+                var invoiceModel = InvoiceModel.CreateInvoiceModelFromOrderId(newOrderId);
+                await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
+            };
+
+            await dialog.ShowAsync();
+
+            CartItems.Clear();
         }
 
         // category filter

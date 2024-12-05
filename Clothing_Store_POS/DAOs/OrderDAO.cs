@@ -57,7 +57,7 @@ namespace Clothing_Store_POS.DAOs
             return Task.FromResult(new PagedResult<Order>(orders, totalItems, pageSize));
         }
 
-        public Order GetOrderById(int orderId)
+        public Order FindOrderById(int orderId)
         {
             return _context.Orders.Find(orderId);
         }

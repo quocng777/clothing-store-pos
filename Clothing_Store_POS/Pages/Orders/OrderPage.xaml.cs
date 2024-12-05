@@ -1,9 +1,15 @@
+using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
+using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using QuestPDF.Companion;
+using QuestPDF.Fluent;
+using QuestPDF.Previewer;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -63,9 +69,32 @@ namespace Clothing_Store_POS.Pages.Orders
             }
         }
 
-        private void PrintBtn_Click(object sender, RoutedEventArgs e)
+        private async void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            var button = sender as Button;
+            var order = button?.CommandParameter as Order;
+
+            if (order != null)
+            {
+                order.OrderItems = new OrderItemDAO().GetOrderItemsByOrderId(order.Id);
+                InvoiceModel invoiceModel = new InvoiceModel
+                {
+                    Id = order.Id,
+                    CreatedAt = order.CreatedAt,
+                    DiscountPercentage = order.DiscountPercentage,
+                    TaxPercentage = order.TaxPercentage,
+                    User = order.User,
+                    Customer = order.Customer,
+                    InvoiceItems = order.OrderItems.Select(orderItem => new InvoiceItem
+                    {
+                        Product = orderItem.Product,
+                        Quantity = orderItem.Quantity,
+                        DiscountPercentage = orderItem.DiscountPercentage
+                    }).ToList()
+                };
+
+                await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
+            }
         }
 
         private void PreviousPage_Click(object sender, RoutedEventArgs e)
