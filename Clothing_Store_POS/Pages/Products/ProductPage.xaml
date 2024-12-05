@@ -11,6 +11,7 @@
 
     <Page.Resources>
         <converters:ThumnailPathConverter x:Key="ImageConverter" />
+        <converters:PriceToVNDConverter x:Key="PriceToVNDConverter" />
     </Page.Resources>
 
     <StackPanel Padding="16" Margin="16,0,16,0">
@@ -84,7 +85,7 @@
                         <Image HorizontalAlignment="Center" MaxWidth="80" Height="80" Source="{x:Bind Thumbnail, Converter={StaticResource ImageConverter}}" Grid.Column="1" />
                         <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" />
                         <TextBlock Text="{x:Bind Category.Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="3" />
-                        <TextBlock Text="{x:Bind Price}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
+                        <TextBlock Text="{x:Bind Price, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
                         <TextBlock Text="{x:Bind Stock}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="5" />
                         <StackPanel Orientation="Horizontal" Grid.Column="6" Spacing="12" HorizontalAlignment="Center">
                             <Button CommandParameter="{Binding}" Click="DeleteBtn_Click" Background="Transparent" BorderBrush="Transparent">
