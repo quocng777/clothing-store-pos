@@ -29,6 +29,7 @@
     <None Remove="Pages\Auth\SignUpPage.xaml" />
     <None Remove="Pages\Auth\VerifyResetPasswordTokenPage.xaml" />
     <None Remove="Pages\Customers\CreateCustomerPage.xaml" />
+    <None Remove="Pages\Customers\CustomerDetailPage.xaml" />
     <None Remove="Pages\Customers\CustomerPage.xaml" />
     <None Remove="Pages\Customers\EditCustomerPage.xaml" />
     <None Remove="Pages\Customers\SendMailPage.xaml" />
@@ -107,6 +108,9 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Customers\CustomerDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Auth\BackToLoginButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

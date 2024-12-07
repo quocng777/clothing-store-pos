@@ -107,5 +107,13 @@ namespace Clothing_Store_POS.Pages.Customers
         {
             Frame.Navigate(typeof(SendMailPage));
         }
+
+        private void Customer_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+            var customer = e.ClickedItem as Customer;
+
+            Frame.Navigate(typeof(CustomerDetailPage), customer);
+        }
     }
 }
