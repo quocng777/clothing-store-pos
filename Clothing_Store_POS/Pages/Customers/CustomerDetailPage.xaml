@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Clothing_Store_POS.Pages.Customers.CustomerDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Clothing_Store_POS.Pages.Customers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel Padding="16" Margin="16,0,16,0">
+            <StackPanel Orientation="Horizontal" Spacing="32">
+
+                <StackPanel BorderBrush="Gray" BorderThickness="1" CornerRadius="16" Padding="32 16">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center" Margin="0 0 0 6">
+                        <FontIcon Glyph="&#xE779;" Foreground="BlueViolet" />
+                        <TextBlock FontWeight="SemiBold" Foreground="Gray">Infomation</TextBlock>
+                    </StackPanel>
+                    <TextBlock Text="David Browner" FontWeight="SemiBold" FontSize="20"/>
+                    <TextBlock Text="Customer ID: #1" FontSize="14" Foreground="Gray"/>
+                    <StackPanel Margin="0 12 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Phone:</TextBlock>
+                            <TextBlock Text="0294921842" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Email:</TextBlock>
+                            <TextBlock Text="quocng777@gmail.com" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel BorderBrush="Gray" BorderThickness="1" CornerRadius="16" Padding="32 16" MinWidth="240">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center" Margin="0 0 0 6">
+                        <TextBlock FontWeight="SemiBold" FontSize="18" Foreground="YellowGreen">$</TextBlock>
+                        <TextBlock FontWeight="SemiBold" Foreground="Gray">Spent</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100">
+                        <TextBlock Text="500.000" FontWeight="SemiBold" FontSize="32"/>
+                        <TextBlock Text="đ" FontSize="14" Foreground="Gray"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Margin="0 24" >Recent orders</TextBlock>
+
+            <ListView 
+        Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
+        CornerRadius="12"
+        IsItemClickEnabled="True"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1">
+
+                <!-- Header -->
+                <ListView.Header>
+                    <Grid Padding="20" ColumnSpacing="16" Background="{StaticResource AcrylicBackgroundFillColorBaseBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Column Headers -->
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Id" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="User" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Customer" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Discount (%)" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Tax (%)" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Created at" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Actions" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                </ListView.Header>
+
+                <!-- Item Template -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="20,12,20,12" ColumnSpacing="16" Margin="-12,0,-12,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" />
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="5" />
+                            <StackPanel Orientation="Horizontal" Grid.Column="6" Spacing="12" HorizontalAlignment="Center">
+                                <Button CommandParameter="{Binding}" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="View details">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <SymbolIcon Symbol="View" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button CommandParameter="{Binding}" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Print">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <SymbolIcon Symbol="Print" Foreground="{StaticResource SystemBaseHigh}" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

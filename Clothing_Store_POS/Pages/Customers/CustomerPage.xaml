@@ -37,7 +37,9 @@
                   CornerRadius="12"
                   IsItemClickEnabled="True"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                  BorderThickness="1">        
+                  BorderThickness="1"
+                  ItemClick="Customer_ItemClick"
+                  SelectionMode="Single">        
             <ListView.Header>
                 <Grid Padding="20" ColumnSpacing="16" Background="{StaticResource AcrylicBackgroundFillColorBaseBrush}">
                     <Grid.ColumnDefinitions>

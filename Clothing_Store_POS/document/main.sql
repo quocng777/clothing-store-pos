@@ -33,6 +33,13 @@ CREATE TABLE IF NOT EXISTS users  (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
+CREATE TABLE IF NOT EXISTS customers (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     discount_percentage DECIMAL(5, 2) DEFAULT 0,
@@ -52,11 +59,4 @@ CREATE TABLE IF NOT EXISTS order_items (
     discount_percentage DECIMAL(5, 2) DEFAULT 0,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) 
-);
-
-CREATE TABLE IF NOT EXISTS customers (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    phone VARCHAR(255) NOT NULL
 );
