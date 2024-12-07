@@ -1,24 +1,18 @@
-﻿using Clothing_Store_POS.DAOs;
+﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Models;
+using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,6 +26,7 @@ namespace Clothing_Store_POS.Pages.Home
     {
         public ProductsViewModel ProductsViewModel { get; set; }
         public CategoriesViewModel CategoriesViewModel { get; set; }
+        public CustomersViewModel CustomersViewModel { get; set; }
         public OrderViewModel OrderViewModel { get; set; }
         public ObservableCollection<CartItemViewModel> CartItems { get; set; }
 
@@ -42,7 +37,20 @@ namespace Clothing_Store_POS.Pages.Home
                 double originalTotal = CartItems.Sum(item => item.TotalPrice);
                 return originalTotal * (1 + (OrderViewModel.TaxPercentage - OrderViewModel.DiscountPercentage) / 100);
             }
-                
+        }
+
+        private CustomerSuggestion _chosenCustomer;
+        public CustomerSuggestion ChosenCustomer
+        {
+            get => _chosenCustomer;
+            set
+            {
+                if (_chosenCustomer != value)
+                {
+                    _chosenCustomer = value;
+                    OnPropertyChanged(nameof(ChosenCustomer));
+                }
+            }
         }
 
         public ComboBox DiscountTypeComboBox;
@@ -54,6 +62,7 @@ namespace Clothing_Store_POS.Pages.Home
             ProductsViewModel = new ProductsViewModel();
             CategoriesViewModel = new CategoriesViewModel();
             OrderViewModel = new OrderViewModel();
+            CustomersViewModel = new CustomersViewModel();
 
             CartItems = [];
             CartItems.CollectionChanged += CartItems_CollectionChanged;
@@ -302,40 +311,76 @@ namespace Clothing_Store_POS.Pages.Home
                 return;
             }
 
-            int newOrderId = OrderViewModel.CreateOrder();
-
-            // save order items
-            foreach (var cartItem in CartItems)
-            {
-                var orderItem = new OrderItem
-                {
-                    OrderId = newOrderId,
-                    ProductId = cartItem.Product.Id,
-                    Quantity = cartItem.Quantity,
-                    DiscountPercentage = cartItem.DiscountPercentage
-                };
-                OrderViewModel.AddOrderItem(orderItem);
-            }
-
-            // create a dialog display saving successfully
             var dialog = new ContentDialog();
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Saving product successfully.";
+            dialog.Title = "Order saving confirmation";
             dialog.PrimaryButtonText = "OK";
             dialog.SecondaryButtonText = "Cancel";
-            dialog.Content = "Your order has been saved successfully.";
-            dialog.SecondaryButtonClick += (s, args) => Frame.Navigate(typeof(HomePage));
+            dialog.Content = "Do you want to save this order?";
+            dialog.PrimaryButtonClick += async (s, args) =>
+            {
+                int customerId = ChosenCustomer != null ? ChosenCustomer.Id : -1;
+                int userId = AppSession.CurrentUser.Id;
+                int newOrderId = OrderViewModel.CreateOrder(customerId, userId);
+
+                foreach (var cartItem in CartItems)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = newOrderId,
+                        ProductId = cartItem.Product.Id,
+                        Quantity = cartItem.Quantity,
+                        DiscountPercentage = cartItem.DiscountPercentage
+                    };
+                    OrderViewModel.AddOrderItem(orderItem);
+                }
+            };
 
             await dialog.ShowAsync();
 
-            // clear cart items
             CartItems.Clear();
         }
 
-        private void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)
+        private async void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)
         {
+            if (CartItems.Count == 0)
+            {
+                return;
+            }
 
+            var dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Saving and Printing confirmation";
+            dialog.PrimaryButtonText = "OK";
+            dialog.SecondaryButtonText = "Cancel";
+            dialog.Content = "Do you want to save this order and print its invoice?";
+            dialog.PrimaryButtonClick += async (s, args) =>
+            {
+                int customerId = ChosenCustomer != null ? ChosenCustomer.Id : -1;
+                int userId = AppSession.CurrentUser.Id;
+                int newOrderId = OrderViewModel.CreateOrder(customerId, userId);
+
+                foreach (var cartItem in CartItems)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = newOrderId,
+                        ProductId = cartItem.Product.Id,
+                        Quantity = cartItem.Quantity,
+                        DiscountPercentage = cartItem.DiscountPercentage
+                    };
+                    OrderViewModel.AddOrderItem(orderItem);
+                }
+
+                var invoiceModel = InvoiceModel.CreateInvoiceModelFromOrderId(newOrderId);
+                await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
+            };
+
+            await dialog.ShowAsync();
+
+            CartItems.Clear();
         }
 
         // category filter
@@ -365,10 +410,72 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            // Since selecting an item will also change the text,
+            // only listen to changes caused by user entering text.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var suitableItems = new List<CustomerSuggestion>();
+                var splitText = sender.Text.ToLower().Split(" ");
+                foreach (var customer in CustomersViewModel.Customers)
+                {
+                    var found = splitText.All((key) =>
+                    {
+                        return customer.Name.ToLower().Contains(key);
+                    });
+                    if (found)
+                    {
+                        suitableItems.Add(new CustomerSuggestion
+                        {
+                            Name = customer.Name,
+                            Id = customer.Id
+                        });
+                    }
+                }
+                sender.ItemsSource = suitableItems;
+            }
+        }
+
+        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            var selectedCustomer = args.SelectedItem as CustomerSuggestion;
+            if (selectedCustomer != null)
+            {
+                ChosenCustomer = selectedCustomer;
+            }
+        }
+
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (CustomerToggleSwitch.IsOn)
+            {
+                AutoSuggestBox.IsEnabled = true;
+            }
+            else
+            {
+                if (ChosenCustomer != null)
+                {
+                    ChosenCustomer = null;
+                }
+                AutoSuggestBox.IsEnabled = false;
+                AutoSuggestBox.Text = "";
+                CustomerName.Text = "";
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public class CustomerSuggestion
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
+
+        public override string ToString() => $"{Name} (ID {Id})";
     }
 }

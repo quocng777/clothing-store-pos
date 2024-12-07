@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,7 @@ namespace Clothing_Store_POS
             // connection to the database
             AppFactory.AppDBContext = new AppDBContext();
             this.InitializeComponent();
+            QuestPDF.Settings.License = LicenseType.Community;
         }
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)

@@ -127,5 +127,10 @@ namespace Clothing_Store_POS.DAOs
 
             return true;
         }
+
+        public User FindUserById(int userId)
+        {
+            return _context.Users.Find(userId);
+        }
     }
 }
