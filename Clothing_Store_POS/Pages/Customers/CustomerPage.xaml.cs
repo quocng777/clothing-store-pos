@@ -113,7 +113,7 @@ namespace Clothing_Store_POS.Pages.Customers
 
             var customer = e.ClickedItem as Customer;
 
-            Frame.Navigate(typeof(CustomerDetailPage));
+            Frame.Navigate(typeof(CustomerDetailPage), customer);
         }
     }
 }

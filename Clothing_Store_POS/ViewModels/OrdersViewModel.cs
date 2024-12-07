@@ -47,6 +47,16 @@ namespace Clothing_Store_POS.ViewModels
             _ = LoadOrders();
         }
 
+        public OrdersViewModel(int customerId)
+        {
+            this._orderDAO = new OrderDAO();
+            CurrentPage = 1;
+            PerPage = 10;
+            Orders = new ObservableCollection<Order>();
+            PageNumbers = new ObservableCollection<int>();
+            _ = LoadOrdersByCustomerId(customerId);
+        }
+
         public void DeleteAnOrder(int orderId)
         {
             Order order = null;
@@ -78,6 +88,34 @@ namespace Clothing_Store_POS.ViewModels
             {
                 CurrentPage = 1;
                 pagedResult = await _orderDAO.GetListOrders(CurrentPage, PerPage, Keyword);
+                TotalPages = pagedResult.TotalPages;
+            }
+
+            // update page numbers
+            PageNumbers.Clear();
+            for (int i = 1; i <= TotalPages; i++)
+            {
+                PageNumbers.Add(i);
+            }
+
+            // update products
+            Orders.Clear();
+            foreach (var order in pagedResult.Items)
+            {
+                Orders.Add(order);
+            }
+        }
+
+        public async Task LoadOrdersByCustomerId(int customerId)
+        {
+            var pagedResult = await _orderDAO.GetListOrdersByCustomerId(CurrentPage, PerPage, customerId);
+            TotalPages = pagedResult.TotalPages;
+            TotalItems = pagedResult.TotalItems;
+
+            if (CurrentPage > TotalPages)
+            {
+                CurrentPage = 1;
+                pagedResult = await _orderDAO.GetListOrdersByCustomerId(CurrentPage, PerPage, customerId);
                 TotalPages = pagedResult.TotalPages;
             }
 
