@@ -15,9 +15,9 @@ namespace Clothing_Store_POS.ViewModels
         private readonly UserDAO _userDAO;
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public string Keyword { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         public UsersViewModel()
         {
@@ -25,11 +25,11 @@ namespace Clothing_Store_POS.ViewModels
             CurrentPage = 1;
         }
 
-        public async Task<List<User>> LoadUsers(int pageNumber = 1, int pageSize = 10)
+        public async Task<List<User>> LoadUsers()
         {
-            var pagedResult = await _userDAO.GetListUsers(pageNumber, pageSize);
+            int pageSize = 6;
+            var pagedResult = await _userDAO.GetListUsers(CurrentPage, pageSize, Keyword);
             TotalPages = pagedResult.TotalPages;
-            CurrentPage = pageNumber;
 
             return pagedResult.Items;
         }

@@ -67,6 +67,9 @@ namespace Clothing_Store_POS.Pages.Auth
                 return;
             }
 
+            // Show ProgressRing
+            Overlay.Visibility = Visibility.Visible;
+
             // if `Remember Me` save username & password to localSettings
             if (RememberMeCheckBox.IsChecked == true)
             {
@@ -82,16 +85,17 @@ namespace Clothing_Store_POS.Pages.Auth
                 Windows.Storage.ApplicationData.Current.LocalSettings.Values.Remove("rememberMe");
             }
 
-            // Show ProgressRing
-            Overlay.Visibility = Visibility.Visible;
-
             var user = await ViewModel.GetUserByUsername(username);
 
             if (user == null || Utilities.VerifyPassword(password, user.PasswordHash) == false)
             {
+                // Hide ProgressRing
+                Overlay.Visibility = Visibility.Collapsed;
+
                 LoginErrorText.Visibility = Visibility.Visible;
                 UsernameTextBox.Text = string.Empty;
                 PasswordBox.Password = string.Empty;
+
                 return;
             }
             else
