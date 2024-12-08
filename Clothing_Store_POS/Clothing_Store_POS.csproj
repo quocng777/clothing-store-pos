@@ -39,6 +39,7 @@
     <None Remove="Pages\Products\CreateProductPage.xaml" />
     <None Remove="Pages\Products\EditProductPage.xaml" />
     <None Remove="Pages\Products\ProductPage.xaml" />
+    <None Remove="Pages\Statistics\OverviewStatistics.xaml" />
     <None Remove="Pages\Users\CreateUserPage.xaml" />
     <None Remove="Pages\Users\EditUserPage.xaml" />
     <None Remove="Pages\Users\UserPage.xaml" />
@@ -60,6 +61,7 @@
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="itext7" Version="9.0.0" />
     <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.0.0" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc4.5" />
     <PackageReference Include="MailKit" Version="4.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-rc.2.24474.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-rc.2.24474.1">
@@ -108,6 +110,9 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Statistics\OverviewStatistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Customers\CustomerDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,7 +185,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\Statistics\" />
+    <Folder Include="Models\Statistics\" />
   </ItemGroup>
 
   <!--
