@@ -1,5 +1,6 @@
 using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Helper;
+using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -28,10 +29,12 @@ namespace Clothing_Store_POS.Pages.Auth
     public sealed partial class ForgotPasswordPage : Page
     {
         private EmailService _emailService { get; }
+        private UsersViewModel _viewModel { get; }
 
         public ForgotPasswordPage()
         {
             _emailService = new EmailService();
+            _viewModel = new UsersViewModel();
             this.InitializeComponent();
         }
 
@@ -56,6 +59,26 @@ namespace Clothing_Store_POS.Pages.Auth
 
             // Show ProgressRing
             Overlay.Visibility = Visibility.Visible;
+
+            // Validate email
+            var validEmail = await _viewModel.GetUserByUsername(email);
+
+            if (validEmail == null)
+            {
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = "Email isn't existed.",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.XamlRoot
+                };
+
+                // Hide ProgressRing
+                Overlay.Visibility = Visibility.Collapsed;
+
+                _ = errorDialog.ShowAsync();
+                return;
+            }
 
             try
             {
