@@ -80,6 +80,8 @@ namespace Clothing_Store_POS.Pages
                 // Allow only Home & Customers
                 navigation_bar.MenuItems.Clear();
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Home", Icon = new SymbolIcon(Symbol.Home), Tag = "home" });
+                navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Statistics", Icon = new SymbolIcon(Symbol.ThreeBars), Tag = "statistics" });
+                navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Orders", Icon = new FontIcon { Glyph = "\uE719" }, Tag = "orders" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Customer", Icon = new SymbolIcon(Symbol.Mail), Tag = "customers" });
             }
             else if (role == "admin")
