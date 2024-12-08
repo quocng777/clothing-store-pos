@@ -58,6 +58,13 @@ namespace Clothing_Store_POS.ViewModels
             return user;
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _userDAO.GetUserByEmail(email);
+
+            return user;
+        }
+
         public async Task<int> AddUser(UserDTO userDto)
         {
             var user = new User
