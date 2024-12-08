@@ -97,7 +97,7 @@
 
                             <Button CommandParameter="{Binding}" Click="PrintBtn_Click" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Print">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <SymbolIcon Symbol="Print" Foreground="Gray" />
+                                    <SymbolIcon Symbol="Print" Foreground="{StaticResource SystemFillColorAttentionBrush}" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -136,7 +136,7 @@
                     </StackPanel>
                     <Button VerticalAlignment="Top" CommandParameter="{Binding}" Click="PrintBtn_Click" Background="Transparent" BorderBrush="Transparent" Grid.Column="1">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <SymbolIcon Symbol="Print" Foreground="{StaticResource SystemColorHighlightTextColor}" />
+                            <SymbolIcon Symbol="Print" Foreground="{StaticResource SystemFillColorAttentionBrush}" />
                         </StackPanel>
                     </Button>
                 </Grid>

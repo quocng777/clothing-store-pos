@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INT,
     customer_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (customer_id) REFERENCES customers(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS order_items (
@@ -58,5 +58,5 @@ CREATE TABLE IF NOT EXISTS order_items (
     quantity INT NOT NULL DEFAULT 1,
     discount_percentage DECIMAL(5, 2) DEFAULT 0,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) 
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );

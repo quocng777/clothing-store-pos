@@ -8,8 +8,7 @@
     xmlns:converter="using:Clothing_Store_POS.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
     
         <Page.Resources>
         <converter:PriceToVNDConverter x:Key="PriceToVNDConverter"/>
@@ -22,7 +21,7 @@
             Background="Transparent" BorderBrush="Transparent" Padding="0"
             Click="ReturnBtn_Click" />
                 <TextBlock Text=" > " VerticalAlignment="Center" FontSize="28" />
-                <TextBlock Text="Create new customer" FontSize="28" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                <TextBlock Text="Customer detail" FontSize="28" VerticalAlignment="Center" FontWeight="SemiBold"/>
             </StackPanel>
 
             <StackPanel Margin="0,24,0,24" Orientation="Horizontal">
