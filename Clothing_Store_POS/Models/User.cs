@@ -1,12 +1,9 @@
-﻿using CsvHelper.Configuration.Attributes;
+﻿using Clothing_Store_POS.Converters;
+using CsvHelper.Configuration.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.Models
 {
@@ -14,7 +11,7 @@ namespace Clothing_Store_POS.Models
     {
         [Key]
         [Column("id")]
-        [Name("ID")]
+        [Ignore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
@@ -44,6 +41,7 @@ namespace Clothing_Store_POS.Models
 
         [Column("created_date")]
         [Name("created_date")]
+        [CsvHelper.Configuration.Attributes.TypeConverter(typeof(UtcDateTimeConverter))]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(7);
 
         public event PropertyChangedEventHandler PropertyChanged;

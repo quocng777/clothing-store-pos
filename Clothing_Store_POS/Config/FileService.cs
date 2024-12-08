@@ -8,27 +8,34 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace Clothing_Store_POS.Config
 {
     public class FileService
     {
+        private string _rootPath { get; set; }
+
+        public FileService()
+        {
+            string baseDirectory = AppContext.BaseDirectory;
+            _rootPath = Directory.GetParent(baseDirectory).Parent.Parent.Parent.Parent.Parent.Parent.FullName;
+        }
+
+        public string GetRootPath()
+        {
+            return _rootPath;
+        }
+
         public void ExportCsv<T>(List<T> data, string fileName)
         {
             using (var memoryStream = new MemoryStream())
             using (var streamWriter = new StreamWriter(memoryStream)) 
             using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
             {
-                // Write data to csv file
-                csvWriter.WriteRecords(data);
-                streamWriter.Flush();
-
-                byte[] csvData = memoryStream.ToArray();
-
                 // Create file path
-                string baseDirectory = AppContext.BaseDirectory;
-                string rootProjectPath = Directory.GetParent(baseDirectory).Parent.Parent.Parent.Parent.Parent.Parent.FullName;
-                string subFolderPath = Path.Combine(rootProjectPath, "Files", "CSV");
+                
+                string subFolderPath = Path.Combine(_rootPath, "Files", "CSV");
 
                 if (!Directory.Exists(subFolderPath))
                 {
@@ -36,6 +43,12 @@ namespace Clothing_Store_POS.Config
                 }
 
                 string filePath = Path.Combine(subFolderPath, fileName);
+
+                // Write data to csv file
+                csvWriter.WriteRecords(data);
+                streamWriter.Flush();
+
+                byte[] csvData = memoryStream.ToArray();
 
                 File.WriteAllBytes(filePath, csvData);
             }
@@ -79,9 +92,7 @@ namespace Clothing_Store_POS.Config
                 var pdfData = memoryStream.ToArray();
 
                 // Create file path
-                string baseDirectory = AppContext.BaseDirectory;
-                string rootProjectPath = Directory.GetParent(baseDirectory).Parent.Parent.Parent.Parent.Parent.Parent.FullName;
-                string subFolderPath = Path.Combine(rootProjectPath, "Files", "PDF");
+                string subFolderPath = Path.Combine(_rootPath, "Files", "PDF");
 
                 if (!Directory.Exists(subFolderPath))
                 {
@@ -91,6 +102,23 @@ namespace Clothing_Store_POS.Config
                 string filePath = Path.Combine(subFolderPath, filename);
 
                 File.WriteAllBytes(filePath, pdfData);
+            }
+        }
+    
+        public List<T> ImportCsv<T>(string filePath) where T : class
+        {
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+
+            using (var reader = new StreamReader(filePath))
+            using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                // Read records
+                var records = csvReader.GetRecords<T>().ToList();
+
+                return records;
             }
         }
     }
