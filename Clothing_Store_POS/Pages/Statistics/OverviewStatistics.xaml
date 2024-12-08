@@ -1,0 +1,78 @@
+﻿<Page x:Class="Clothing_Store_POS.Pages.Statistics.OverviewStatistics"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
+             xmlns:vms="using:Clothing_Store_POS.ViewModels"
+             xmlns:converters="using:Clothing_Store_POS.Converters"
+             mc:Ignorable="d">
+    <Page.DataContext>
+        <vms:SalesViewModel />
+    </Page.DataContext>
+    <Page.Resources>
+        <converters:PriceToVNDConverter x:Key="PriceToVNDConverter" />
+    </Page.Resources>
+    
+    <Grid Padding="16">
+        <!-- Chart Control -->
+        <!--<StackPanel Background="{StaticResource CardBackgroundFillColorDefault}" MinHeight="600" MinWidth="800">
+            <TextBlock Text="Yearly Salary"/>
+            <lvc:CartesianChart x:Name="IncomeChart" MinHeight="500"/>
+        </StackPanel>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Padding="8" Grid.Row="0" CornerRadius="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.25*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2"
+                        Orientation="Horizontal" Padding="20" VerticalAlignment="Top">
+                <TextBlock Text="Monthly Sales" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                <ComboBox Name="YearComboBox" 
+                          ItemsSource="{Binding AvailableYears, Mode=OneWay}" 
+                          SelectedItem="{Binding SelectedYear, Mode=TwoWay}" 
+                          SelectionChanged="OnYearSelectionChanged"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Margin="10"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Padding="10" VerticalAlignment="Top">
+                <lvc:CartesianChart x:Name="IncomeChart" MinHeight="400"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" 
+                        Background="{StaticResource SystemFillColorSuccessBackgroundBrush}" VerticalAlignment="Top"
+                        Padding="16" CornerRadius="16" BorderBrush="{StaticResource CardStrokeColorDefault}" BorderThickness="1">
+                <TextBlock Text="Total Sales" FontSize="16"/>
+                <TextBlock x:Name="TotalSalesText" FontSize="30" FontWeight="Bold" Margin="0,0,0,10" Text="{Binding YearlySales.TotalSales, Converter={StaticResource PriceToVNDConverter}}"/>
+
+                <TextBlock Text="Top Performing Month" FontSize="16"/>
+                <TextBlock x:Name="TopPerformingMonthText" FontSize="24" FontWeight="SemiBold" Text="{Binding YearlySales.TopPerformingMonth.Month}" Foreground="{StaticResource SystemFillColorSuccessBrush}"/>
+                <TextBlock x:Name="TopPerformingMonthSalary" FontSize="24" FontWeight="SemiBold" Text="{Binding YearlySales.TopPerformingMonth.TotalIncome, Converter={StaticResource PriceToVNDConverter}}"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Padding="20" Grid.Row="1" Spacing="20" Margin="0,20,0,0">
+            <TextBlock Text="Periodic Reports" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <!-- From Date and To Date -->
+            <StackPanel Orientation="Horizontal">
+                <DatePicker x:Name="FromDate" />
+                <TextBlock Text="To" VerticalAlignment="Center" Margin="10,0" />
+                <DatePicker x:Name="ToDate"/>
+                <Button Content="Load" Margin="10,0"/>
+            </StackPanel>
+
+            <TextBlock Text="Coming soon..." VerticalAlignment="Center" FontStyle="Italic"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -198,7 +198,7 @@
                 <ListView x:Name="OrderListView" ItemsSource="{x:Bind CartItems}" Margin="0,10,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:CartItemViewModel">
-                            <Grid HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Stretch" Padding="0,4,0,4">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="2*"/>
