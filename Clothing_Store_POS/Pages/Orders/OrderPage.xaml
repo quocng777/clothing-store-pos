@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <converter:PriceToVNDConverter x:Key="PriceToVNDConverter"/>
+        <converter:DateToStringConverter x:Key="DateToStringConverter"/>
     </Page.Resources>
 
     <StackPanel Padding="16" Margin="16,0,16,0">
@@ -81,7 +82,7 @@
                         <TextBlock Text="{x:Bind Customer.Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" ToolTipService.ToolTip="{x:Bind Customer.Id}"/>
                         <TextBlock Text="{x:Bind DiscountPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" />
                         <TextBlock Text="{x:Bind TaxPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
-                        <TextBlock Text="{x:Bind CreatedAt}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="5" />
+                        <TextBlock Text="{x:Bind CreatedAt, Converter={StaticResource DateToStringConverter}}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="5" />
                         <StackPanel Orientation="Horizontal" Grid.Column="6" Spacing="12" HorizontalAlignment="Center">
                             <Button CommandParameter="{Binding}" Click="ViewBtn_Click" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="View details">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -131,7 +132,7 @@
                             Created by: <Run FontWeight="SemiBold" Text="{Binding User.FullName, Mode=OneWay}" ToolTipService.ToolTip="{Binding User.UserName}"/>
                         </TextBlock>
                         <TextBlock HorizontalAlignment="Left">
-                            Created at: <Run FontWeight="SemiBold" Text="{Binding CreatedAt, Mode=OneWay}"/>
+                            Created at: <Run FontWeight="SemiBold" Text="{Binding CreatedAt, Mode=OneWay, Converter={StaticResource DateToStringConverter}}"/>
                         </TextBlock>
                     </StackPanel>
                     <Button VerticalAlignment="Top" CommandParameter="{Binding}" Click="PrintBtn_Click" Background="Transparent" BorderBrush="Transparent" Grid.Column="1">

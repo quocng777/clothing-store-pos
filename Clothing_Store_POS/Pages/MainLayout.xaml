@@ -16,7 +16,7 @@
 
         <Border x:Name="AppTitleBar" Grid.Row="0" Background="Transparent">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <Image Source="Assets\logo.png" Width="20" Height="20" VerticalAlignment="Center" Margin="12,0,8,0"/>
+                <Image Source="ms-appx:///Assets/logo.png" Width="20" Height="20" VerticalAlignment="Center" Margin="12,0,8,0"/>
 
                 <TextBlock x:Name="AppTitle" Text="Clothing Store TQT" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="12"/>
             </StackPanel>

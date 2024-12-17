@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using Clothing_Store_POS.Converters;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml;
+using Clothing_Store_POS.Models;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -19,39 +22,61 @@ namespace Clothing_Store_POS.Pages.Statistics
     /// </summary>
     public sealed partial class OverviewStatistics : Page
     {
-        public SalesViewModel ViewModel { get; set; }
+        public SalesViewModel SalesViewModel { get; set; }
+        public PeriodicReportViewModel PeriodicReportViewModel { get; set; }
+        private readonly List<string> Months = new()
+        {
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
 
         public OverviewStatistics()
         {
             this.InitializeComponent();
-            ViewModel = new SalesViewModel();
-            _ = ViewModel.LoadData();
-            DataContext = ViewModel;
+            SalesViewModel = new SalesViewModel();
+            PeriodicReportViewModel = new PeriodicReportViewModel();
+            _ = InitializeAsync();
             LoadOverviewChart();
+        }
+
+        private async Task InitializeAsync()
+        {
+            await SalesViewModel.LoadAvailableYearsAsync();
+            await PeriodicReportViewModel.LoadDataForDuration();
         }
 
         private async void OnYearSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await ViewModel.LoadSalesData(ViewModel.SelectedYear);
-            LoadOverviewChart();
+            if (e.AddedItems.Count > 0 && e.AddedItems[0] is int year)
+            {
+                SalesViewModel.SelectedYear = year;
+                await SalesViewModel.LoadSalesDataAsync(year);
+                LoadOverviewChart();
+            }
+        }
+
+        private async void LoadBtn_Clicked(object sender, RoutedEventArgs e)
+        {
+            // fromDate is 00h of this date, toDate is the end of the day 23h59m59s
+            var fromDate = FromDatePicker.Date;
+            var toDate = ToDatePicker.Date.AddDays(1).AddSeconds(-1);
+            PeriodicReportViewModel.FromDate = fromDate.DateTime;
+            PeriodicReportViewModel.ToDate = toDate.DateTime;
+            await PeriodicReportViewModel.LoadDataForDuration();
         }
 
         private void LoadOverviewChart()
         {
-            IncomeChart.Series = ViewModel.IncomeChartSeries;
+            IncomeChart.Series = SalesViewModel.IncomeChartSeries;
             IncomeChart.XAxes = new List<Axis>
             {
                 new Axis
                 {
-                    Labels = ViewModel.Months,
+                    Labels = Months,
                     Labeler = value =>
                     {
-                        int monthIndex = (int)value;
-                        if (monthIndex >= 0 && monthIndex < ViewModel.Months.Count)
-                        {
-                            return ViewModel.Months[monthIndex];
-                        }
-                        return string.Empty;
+                        int index = (int)value;
+                        return index >= 0 && index < Months.Count ? Months[index] : string.Empty;
                     }
                 }
             };

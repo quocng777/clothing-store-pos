@@ -1,18 +1,16 @@
 ﻿using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Statistics;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
-using QuestPDF.Helpers;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Clothing_Store_POS.Converters;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.ViewModels
 {
@@ -20,18 +18,8 @@ namespace Clothing_Store_POS.ViewModels
     {
         private readonly OrderService _orderService;
         private YearlySalesDto _yearlySales;
-        private List<int> _availableYears;
-        private int _selectedYear;
-
-        public List<int> AvailableYears
-        {
-            get => _availableYears;
-            set
-            {
-                _availableYears = value;
-                OnPropertyChanged(nameof(AvailableYears));
-            }
-        }
+        public List<int> AvailableYears { get; set; } = new();
+        public int SelectedYear { get; set; }
 
         public YearlySalesDto YearlySales
         {
@@ -44,68 +32,49 @@ namespace Clothing_Store_POS.ViewModels
             }
         }
 
-        public int SelectedYear
-        {
-            get => _selectedYear;
-            set
-            {
-                _selectedYear = value;
-                OnPropertyChanged(nameof(SelectedYear));
-                _ = LoadSalesData(value);
-            }
-        }
-
-        public ISeries[] IncomeChartSeries { get; set; }
-        public List<string> Months { get; set; }
+        public IEnumerable<ISeries> IncomeChartSeries { get; private set; } = Array.Empty<ISeries>();
 
         public SalesViewModel()
         {
             _orderService = new OrderService();
-            AvailableYears = new List<int>();
-            Months = new List<string>
-            {
-                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-            };
         }
 
-        public async Task LoadSalesData(int year)
+        public async Task LoadSalesDataAsync(int year)
         {
             YearlySales = await _orderService.GetYearlySalesAsync(year);
         }
 
-        public async Task LoadAvailableYears()
+        public async Task LoadAvailableYearsAsync()
         {
-            var years = await _orderService.GetAvailableYearsAsync();
-            AvailableYears = years;
-        }
-
-        public async Task LoadData()
-        {
-            await LoadAvailableYears();
+            AvailableYears = await _orderService.GetAvailableYearsAsync();
             if (AvailableYears.Count > 0)
             {
                 SelectedYear = AvailableYears[0];
+            }
+            else
+            {
+                SelectedYear = DateTime.Now.Year;
             }
         }
 
         private void PrepareChartData()
         {
-            var totalSales = YearlySales.MonthlySales.Select(ms => ms.TotalIncome).ToArray();
+            if (YearlySales?.MonthlySales == null)
+            {
+                IncomeChartSeries = Array.Empty<ISeries>();
+                OnPropertyChanged(nameof(IncomeChartSeries));
+                return;
+            }
+
             IncomeChartSeries = new ISeries[]
             {
                 new ColumnSeries<double>
                 {
-                    Values = totalSales,
-                    Fill = new SolidColorPaint(SKColors.Blue),
-                    Name = "Monthly Sales"
+                    Values = YearlySales.MonthlySales.Select(ms => ms.TotalIncome).ToArray(),
+                    Fill = new SolidColorPaint(SKColors.BlueViolet),
+                    Name = "Sales"
                 }
             };
-        }
-
-        public string YAxisFormatter(double value)
-        {
-            return PriceToVNDConverter.convertToVND(value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
