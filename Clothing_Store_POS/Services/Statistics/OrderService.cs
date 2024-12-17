@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.Services.Statistics
@@ -68,13 +67,10 @@ namespace Clothing_Store_POS.Services.Statistics
 
         public async Task<SalesStatisticsDto> GetSalesStatisticsAsync(DateTime fromDate, DateTime toDate, int takenProducts, int takenUsers, int takenCustomers)
         {
-            Debug.WriteLine("[OrderService] GetSalesStatisticsAsync " + fromDate + " - " + toDate);
             var orders = await FetchOrdersAsync(fromDate, toDate);
 
             var totalSales = CalculateTotalSales(orders);
             var totalOrders = CalculateTotalOrders(orders);
-            Debug.WriteLine("[OrderService] TotalSales " + totalSales);
-            Debug.WriteLine("[OrderService] TotalOrders " + totalOrders);
 
             var categorySales = await CalculateCategorySalesAsync(orders);
             var topProducts = GetTopProducts(orders, takenProducts);

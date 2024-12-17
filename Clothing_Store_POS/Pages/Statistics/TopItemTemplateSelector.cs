@@ -16,20 +16,16 @@ namespace Clothing_Store_POS.Pages.Statistics
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            Debug.WriteLine("[TopItemTemplateSelector] Selecting template for item: " + item.ToString());
             if (item is ProductStatsDto product)
             {
-                Debug.WriteLine("[TopItemTemplateSelector] Product index: " + product.Index);
                 return product.Index == 1 ? FirstPositionProductTemplate : DefaultProductTemplate;
             }
             else if (item is UserStatsDto user)
             {
-                Debug.WriteLine("[TopItemTemplateSelector] User index: " + user.Index);
                 return user.Index == 1 ? FirstPositionUserTemplate : DefaultUserTemplate;
             }
             else if (item is CustomerStatsDto customer)
             {
-                Debug.WriteLine("[TopItemTemplateSelector] Customer index: " + customer.Index);
                 return customer.Index == 1 ? FirstPositionCustomerTemplate : DefaultCustomerTemplate;
             }
 

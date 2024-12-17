@@ -20,7 +20,6 @@
     <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Assets\horizontal-banner.png" />
     <None Remove="Assets\logo.png" />
     <None Remove="Pages\Auth\BackToLoginButton.xaml" />
     <None Remove="Pages\Auth\ForgotPasswordPage.xaml" />
@@ -91,9 +90,6 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Assets\horizontal-banner.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="Assets\product-default.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

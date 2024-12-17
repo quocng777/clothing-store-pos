@@ -1,15 +1,10 @@
-﻿using Clothing_Store_POS.ViewModels;
+﻿using Clothing_Store_POS.Converters;
+using Clothing_Store_POS.ViewModels;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore;
-using Microsoft.UI.Xaml.Controls;
-using QuestPDF.Helpers;
-using System.Collections.Generic;
-using Clothing_Store_POS.Converters;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
-using Clothing_Store_POS.Models;
+using Microsoft.UI.Xaml.Controls;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -57,7 +52,6 @@ namespace Clothing_Store_POS.Pages.Statistics
 
         private async void LoadBtn_Clicked(object sender, RoutedEventArgs e)
         {
-            // fromDate is 00h of this date, toDate is the end of the day 23h59m59s
             var fromDate = FromDatePicker.Date;
             var toDate = ToDatePicker.Date.AddDays(1).AddSeconds(-1);
             PeriodicReportViewModel.FromDate = fromDate.DateTime;

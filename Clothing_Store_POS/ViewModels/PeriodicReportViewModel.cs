@@ -1,19 +1,15 @@
 ﻿using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Statistics;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView.Extensions;
+using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using LiveChartsCore.SkiaSharpView.Extensions;
-using System.Diagnostics;
 
 namespace Clothing_Store_POS.ViewModels
 {
