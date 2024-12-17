@@ -28,10 +28,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Run Text="{x:Bind Index}"/>
+                    <Run Text="{x:Bind Index}"/> 
                 </TextBlock>
                 <TextBlock Grid.Column="1" Text="{x:Bind ProductName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
-                    <Run Text="{x:Bind ProductName}"/> <Run Text="👑" FontSize="18"/>
+                    <Run Text="{x:Bind ProductName}"/> 👑
                 </TextBlock>
                 <TextBlock Grid.Column="2" Text="{x:Bind TotalQuantity, Mode=OneWay}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
             </Grid>
@@ -61,7 +61,7 @@
                     <Run Text="{x:Bind Index}"/>
                 </TextBlock>
                 <TextBlock Grid.Column="1" Text="{x:Bind UserName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
-            <Run Text="{x:Bind UserName}"/> <Run Text="👑" FontSize="18"/>
+                    <Run Text="{x:Bind UserName}"/> 👑
                 </TextBlock>
                 <TextBlock Grid.Column="2" Text="{x:Bind TotalOrders, Mode=OneWay}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
             </Grid>
@@ -91,7 +91,7 @@
                     <Run Text="{x:Bind Index}"/>
                 </TextBlock>
                 <TextBlock Grid.Column="1" Text="{x:Bind CustomerName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
-                    <Run Text="{x:Bind CustomerName}"/> <Run Text="👑" FontSize="18"/>
+                    <Run Text="{x:Bind CustomerName}"/> 👑
                 </TextBlock>
                 <TextBlock Grid.Column="2" Text="{x:Bind TotalSpent, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
             </Grid>
@@ -116,7 +116,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Padding="8" Grid.Row="0" CornerRadius="16">
+        <Grid Padding="8,0,8,4" Grid.Row="0" CornerRadius="16" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -128,7 +128,7 @@
 
             <StackPanel Grid.Row="0" Grid.ColumnSpan="2"
                         Orientation="Horizontal" Padding="20" VerticalAlignment="Top">
-                <TextBlock Text="Monthly Sales" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBlock Text="Monthly Sales" FontSize="26" FontWeight="Bold" VerticalAlignment="Center"/>
                 <ComboBox Name="YearComboBox" 
                           ItemsSource="{x:Bind SalesViewModel.AvailableYears, Mode=OneWay}" 
                           SelectedItem="{x:Bind SalesViewModel.SelectedYear, Mode=TwoWay}" 
@@ -154,8 +154,8 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel Padding="20" Grid.Row="1" Spacing="20" Margin="0,20,0,0">
-            <TextBlock Text="Periodic Reports" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+        <StackPanel Padding="20" Grid.Row="1" Spacing="20" Margin="0,20,0,0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="16">
+            <TextBlock Text="Periodic Reports" FontSize="26" FontWeight="Bold" VerticalAlignment="Center"/>
             <StackPanel Orientation="Horizontal">
                 <DatePicker x:Name="FromDatePicker" Date="{x:Bind PeriodicReportViewModel.FromDate, Mode=OneWay}"/>
                 <TextBlock Text="To" VerticalAlignment="Center" Margin="10,0" />

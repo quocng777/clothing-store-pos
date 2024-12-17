@@ -22,6 +22,7 @@ namespace Clothing_Store_POS.ViewModels
         public User User { get; set; }
         public Customer Customer { get; set; }
         public ObservableCollection<OrderItemViewModel> OrderItems { get; set; }
+        public string Note { get; set; }
         public double OriginalPrice => OrderItems.Sum(oi => oi.TotalPrice);
         public double FinalPrice => OriginalPrice * (1 + TaxPercentage / 100) * (1 - DiscountPercentage / 100);
 
@@ -38,11 +39,12 @@ namespace Clothing_Store_POS.ViewModels
             _orderDAO = new OrderDAO();
             _orderItemDAO = new OrderItemDAO();
             Id = order.Id;
-            CreatedAt = order.CreatedAt;
+            CreatedAt = order.CreatedAt.ToLocalTime();
             DiscountPercentage = order.DiscountPercentage;
             TaxPercentage = order.TaxPercentage;
             User = order.User;
             Customer = order.Customer;
+            Note = order.Note;
         }
 
         public void LoadOrderItems()
@@ -63,6 +65,7 @@ namespace Clothing_Store_POS.ViewModels
                 TaxPercentage = TaxPercentage,
                 CustomerId = customerId != -1 ? customerId : null,
                 UserId = userId,
+                Note = Note,
                 CreatedAt = DateTime.UtcNow,
             };
             int orderId = _orderDAO.AddOrder(order);

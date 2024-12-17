@@ -16,6 +16,7 @@ namespace Clothing_Store_POS.Models
         public User User { get; set; }
         public Customer Customer { get; set; }
         public List<InvoiceItem> InvoiceItems { get; set; } = new List<InvoiceItem>();
+        public string Note { get; set; }
 
         public double OriginalPrice => InvoiceItems.Sum(ii => ii.TotalPrice);
         public double FinalPrice => OriginalPrice * (1 + TaxPercentage / 100) * (1 - DiscountPercentage / 100);
@@ -48,6 +49,7 @@ namespace Clothing_Store_POS.Models
                 TaxPercentage = order.TaxPercentage,
                 User = order.User,
                 Customer = order.Customer,
+                Note = order.Note,
                 InvoiceItems = order.OrderItems.Select(orderItem => new InvoiceItem
                 {
                     Product = orderItem.Product,

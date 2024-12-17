@@ -91,12 +91,6 @@ namespace Clothing_Store_POS.ViewModels
                 TotalPages = pagedResult.TotalPages;
             }
 
-            // convert utc datetime to local
-            foreach (var order in pagedResult.Items)
-            {
-                order.CreatedAt = order.CreatedAt.ToLocalTime();
-            }
-
             // update page numbers
             PageNumbers.Clear();
             for (int i = 1; i <= TotalPages; i++)

@@ -46,10 +46,10 @@
                         <ColumnDefinition Width="0.5*" />
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="1.5*" />
+                        <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1.5*" />
                     </Grid.ColumnDefinitions>
 
                     <!-- Column Headers -->
@@ -71,10 +71,10 @@
                             <ColumnDefinition Width="0.5*" />
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="1.5*" />
+                            <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1.5*" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{x:Bind Id}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
@@ -120,58 +120,40 @@
 
         <!--Modal for order details-->
         <ContentDialog x:Name="OrderDetailsDialog" CloseButtonText="Close">
-            <StackPanel MinWidth="600">
-                <Grid Margin="4,4,4,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical" Spacing="8" Grid.Column="0">
-                        <TextBlock Text="Order Details" FontSize="28" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0"/>
-                        <TextBlock HorizontalAlignment="Left">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel MinWidth="600">
+                    <Grid Margin="4,4,4,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical" Spacing="8" Grid.Column="0">
+                            <TextBlock Text="Order Details" FontSize="28" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0"/>
+                            <TextBlock HorizontalAlignment="Left">
                             Created by: <Run FontWeight="SemiBold" Text="{Binding User.FullName, Mode=OneWay}" ToolTipService.ToolTip="{Binding User.UserName}"/>
-                        </TextBlock>
-                        <TextBlock HorizontalAlignment="Left">
-                            Created at: <Run FontWeight="SemiBold" Text="{Binding CreatedAt, Mode=OneWay, Converter={StaticResource DateToStringConverter}}"/>
-                        </TextBlock>
-                    </StackPanel>
-                    <Button VerticalAlignment="Top" CommandParameter="{Binding}" Click="PrintBtn_Click" Background="Transparent" BorderBrush="Transparent" Grid.Column="1">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <SymbolIcon Symbol="Print" Foreground="{StaticResource SystemFillColorAttentionBrush}" />
+                            </TextBlock>
+                            <TextBlock HorizontalAlignment="Left">
+                                Created at: <Run FontWeight="SemiBold" Text="{Binding CreatedAt, Mode=OneWay, Converter={StaticResource DateToStringConverter}}"/>
+                            </TextBlock>
                         </StackPanel>
-                    </Button>
-                </Grid>
-                <TextBlock FontSize="16" Margin="4">
-                    Customer: <Run FontWeight="SemiBold" Text="{Binding Customer.Name, Mode=OneWay}"/>
-                </TextBlock>
-                <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="0,0,0,1" Margin="0,4,0,8"/>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <ListView ItemsSource="{Binding OrderItems}" 
-                              Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
-                              CornerRadius="12" 
-                              BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                              MaxHeight="400">        
-                        <ListView.Header>
-                            <Grid Padding="18,12,16,12" ColumnSpacing="16">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="2*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="ID" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
-                                <TextBlock Text="Product" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" />
-                                <TextBlock Text="Price" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" />
-                                <TextBlock Text="Quantity" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" />
-                                <TextBlock Text="Discount(%)" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
-                                <TextBlock Text="Subtotal" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="5" />
-                            </Grid>
-                        </ListView.Header>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="viewmodel:OrderItemViewModel">
-                                <Grid Padding="0,0,4,0" ColumnSpacing="16" Margin="-4,0,0,0">
+                        <Button VerticalAlignment="Top" CommandParameter="{Binding}" Click="PrintBtn_Click" Background="Transparent" BorderBrush="Transparent" Grid.Column="1">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <SymbolIcon Symbol="Print" Foreground="{StaticResource SystemFillColorAttentionBrush}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <TextBlock FontSize="16" Margin="4">
+                        Customer: <Run FontWeight="SemiBold" Text="{Binding Customer.Name, Mode=OneWay}"/>
+                    </TextBlock>
+                    <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="0,0,0,1" Margin="0,4,0,8"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <ListView ItemsSource="{Binding OrderItems}" 
+                                  Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
+                                  CornerRadius="12" 
+                                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                  MaxHeight="400">
+                            <ListView.Header>
+                                <Grid Padding="18,12,16,12" ColumnSpacing="16">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0.5*" />
                                         <ColumnDefinition Width="2*" />
@@ -180,64 +162,88 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Id}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
-                                    <TextBlock Text="{Binding Product.Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" />
-                                    <TextBlock Text="{Binding Product.Price, Converter={StaticResource PriceToVNDConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" />
-                                    <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" />
-                                    <TextBlock Text="{Binding DiscountPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
-                                    <TextBlock Text="{Binding TotalPrice, Converter={StaticResource PriceToVNDConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="5" />
+                                    <TextBlock Text="ID" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+                                    <TextBlock Text="Product" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" />
+                                    <TextBlock Text="Price" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" />
+                                    <TextBlock Text="Quantity" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" />
+                                    <TextBlock Text="Discount(%)" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
+                                    <TextBlock Text="Subtotal" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="5" />
                                 </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollViewer>
-                
-                <Border BorderBrush="{StaticResource FocusStrokeColorOuterBrush}" BorderThickness="0,0.5" Margin="0,8,0,16"/>
-                <Grid RowSpacing="8" Margin="4,0,4,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="1" Grid.Row="0"
-                               VerticalAlignment="Center" HorizontalAlignment="Right"
-                               FontSize="16"
-                               Text="{Binding OriginalPrice, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               FontSize="16"
-                               Text="Discount:"/>
-                    <TextBlock Grid.Column="2" Grid.Row="1"
-                               VerticalAlignment="Center" HorizontalAlignment="Right"
-                               FontSize="16">
-                        - <Run Text="{Binding DiscountPercentage}"/> %
-                    </TextBlock>
-                    <TextBlock Grid.Column="0" Grid.Row="2"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               FontSize="16"
-                               Text="Tax:"/>
-                    <TextBlock Grid.Column="2" Grid.Row="2"
-                               VerticalAlignment="Center" HorizontalAlignment="Right"
-                               FontSize="16">
-                        + <Run Text="{Binding TaxPercentage}"/> %
-                    </TextBlock>
-                    <Border BorderBrush="{StaticResource FocusStrokeColorOuterBrush}" BorderThickness="0,0.5" Margin="0,8,0,16" Grid.Row="3" Grid.ColumnSpan="2"/>
-                    <TextBlock Grid.Column="0" Grid.Row="4"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"
-                               FontSize="16"
-                               Text="Total:"/>
-                    <TextBlock Grid.Column="1" Grid.Row="4"
-                               VerticalAlignment="Center" HorizontalAlignment="Right"
-                               FontSize="16" FontWeight="Bold"
-                               Text="{Binding FinalPrice, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}"/>
-                </Grid>
-            </StackPanel>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodel:OrderItemViewModel">
+                                    <Grid Padding="0,0,4,0" ColumnSpacing="16" Margin="-4,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Id}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+                                        <TextBlock Text="{Binding Product.Name}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" />
+                                        <TextBlock Text="{Binding Product.Price, Converter={StaticResource PriceToVNDConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" />
+                                        <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" />
+                                        <TextBlock Text="{Binding DiscountPercentage}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" />
+                                        <TextBlock Text="{Binding TotalPrice, Converter={StaticResource PriceToVNDConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="5" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+
+                    <Border BorderBrush="{StaticResource FocusStrokeColorOuterBrush}" BorderThickness="0,0.5" Margin="0,8,0,16"/>
+                    <Grid RowSpacing="8" Margin="4,0,4,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                                   FontSize="16"
+                                   Text="{Binding OriginalPrice, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   FontSize="16"
+                                   Text="Discount:"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1"
+                                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                                   FontSize="16">
+                            - <Run Text="{Binding DiscountPercentage}"/> %
+                        </TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="2"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   FontSize="16"
+                                   Text="Tax:"/>            
+                        <TextBlock Grid.Column="2" Grid.Row="2"
+                                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                                   FontSize="16">
+                            + <Run Text="{Binding TaxPercentage}"/> %
+                        </TextBlock>
+                        <Border BorderBrush="{StaticResource FocusStrokeColorOuterBrush}" BorderThickness="0,0.5" Margin="0,8,0,16" Grid.Row="3" Grid.ColumnSpan="2"/>
+                        <TextBlock Grid.Column="0" Grid.Row="4"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   FontSize="16"
+                                   Text="Total:"/>
+                        <TextBlock Grid.Column="1" Grid.Row="4"
+                                   VerticalAlignment="Center" HorizontalAlignment="Right"
+                                   FontSize="16" FontWeight="Bold"
+                                   Text="{Binding FinalPrice, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}"/>
+                    </Grid>
+                    <StackPanel Margin="4,16,0,0">
+                        <TextBlock Text="Note" FontSize="14" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding Note, Mode=OneWay}" FontSize="14" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
         </ContentDialog>
     </StackPanel>
 </Page>

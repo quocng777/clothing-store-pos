@@ -4,9 +4,6 @@ using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuestPDF.Companion;
-using QuestPDF.Fluent;
-using QuestPDF.Previewer;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -72,9 +69,9 @@ namespace Clothing_Store_POS.Pages.Orders
         private async void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
+            var parameter = button?.CommandParameter;
 
-            if (order != null)
+            if (parameter is Order order && order != null)
             {
                 order.OrderItems = new OrderItemDAO().GetOrderItemsByOrderId(order.Id);
                 InvoiceModel invoiceModel = new InvoiceModel
@@ -83,6 +80,7 @@ namespace Clothing_Store_POS.Pages.Orders
                     CreatedAt = order.CreatedAt,
                     DiscountPercentage = order.DiscountPercentage,
                     TaxPercentage = order.TaxPercentage,
+                    Note = order.Note,
                     User = order.User,
                     Customer = order.Customer,
                     InvoiceItems = order.OrderItems.Select(orderItem => new InvoiceItem
@@ -93,6 +91,25 @@ namespace Clothing_Store_POS.Pages.Orders
                     }).ToList()
                 };
 
+                await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
+            } else if (parameter is OrderViewModel orderViewModel && orderViewModel != null)
+            {
+                InvoiceModel invoiceModel = new InvoiceModel
+                {
+                    Id = orderViewModel.Id,
+                    CreatedAt = orderViewModel.CreatedAt,
+                    DiscountPercentage = orderViewModel.DiscountPercentage,
+                    TaxPercentage = orderViewModel.TaxPercentage,
+                    Note = orderViewModel.Note,
+                    User = orderViewModel.User,
+                    Customer = orderViewModel.Customer,
+                    InvoiceItems = orderViewModel.OrderItems.Select(orderItem => new InvoiceItem
+                    {
+                        Product = orderItem.Product,
+                        Quantity = orderItem.Quantity,
+                        DiscountPercentage = orderItem.DiscountPercentage
+                    }).ToList()
+                };
                 await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
             }
         }

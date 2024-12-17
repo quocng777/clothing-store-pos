@@ -281,11 +281,27 @@
                 <TextBlock Text="Total:" FontWeight="Bold" FontSize="16"/>
                 <TextBlock x:Name="TotalAmountText" Text="{x:Bind TotalAmount, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}" FontSize="16" Foreground="{ThemeResource SystemFillColorCriticalBrush}" Margin="10,0,0,0"/>
             </StackPanel>
-
+            <Expander x:Name="NoteExpander" HorizontalAlignment="Stretch" Background="Transparent" Padding="0">
+                <Expander.Header>
+                    <TextBlock Text="Add note"/>
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <TextBox Text="{x:Bind OrderViewModel.Note, Mode=TwoWay}" 
+                                AutomationProperties.Name="multi-line TextBox"
+                                TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                                SelectionHighlightColor="Green"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                MinWidth="400" Margin="0"/>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" Spacing="10">
                 <Button Content="Save" Click="SaveOrder_Click"/>
                 <Button Content="Save and Print" Click="SaveAndPrintOrder_Click"/>
             </StackPanel>
+            
         </StackPanel>
     </Grid>
 
