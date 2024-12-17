@@ -17,10 +17,10 @@
     <Content Remove="Assets\clothing_icon.png" />
     <Content Remove="Assets\clothing_shop_login.svg" />
     <Content Remove="Assets\email_background.svg" />
-    <Content Remove="Assets\logo.png" />
     <Content Remove="Assets\sample_image.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\logo.png" />
     <None Remove="Pages\Auth\BackToLoginButton.xaml" />
     <None Remove="Pages\Auth\ForgotPasswordPage.xaml" />
     <None Remove="Pages\Auth\LoginPage.xaml" />
@@ -104,9 +104,9 @@
     <None Update="Assets\email_background.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\logo.png">
+    <Content Update="Assets\logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -183,9 +183,6 @@
     <Page Update="Pages\Auth\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Statistics\" />
   </ItemGroup>
 
   <!--
