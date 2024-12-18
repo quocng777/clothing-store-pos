@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS orders (
     tax_percentage DECIMAL(5, 2) DEFAULT 0,
     user_id INT,
     customer_id INT,
+    note TEXT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE

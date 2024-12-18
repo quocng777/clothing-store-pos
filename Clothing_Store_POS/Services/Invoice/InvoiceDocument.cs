@@ -90,6 +90,11 @@ namespace Clothing_Store_POS.Services.Invoice
                 column.Item().Element(ComposeTable);
 
                 column.Item().Element(ComposeGrandTotal);
+
+                if(!string.IsNullOrEmpty(Model.Note))
+                {
+                    column.Item().Element(ComposeComments);
+                }
             });
         }
 
@@ -200,8 +205,8 @@ namespace Clothing_Store_POS.Services.Invoice
             container.Background(Colors.Grey.Lighten4).Padding(10).Column(column =>
             {
                 column.Spacing(5);
-                column.Item().Text("Notes").FontSize(14);
-                column.Item().Text("Please...");
+                column.Item().Text("Note:").FontSize(10).SemiBold();
+                column.Item().Text($"{Model.Note}").FontSize(10);
             });
         }
     }

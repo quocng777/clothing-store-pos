@@ -84,6 +84,7 @@ namespace Clothing_Store_POS.Services.Statistics
                 topUsers[i].Index = i + 1;
             }
             var topCustomers = GetTopCustomers(orders, takenCustomers);
+            Debug.WriteLine("[OrderService] topCustomers.Count: " + topCustomers.Count);
             for (int i = 0; i < topCustomers.Count; i++)
             {
                 topCustomers[i].Index = i + 1;
@@ -113,6 +114,7 @@ namespace Clothing_Store_POS.Services.Statistics
                     .ThenInclude(oi => oi.Product)
                     .ThenInclude(p => p.Category)
                     .Include(o => o.User)
+                    .Include(o => o.Customer)
                     .ToListAsync();
 
                 return list;
@@ -181,12 +183,12 @@ namespace Clothing_Store_POS.Services.Statistics
         private List<CustomerStatsDto> GetTopCustomers(List<Order> orders, int takeNumber)
         {
             return orders
-                .SelectMany(o => o.OrderItems)
-                .GroupBy(oi => oi.Order.Customer)
+                .Where(o => o.Customer != null)
+                .GroupBy(o => o.Customer)
                 .Select(g => new CustomerStatsDto
                 {
                     CustomerName = g.Key?.Name,
-                    TotalSpent = g.Sum(oi => oi.Quantity * oi.Product.Price * (1 - oi.DiscountPercentage / 100)),
+                    TotalSpent = g.Sum(o => o.OrderItems.Sum(oi => oi.Quantity * oi.Product.Price * (1 - oi.DiscountPercentage / 100))),
                 })
                 .OrderByDescending(x => x.TotalSpent)
                 .Take(takeNumber)

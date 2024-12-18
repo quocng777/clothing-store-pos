@@ -340,6 +340,7 @@ namespace Clothing_Store_POS.Pages.Home
             await dialog.ShowAsync();
 
             CartItems.Clear();
+            OrderViewModel.Note = "";
         }
 
         private async void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)
@@ -381,6 +382,7 @@ namespace Clothing_Store_POS.Pages.Home
             await dialog.ShowAsync();
 
             CartItems.Clear();
+            OrderViewModel.Note = "";
         }
 
         // category filter

@@ -9,7 +9,7 @@ namespace Clothing_Store_POS.ViewModels
     public class OrdersViewModel : INotifyPropertyChanged
     {
         public readonly OrderDAO _orderDAO;
-        public ObservableCollection<Order> Orders { get; set; }
+        public ObservableCollection<OrderViewModel> Orders { get; set; }
         public ObservableCollection<int> PageNumbers { get; set; }
         public int TotalPages { get; set; }
         public int TotalItems { get; set; }
@@ -42,7 +42,7 @@ namespace Clothing_Store_POS.ViewModels
             this._orderDAO = new OrderDAO();
             CurrentPage = 1;
             PerPage = 10;
-            Orders = new ObservableCollection<Order>();
+            Orders = new ObservableCollection<OrderViewModel>();
             PageNumbers = new ObservableCollection<int>();
             _ = LoadOrders();
         }
@@ -52,14 +52,14 @@ namespace Clothing_Store_POS.ViewModels
             this._orderDAO = new OrderDAO();
             CurrentPage = 1;
             PerPage = 10;
-            Orders = new ObservableCollection<Order>();
+            Orders = new ObservableCollection<OrderViewModel>();
             PageNumbers = new ObservableCollection<int>();
             _ = LoadOrdersByCustomerId(customerId);
         }
 
         public void DeleteAnOrder(int orderId)
         {
-            Order order = null;
+            OrderViewModel order = null;
             foreach (var o in Orders)
             {
                 if (o.Id == orderId)
@@ -91,12 +91,6 @@ namespace Clothing_Store_POS.ViewModels
                 TotalPages = pagedResult.TotalPages;
             }
 
-            // convert utc datetime to local
-            foreach (var order in pagedResult.Items)
-            {
-                order.CreatedAt = order.CreatedAt.ToLocalTime();
-            }
-
             // update page numbers
             PageNumbers.Clear();
             for (int i = 1; i <= TotalPages; i++)
@@ -108,7 +102,7 @@ namespace Clothing_Store_POS.ViewModels
             Orders.Clear();
             foreach (var order in pagedResult.Items)
             {
-                Orders.Add(order);
+                Orders.Add(new OrderViewModel(order));
             }
         }
 
@@ -136,7 +130,7 @@ namespace Clothing_Store_POS.ViewModels
             Orders.Clear();
             foreach (var order in pagedResult.Items)
             {
-                Orders.Add(order);
+                Orders.Add(new OrderViewModel(order));
             }
         }
 
