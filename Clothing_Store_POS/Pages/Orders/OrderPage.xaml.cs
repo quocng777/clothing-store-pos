@@ -69,6 +69,10 @@ namespace Clothing_Store_POS.Pages.Orders
 
             if (parameter is OrderViewModel orderViewModel && orderViewModel != null)
             {
+                if (orderViewModel.OrderItems == null)
+                {
+                    orderViewModel.LoadOrderItems();
+                }
                 InvoiceModel invoiceModel = new InvoiceModel
                 {
                     Id = orderViewModel.Id,

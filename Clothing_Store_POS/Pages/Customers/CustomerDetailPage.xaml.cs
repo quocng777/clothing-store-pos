@@ -29,7 +29,6 @@ namespace Clothing_Store_POS.Pages.Customers
     {
         public CustomerViewModel ViewModel;
         public OrdersViewModel OrdersViewModel { get; set; }
-        public OrderViewModel OrderViewModel { get; set; }
 
         public CustomerDetailPage()
         {
@@ -55,13 +54,15 @@ namespace Clothing_Store_POS.Pages.Customers
         private async void ViewBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
+            var order = button?.CommandParameter as OrderViewModel;
 
             if (order != null)
             {
-                OrderViewModel = new OrderViewModel(order);
-                OrderViewModel.LoadOrderItems();
-                OrderDetailsDialog.DataContext = OrderViewModel;
+                if (order.OrderItems == null)
+                {
+                    order.LoadOrderItems();
+                }
+                OrderDetailsDialog.DataContext = order;
                 await OrderDetailsDialog.ShowAsync();
             }
         }
@@ -69,17 +70,19 @@ namespace Clothing_Store_POS.Pages.Customers
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(CustomerPage));
-
         }
 
         private async void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
+            var order = button?.CommandParameter as OrderViewModel;
 
             if (order != null)
             {
-                order.OrderItems = new OrderItemDAO().GetOrderItemsByOrderId(order.Id);
+                if (order.OrderItems == null)
+                {
+                    order.LoadOrderItems();
+                }
                 InvoiceModel invoiceModel = new InvoiceModel
                 {
                     Id = order.Id,
