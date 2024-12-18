@@ -5,7 +5,6 @@ using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -19,7 +18,6 @@ namespace Clothing_Store_POS.Pages.Orders
     public sealed partial class OrderPage : Page
     {
         public OrdersViewModel OrdersViewModel { get; }
-        public OrderViewModel OrderViewModel { get; set; }
         
         public OrderPage()
         {
@@ -30,12 +28,8 @@ namespace Clothing_Store_POS.Pages.Orders
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
-
-            Debug.WriteLine($"Deleting order #{order.Id}");
-
+            var order = button?.CommandParameter as OrderViewModel;
             var dialog = new ContentDialog();
-
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
@@ -55,13 +49,15 @@ namespace Clothing_Store_POS.Pages.Orders
         private async void ViewBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
+            var order = button?.CommandParameter as OrderViewModel;
 
             if (order != null)
             {
-                OrderViewModel = new OrderViewModel(order);
-                OrderViewModel.LoadOrderItems();
-                OrderDetailsDialog.DataContext = OrderViewModel;
+                if (order.OrderItems == null)
+                {
+                    order.LoadOrderItems();
+                }
+                OrderDetailsDialog.DataContext = order;
                 await OrderDetailsDialog.ShowAsync();
             }
         }
@@ -71,28 +67,7 @@ namespace Clothing_Store_POS.Pages.Orders
             var button = sender as Button;
             var parameter = button?.CommandParameter;
 
-            if (parameter is Order order && order != null)
-            {
-                order.OrderItems = new OrderItemDAO().GetOrderItemsByOrderId(order.Id);
-                InvoiceModel invoiceModel = new InvoiceModel
-                {
-                    Id = order.Id,
-                    CreatedAt = order.CreatedAt,
-                    DiscountPercentage = order.DiscountPercentage,
-                    TaxPercentage = order.TaxPercentage,
-                    Note = order.Note,
-                    User = order.User,
-                    Customer = order.Customer,
-                    InvoiceItems = order.OrderItems.Select(orderItem => new InvoiceItem
-                    {
-                        Product = orderItem.Product,
-                        Quantity = orderItem.Quantity,
-                        DiscountPercentage = orderItem.DiscountPercentage
-                    }).ToList()
-                };
-
-                await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
-            } else if (parameter is OrderViewModel orderViewModel && orderViewModel != null)
+            if (parameter is OrderViewModel orderViewModel && orderViewModel != null)
             {
                 InvoiceModel invoiceModel = new InvoiceModel
                 {

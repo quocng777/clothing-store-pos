@@ -3,7 +3,6 @@
     x:Class="Clothing_Store_POS.Pages.Orders.OrderPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Clothing_Store_POS.Models"
     xmlns:viewmodel="using:Clothing_Store_POS.ViewModels"
     xmlns:converter="using:Clothing_Store_POS.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -65,7 +64,7 @@
 
             <!-- Item Template -->
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:Order">
+                <DataTemplate x:DataType="viewmodel:OrderViewModel">
                     <Grid Padding="20,12,20,12" ColumnSpacing="16" Margin="-12,0,-12,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*" />

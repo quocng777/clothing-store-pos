@@ -181,13 +181,13 @@ namespace Clothing_Store_POS.Services.Statistics
         private List<CustomerStatsDto> GetTopCustomers(List<Order> orders, int takeNumber)
         {
             return orders
-                .SelectMany(o => o.OrderItems)
-                .GroupBy(oi => oi.Order.Customer)
+                .GroupBy(o => o.Customer)
                 .Select(g => new CustomerStatsDto
                 {
                     CustomerName = g.Key?.Name,
-                    TotalSpent = g.Sum(oi => oi.Quantity * oi.Product.Price * (1 - oi.DiscountPercentage / 100)),
+                    TotalSpent = g.Sum(o => o.OrderItems.Sum(oi => oi.Quantity * oi.Product.Price * (1 - oi.DiscountPercentage / 100))),
                 })
+                .Where(x => !string.IsNullOrEmpty(x.CustomerName))
                 .OrderByDescending(x => x.TotalSpent)
                 .Take(takeNumber)
                 .ToList();

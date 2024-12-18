@@ -30,7 +30,7 @@
                 <TextBlock Grid.Column="0" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Run Text="{x:Bind Index}"/> 
                 </TextBlock>
-                <TextBlock Grid.Column="1" Text="{x:Bind ProductName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
+                <TextBlock Grid.Column="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
                     <Run Text="{x:Bind ProductName}"/> 👑
                 </TextBlock>
                 <TextBlock Grid.Column="2" Text="{x:Bind TotalQuantity, Mode=OneWay}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
@@ -60,7 +60,7 @@
                 <TextBlock Grid.Column="0" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Run Text="{x:Bind Index}"/>
                 </TextBlock>
-                <TextBlock Grid.Column="1" Text="{x:Bind UserName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
+                <TextBlock Grid.Column="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
                     <Run Text="{x:Bind UserName}"/> 👑
                 </TextBlock>
                 <TextBlock Grid.Column="2" Text="{x:Bind TotalOrders, Mode=OneWay}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
@@ -90,7 +90,7 @@
                 <TextBlock Grid.Column="0" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Run Text="{x:Bind Index}"/>
                 </TextBlock>
-                <TextBlock Grid.Column="1" Text="{x:Bind CustomerName}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
+                <TextBlock Grid.Column="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
                     <Run Text="{x:Bind CustomerName}"/> 👑
                 </TextBlock>
                 <TextBlock Grid.Column="2" Text="{x:Bind TotalSpent, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
