@@ -7,7 +7,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
-using Org.BouncyCastle.Asn1.Cmp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -78,6 +77,7 @@ namespace Clothing_Store_POS.Pages.Home
 
             PerPageComboBox.SelectedIndex = 0;
             CurrentPageComboBox.SelectedIndex = 0;
+            this.NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             Task.Run(() => _paymentHandler.StartHttpListener());
         }
