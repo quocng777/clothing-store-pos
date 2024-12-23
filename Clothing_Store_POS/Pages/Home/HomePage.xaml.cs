@@ -1,4 +1,5 @@
 ﻿using Clothing_Store_POS.Config;
+using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
@@ -6,6 +7,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
+using Org.BouncyCastle.Asn1.Cmp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +15,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.UI.Dispatching;
+using System.Threading.Tasks;
+using System.Web;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,7 +34,7 @@ namespace Clothing_Store_POS.Pages.Home
         public CustomersViewModel CustomersViewModel { get; set; }
         public OrderViewModel OrderViewModel { get; set; }
         public ObservableCollection<CartItemViewModel> CartItems { get; set; }
-
+        private PaymentHandler _paymentHandler;
         public double TotalAmount
         {
             get
@@ -59,6 +64,8 @@ namespace Clothing_Store_POS.Pages.Home
 
         public HomePage()
         {
+            _paymentHandler = new PaymentHandler();
+            _paymentHandler.PaymentReceived += OnPaymentReceived;
             ProductsViewModel = new ProductsViewModel();
             CategoriesViewModel = new CategoriesViewModel();
             OrderViewModel = new OrderViewModel();
@@ -71,10 +78,53 @@ namespace Clothing_Store_POS.Pages.Home
 
             PerPageComboBox.SelectedIndex = 0;
             CurrentPageComboBox.SelectedIndex = 0;
+
+            Task.Run(() => _paymentHandler.StartHttpListener());
         }
 
-        // Cart actions
-        private void AddToCart_Click(object sender, RoutedEventArgs e)
+        private void OnPaymentReceived(string queryString)
+        {
+            var queryParameters = HttpUtility.ParseQueryString(queryString);
+            string responseCode = queryParameters["vnp_ResponseCode"];
+
+
+            if (responseCode == "00") // Thành công
+            {
+                DispatcherQueue.TryEnqueue(async () => { 
+                    VNPayStatusMessage.Text = "Payment completed successufully!";
+                    var contentDialog = new ContentDialog
+                    {
+                        Title = "Alert",
+                        Content = "Payment completed successufully!",
+                        CloseButtonText = "Close"
+                    };
+                    contentDialog.XamlRoot = this.Content.XamlRoot;
+
+                    var result = await contentDialog.ShowAsync();
+                });
+             
+            }
+            else
+            {
+                DispatcherQueue.TryEnqueue(async () => { 
+                    VNPayStatusMessage.Text = "Payment failed. Check again!";
+                    var contentDialog = new ContentDialog
+                    {
+                        Title = "Alert",
+                        Content = "Payment failed. Check again!",
+                        CloseButtonText = "Close"
+                    };
+
+                    contentDialog.XamlRoot = this.Content.XamlRoot;
+
+                    var result = await contentDialog.ShowAsync();
+                });
+  
+            }
+        }
+
+            // Cart actions
+            private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var product = button?.CommandParameter as Product;
@@ -448,6 +498,17 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
+        private void OnlinePay_Click(object sender, RoutedEventArgs e)
+        { 
+            
+            string queryString = VNPayHelper.CreatePaymentUrl(TotalAmount);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = queryString,
+                UseShellExecute = true
+            });
+        }
+
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (CustomerToggleSwitch.IsOn)
@@ -480,4 +541,5 @@ namespace Clothing_Store_POS.Pages.Home
 
         public override string ToString() => $"{Name} (ID {Id})";
     }
+
 }
