@@ -31,6 +31,9 @@ namespace Clothing_Store_POS.Models
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
 
+        [Column("note")]
+        public string Note { get; set; }
+
         public virtual List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

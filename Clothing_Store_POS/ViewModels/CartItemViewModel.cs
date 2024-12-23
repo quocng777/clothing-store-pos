@@ -65,6 +65,8 @@ namespace Clothing_Store_POS.ViewModels
             }
         }
 
+        public string Note { get; set; }
+
 
         public CartItemViewModel(Product product, int quantity)
         {

@@ -19,6 +19,7 @@ using Clothing_Store_POS.Pages.Auth;
 using Clothing_Store_POS.Pages.Customers;
 using Clothing_Store_POS.Pages.Orders;
 using Clothing_Store_POS.Config;
+using Clothing_Store_POS.Pages.Statistics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -45,6 +46,9 @@ namespace Clothing_Store_POS.Pages
             switch (selectedTag) {
                 case "home":
                     this.MainContent.Navigate(typeof(HomePage));
+                    break;
+                case "statistics":
+                    this.MainContent.Navigate(typeof(OverviewStatistics));
                     break;
                 case "products":
                     this.MainContent.Navigate(typeof(ProductPage));
@@ -76,12 +80,15 @@ namespace Clothing_Store_POS.Pages
                 // Allow only Home & Customers
                 navigation_bar.MenuItems.Clear();
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Home", Icon = new SymbolIcon(Symbol.Home), Tag = "home" });
+                navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Statistics", Icon = new SymbolIcon(Symbol.ThreeBars), Tag = "statistics" });
+                navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Orders", Icon = new FontIcon { Glyph = "\uE719" }, Tag = "orders" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Customer", Icon = new SymbolIcon(Symbol.Mail), Tag = "customers" });
             }
             else if (role == "admin")
             {
                 navigation_bar.MenuItems.Clear();
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Home", Icon = new SymbolIcon(Symbol.Home), Tag = "home" });
+                navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Statistics", Icon = new SymbolIcon(Symbol.ThreeBars), Tag = "statistics" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Products", Icon = new BitmapIcon { UriSource = new Uri("ms-appx:///Assets/clothing_icon.png") }, Tag = "products" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Orders", Icon = new FontIcon { Glyph = "\uE719" }, Tag = "orders" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Users", Icon = new SymbolIcon(Symbol.Contact), Tag = "users" });

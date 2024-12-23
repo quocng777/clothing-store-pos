@@ -3,6 +3,7 @@ using Clothing_Store_POS.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,34 +13,47 @@ namespace Clothing_Store_POS.DAOs
     public class UserDAO
     {
         private readonly AppDBContext _context;
+        private FileService _fileService;
 
         public UserDAO()
         {
             _context = new AppDBContext();
+            _fileService = new FileService();
         }
 
         public List<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            var users = _context.Users.ToList();
+
+            return users;
         }
 
-        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize)
+        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize, string keyword)
         {
-            // Count total users
-            int totalItems = await _context.Users.CountAsync();
+            var query = _context.Users.AsQueryable();
 
-            var users = await _context.Users.OrderBy(u => u.Id)
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query
+                    .Where(u => EF.Functions.ILike(u.Email, $"%{keyword}%") || EF.Functions.ILike(u.Id.ToString(), $"%{keyword}%"));
+            }
+
+            // Count total users
+            int totalItems = await query.CountAsync();
+
+            var users = await query.OrderBy(u => u.Id)
                                             .Skip((pageNumber - 1) * pageSize)
                                             .Take(pageSize)
                                             .ToListAsync();
 
+            // delete passwordHash
+            //users.ForEach(u => u.PasswordHash = null);
+
+            //_fileService.ExportCsv(users, "users.csv");
+            //_fileService.ExportPdf(users, "users.pdf");
+
             return new PagedResult<User>(users, totalItems, pageSize);
         }
-
-        //public async Task<PagedResult<User>> SearchFilter(string search, int pageNumber, int pageSize)
-        //{
-
-        //}
 
         public async Task<User> GetUserByUsername(string username)
         {
@@ -66,22 +80,6 @@ namespace Clothing_Store_POS.DAOs
         public async Task<int> UpdateUser(User user)
         {
             var existedUser = await _context.Users.FindAsync(user.Id);
-
-            // Neu 2 value giong nhau thi isModified == false
-            //if (string.Equals(user.FullName, existedUser.FullName))
-            //{
-            //    _context.Entry(existedUser).Property(u => u.FullName).IsModified = false;
-            //}
-
-            //if (string.Equals(user.UserName, existedUser.UserName))
-            //{
-            //    _context.Entry(existedUser).Property(u => u.UserName).IsModified = false;
-            //}
-            
-            //if (string.Equals(user.Email, existedUser.Email))
-            //{
-            //    _context.Entry(existedUser).Property(u => u.Email).IsModified = false;
-            //}
 
             _context.Entry(existedUser).Property(u => u.Id).IsModified = false;
 

@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -81,7 +82,8 @@ namespace Clothing_Store_POS.Pages.Products
 
         private void CategoriesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(CategoriesComboBox.SelectedItem is Category category)
+            Debug.WriteLine("Category selected" + CategoriesComboBox.SelectedItem);
+            if (CategoriesComboBox.SelectedItem is CategoryViewModel category)
             {
                 if (category != null)
                 {

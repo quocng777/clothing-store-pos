@@ -1,4 +1,5 @@
-﻿using Clothing_Store_POS.DAOs;
+﻿using Clothing_Store_POS.Config;
+using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using System;
@@ -13,23 +14,34 @@ namespace Clothing_Store_POS.ViewModels
     public class UsersViewModel : INotifyPropertyChanged
     {
         private readonly UserDAO _userDAO;
+        //private FileService _fileService;
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public string Keyword { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         public UsersViewModel()
         {
             _userDAO = new UserDAO();
             CurrentPage = 1;
+            //_fileService = new FileService();
         }
 
-        public async Task<List<User>> LoadUsers(int pageNumber = 1, int pageSize = 10)
+        public async Task<List<User>> LoadUsers()
         {
-            var pagedResult = await _userDAO.GetListUsers(pageNumber, pageSize);
+            int pageSize = 6;
+            var pagedResult = await _userDAO.GetListUsers(CurrentPage, pageSize, Keyword);
             TotalPages = pagedResult.TotalPages;
-            CurrentPage = pageNumber;
+
+            //var rootPath = _fileService.GetRootPath();
+            //var users = _fileService.ImportCsv<User>($"{rootPath}/Files/CSV/users.csv");
+
+            //foreach (var user in users)
+            //{
+            //    await _userDAO.AddUser(user);
+            //    System.Diagnostics.Debug.WriteLine($"{user.FullName}");
+            //}
 
             return pagedResult.Items;
         }
@@ -42,6 +54,13 @@ namespace Clothing_Store_POS.ViewModels
         public async Task<User> GetUserByUsername(string username)
         {
             var user = await _userDAO.GetUserByUsername(username);
+
+            return user;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _userDAO.GetUserByEmail(email);
 
             return user;
         }

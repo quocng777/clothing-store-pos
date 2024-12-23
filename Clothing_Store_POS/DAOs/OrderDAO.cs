@@ -57,6 +57,28 @@ namespace Clothing_Store_POS.DAOs
             return Task.FromResult(new PagedResult<Order>(orders, totalItems, pageSize));
         }
 
+        public Task<PagedResult<Order>> GetListOrdersByCustomerId(int pageNumber, int pageSize, int customerId)
+        {
+            var query = _context.Orders.AsQueryable();
+
+            query = query
+                    .Where(o => o.Customer.Id == customerId);
+
+            int totalItems = query.Count();
+
+            var orders = query
+                .OrderBy(o => o.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Include(o => o.Customer)
+                .Include(o => o.User)
+                .Reverse()
+                .ToList();
+    
+
+            return Task.FromResult(new PagedResult<Order>(orders, totalItems, pageSize));
+        }
+
         public Order FindOrderById(int orderId)
         {
             return _context.Orders.Find(orderId);

@@ -4,11 +4,7 @@ using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using QuestPDF.Companion;
-using QuestPDF.Fluent;
-using QuestPDF.Previewer;
 using System;
-using System.Diagnostics;
 using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -22,7 +18,6 @@ namespace Clothing_Store_POS.Pages.Orders
     public sealed partial class OrderPage : Page
     {
         public OrdersViewModel OrdersViewModel { get; }
-        public OrderViewModel OrderViewModel { get; set; }
         
         public OrderPage()
         {
@@ -33,12 +28,8 @@ namespace Clothing_Store_POS.Pages.Orders
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
-
-            Debug.WriteLine($"Deleting order #{order.Id}");
-
+            var order = button?.CommandParameter as OrderViewModel;
             var dialog = new ContentDialog();
-
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
@@ -58,13 +49,15 @@ namespace Clothing_Store_POS.Pages.Orders
         private async void ViewBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
+            var order = button?.CommandParameter as OrderViewModel;
 
             if (order != null)
             {
-                OrderViewModel = new OrderViewModel(order);
-                OrderViewModel.LoadOrderItems();
-                OrderDetailsDialog.DataContext = OrderViewModel;
+                if (order.OrderItems == null)
+                {
+                    order.LoadOrderItems();
+                }
+                OrderDetailsDialog.DataContext = order;
                 await OrderDetailsDialog.ShowAsync();
             }
         }
@@ -72,27 +65,30 @@ namespace Clothing_Store_POS.Pages.Orders
         private async void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var order = button?.CommandParameter as Order;
+            var parameter = button?.CommandParameter;
 
-            if (order != null)
+            if (parameter is OrderViewModel orderViewModel && orderViewModel != null)
             {
-                order.OrderItems = new OrderItemDAO().GetOrderItemsByOrderId(order.Id);
+                if (orderViewModel.OrderItems == null)
+                {
+                    orderViewModel.LoadOrderItems();
+                }
                 InvoiceModel invoiceModel = new InvoiceModel
                 {
-                    Id = order.Id,
-                    CreatedAt = order.CreatedAt,
-                    DiscountPercentage = order.DiscountPercentage,
-                    TaxPercentage = order.TaxPercentage,
-                    User = order.User,
-                    Customer = order.Customer,
-                    InvoiceItems = order.OrderItems.Select(orderItem => new InvoiceItem
+                    Id = orderViewModel.Id,
+                    CreatedAt = orderViewModel.CreatedAt,
+                    DiscountPercentage = orderViewModel.DiscountPercentage,
+                    TaxPercentage = orderViewModel.TaxPercentage,
+                    Note = orderViewModel.Note,
+                    User = orderViewModel.User,
+                    Customer = orderViewModel.Customer,
+                    InvoiceItems = orderViewModel.OrderItems.Select(orderItem => new InvoiceItem
                     {
                         Product = orderItem.Product,
                         Quantity = orderItem.Quantity,
                         DiscountPercentage = orderItem.DiscountPercentage
                     }).ToList()
                 };
-
                 await InvoicePrinter.GenerateAndSaveInvoice(invoiceModel);
             }
         }
