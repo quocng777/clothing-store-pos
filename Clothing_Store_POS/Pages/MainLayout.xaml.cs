@@ -20,6 +20,7 @@ using Clothing_Store_POS.Pages.Customers;
 using Clothing_Store_POS.Pages.Orders;
 using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Pages.Statistics;
+using Clothing_Store_POS.Pages.Categories;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -62,6 +63,9 @@ namespace Clothing_Store_POS.Pages
                 case "orders":
                     this.MainContent.Navigate(typeof(OrderPage));
                     break;
+                case "categories":
+                    this.MainContent.Navigate(typeof(CategoryPage));
+                    break;
             }
         }
 
@@ -93,6 +97,7 @@ namespace Clothing_Store_POS.Pages
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Orders", Icon = new FontIcon { Glyph = "\uE719" }, Tag = "orders" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Users", Icon = new SymbolIcon(Symbol.Contact), Tag = "users" });
                 navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Customer", Icon = new SymbolIcon(Symbol.Mail), Tag = "customers" });
+                navigation_bar.MenuItems.Add(new NavigationViewItem { Content = "Categories", Icon = new SymbolIcon(Symbol.Library), Tag = "categories" });
             }
         }
     }

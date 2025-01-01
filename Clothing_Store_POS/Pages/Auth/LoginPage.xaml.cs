@@ -41,6 +41,14 @@ namespace Clothing_Store_POS.Pages.Auth
                 RememberMeCheckBox.IsChecked = (bool)localSettings.Values["rememberMe"];
             }
         }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            UsernameTextBox.KeyDown -= TextBox_KeyDown;
+        }
+
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
             {
@@ -113,6 +121,15 @@ namespace Clothing_Store_POS.Pages.Auth
         private void ForgotPass_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ForgotPasswordPage));
+        }
+
+        private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                e.Handled = true;
+                Login_Click(sender, e);
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ using System.Linq;
 using Microsoft.UI.Dispatching;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.UI.Xaml.Navigation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -66,7 +67,6 @@ namespace Clothing_Store_POS.Pages.Home
             _paymentHandler = new PaymentHandler();
             _paymentHandler.PaymentReceived += OnPaymentReceived;
             ProductsViewModel = new ProductsViewModel();
-            CategoriesViewModel = new CategoriesViewModel();
             OrderViewModel = new OrderViewModel();
             CustomersViewModel = new CustomersViewModel();
 
@@ -80,6 +80,14 @@ namespace Clothing_Store_POS.Pages.Home
             this.NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             Task.Run(() => _paymentHandler.StartHttpListener());
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            CategoriesViewModel = new CategoriesViewModel();
+            await CategoriesViewModel.InitializeAsync();
         }
 
         private void OnPaymentReceived(string queryString)
@@ -123,8 +131,8 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
-            // Cart actions
-            private void AddToCart_Click(object sender, RoutedEventArgs e)
+        // Cart actions
+        private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var product = button?.CommandParameter as Product;
