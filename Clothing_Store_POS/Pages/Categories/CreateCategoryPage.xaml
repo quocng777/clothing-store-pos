@@ -7,9 +7,45 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+>
 
-    <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel Padding="16" Margin="16,0,16,0" >
 
-    </Grid>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="16">
+                <Button Content="Category Management" FontSize="28" 
+            Background="Transparent" BorderBrush="Transparent" Padding="0"
+            Click="ReturnBtn_Click" />
+                <TextBlock Text=" > " VerticalAlignment="Center" FontSize="28" />
+                <TextBlock Text="Create new category" FontSize="28" VerticalAlignment="Center" FontWeight="SemiBold"/>
+            </StackPanel>
+            <StackPanel Margin="0 24" Orientation="Horizontal">
+                <Button Style="{StaticResource AccentButtonStyle}" Click="ReturnBtn_Click">
+                    <FontIcon Glyph="&#xE72B;" />
+                </Button>
+            </StackPanel>
+
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" ColumnSpacing="24" RowSpacing="24" Padding="32" Background="{StaticResource CardBackgroundFillColorDefault}" CornerRadius="24" MaxWidth="600">
+                <Grid.RowDefinitions >
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="200" />
+                    <ColumnDefinition MinWidth="200"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel MaxWidth="300" Spacing="12" Grid.Row="0" >
+                    <TextBlock Text="Fullname"/>
+                    <TextBox Text="{x:Bind CurrentCategory.Name, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox"
+        TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                    <TextBlock x:Name="NameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center" Spacing="32">
+                    <Button Content="Cancel" Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100"/>
+                    <Button Background="{StaticResource AccentFillColorDefaultBrush}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

@@ -9,7 +9,7 @@
     mc:Ignorable="d"
 >
 
-    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
     <StackPanel Padding="16" Margin="16,0,16,0" >
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="16">
@@ -30,10 +30,6 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="200" />
@@ -45,68 +41,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="ID" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0"/>
-                <TextBox Text="{x:Bind CurrentUser.Id}" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
+                <TextBox Text="{x:Bind CurrentCategory.Id}" IsEnabled="False" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1"/>
             </Grid>
-            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="1" >
+            <StackPanel MaxWidth="300" Spacing="12" Grid.Row="1" >
                 <TextBlock Text="Fullname"/>
-                <TextBox Text="{x:Bind CurrentUser.FullName, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox"
-                            TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
-                <TextBlock x:Name="FullnameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
-            </StackPanel>
-            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="1">
-                <TextBlock Text="Username"/>
-                <TextBox 
-                    Text="{x:Bind CurrentUser.UserName, Mode=TwoWay}"
-                    AutomationProperties.Name="multi-line TextBox"
-                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
-                <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
+                    <TextBox Text="{x:Bind CurrentCategory.Name, Mode=TwoWay}" AutomationProperties.Name="multi-line TextBox"
+                            TextWrapping="Wrap" IsSpellCheckEnabled="True"/>
+                <TextBlock x:Name="NameErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
-            <StackPanel Spacing="12" Grid.Row="2" Grid.ColumnSpan="2">
-                <TextBlock Text="Email"/>
-                <TextBox 
-                    Text="{x:Bind CurrentUser.Email, Mode=TwoWay}"
-                    AutomationProperties.Name="multi-line TextBox"
-                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
-                <TextBlock x:Name="EmailErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
-            </StackPanel>
-
-            <StackPanel Spacing="12" Grid.Row="3" Grid.ColumnSpan="2">
-                <TextBlock Text="Password"/>
-                <PasswordBox 
-                    Password="{x:Bind CurrentUser.Password, Mode=TwoWay}"
-                    AutomationProperties.Name="Simple PasswordBox"/>
-                <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
-            </StackPanel>
-
-            <StackPanel Spacing="12" Grid.ColumnSpan="2" Grid.Row="4">
-                <TextBlock Text="Confirm Password"/>
-                <PasswordBox 
-                                Password="{x:Bind CurrentUser.ConfirmPassword, Mode=TwoWay}"
-                                AutomationProperties.Name="Simple PasswordBox"/>
-                <TextBlock x:Name="ConfirmPasswordErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
-            </StackPanel>
-
-            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="5">
-                <TextBlock Text="Role"/>
-                <TextBox Text="{x:Bind CurrentUser.Role, Mode=TwoWay}"   
-                            AutomationProperties.Name="multi-line TextBox"
-                            TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
-                <TextBlock x:Name="RoleErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
-            </StackPanel>
-
-            <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="5">
-                --><!-- CheckBox for boolean selection --><!--
-                <CheckBox Content="Active User"
-                        IsChecked="{x:Bind CurrentUser.IsActive, Mode=TwoWay}"
-                        Margin="36,32,0,0"/>
-            </StackPanel>
-
-            <StackPanel Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 16 0 0" VerticalAlignment="Center" Spacing="32">
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 16 0 0" VerticalAlignment="Center" Spacing="32">
                 <Button Content="Cancel" Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100" Click="CancleEditBtn_Click"/>
                 <Button Background="{StaticResource AccentFillColorDefaultBrush}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
             </StackPanel>
         </Grid>
     </StackPanel>
-    </ScrollViewer>-->
+    </ScrollViewer>
 </Page>
