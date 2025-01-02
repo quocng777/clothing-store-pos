@@ -20,6 +20,7 @@ namespace Clothing_Store_POS.Pages.Products
         {
             this.InitializeComponent();
             ViewModel = new ProductsViewModel();
+            this.NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)

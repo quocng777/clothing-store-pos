@@ -9,15 +9,28 @@ namespace Clothing_Store_POS.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return convertToVND(value);
+            return ConvertToVND(value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException("ConvertBack is not supported.");
+            if (value is string price)
+            {
+                string cleandPrice = price.Replace("đ", "")
+                                          .Replace(" ", "")
+                                          .Replace(".", "")
+                                          .Replace(",", ".");
+
+                if (double.TryParse(cleandPrice, NumberStyles.Any, CultureInfo.InvariantCulture, out double result))
+                {
+                    return result;
+                }
+            }
+
+            return 0;
         }
 
-        public static string convertToVND(object price)
+        public static string ConvertToVND(object price)
         {
             if(price is double number)
             {

@@ -78,7 +78,7 @@ namespace Clothing_Store_POS.Pages.Statistics
             {
                 new Axis
                 {
-                    Labeler = value => PriceToVNDConverter.convertToVND(value),
+                    Labeler = value => PriceToVNDConverter.ConvertToVND(value),
                 }
             };
         }

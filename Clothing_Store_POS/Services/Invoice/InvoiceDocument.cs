@@ -135,10 +135,10 @@ namespace Clothing_Store_POS.Services.Invoice
                 {
                     table.Cell().Element(CellStyle).Text($"{Model.InvoiceItems.IndexOf(item) + 1}");
                     table.Cell().Element(CellStyle).Text(item.Product.Name);
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{PriceToVNDConverter.convertToVND(item.Product.Price)}");
+                    table.Cell().Element(CellStyle).AlignRight().Text($"{PriceToVNDConverter.ConvertToVND(item.Product.Price)}");
                     table.Cell().Element(CellStyle).AlignCenter().Text($"{item.Quantity}");
                     table.Cell().Element(CellStyle).AlignCenter().Text($"{item.DiscountPercentage}");
-                    table.Cell().Element(CellStyle).AlignRight().Text($"{PriceToVNDConverter.convertToVND(item.TotalPrice)}");
+                    table.Cell().Element(CellStyle).AlignRight().Text($"{PriceToVNDConverter.ConvertToVND(item.TotalPrice)}");
 
                     static IContainer CellStyle(IContainer container)
                     {
@@ -155,7 +155,7 @@ namespace Clothing_Store_POS.Services.Invoice
         {
             container.Column(column =>
             {
-                column.Item().Text($"{PriceToVNDConverter.convertToVND(Model.OriginalPrice)}").AlignRight();
+                column.Item().Text($"{PriceToVNDConverter.ConvertToVND(Model.OriginalPrice)}").AlignRight();
 
                 column.Item().PaddingVertical(5).Row(row =>
                 {
@@ -172,7 +172,7 @@ namespace Clothing_Store_POS.Services.Invoice
                 column.Item().BorderTop(1).PaddingVertical(10).Row(row =>
                 {
                     row.RelativeItem().Text("Total:").AlignLeft().Bold();
-                    row.ConstantItem(100).Text($"{PriceToVNDConverter.convertToVND(Model.FinalPrice)}").AlignRight().Bold();
+                    row.ConstantItem(100).Text($"{PriceToVNDConverter.ConvertToVND(Model.FinalPrice)}").AlignRight().Bold();
                 });
             });
         }
