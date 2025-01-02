@@ -92,6 +92,19 @@ namespace Clothing_Store_POS.ViewModels
             _productDAO.UpdateProduct(savedProduct);
         }
 
+        public void UpdateStockById(int id, int quantity)
+        {
+            var savedProduct = _productDAO.findProductById(id);
+            if (savedProduct == null)
+            {
+                throw new Exception("Product not found");
+            }
+
+            savedProduct.Stock -= quantity;
+
+            _productDAO.UpdateProduct(savedProduct);
+        }
+
         public void Clear()
         {
             Name = String.Empty;

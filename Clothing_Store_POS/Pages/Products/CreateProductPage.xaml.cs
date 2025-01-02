@@ -35,8 +35,15 @@ namespace Clothing_Store_POS.Pages.Products
         public CreateProductPage()
         {
             this.InitializeComponent();
-            this.CategoriesViewModel = new CategoriesViewModel();
             this.ProductViewModel = new ProductViewModel();
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            this.CategoriesViewModel = new CategoriesViewModel();
+            await CategoriesViewModel.InitializeAsync();
         }
 
         private async void PickAPhotoButton_Click(object sender, RoutedEventArgs e)

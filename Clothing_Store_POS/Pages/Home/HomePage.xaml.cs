@@ -18,6 +18,7 @@ using Microsoft.UI.Dispatching;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.UI.Xaml.Navigation;
+using LiveChartsCore.Kernel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,6 +30,7 @@ namespace Clothing_Store_POS.Pages.Home
     /// </summary>
     public sealed partial class HomePage : Page, INotifyPropertyChanged
     {
+        public ProductViewModel ProductViewModel { get; set; }
         public ProductsViewModel ProductsViewModel { get; set; }
         public CategoriesViewModel CategoriesViewModel { get; set; }
         public CustomersViewModel CustomersViewModel { get; set; }
@@ -67,6 +69,7 @@ namespace Clothing_Store_POS.Pages.Home
             _paymentHandler = new PaymentHandler();
             _paymentHandler.PaymentReceived += OnPaymentReceived;
             ProductsViewModel = new ProductsViewModel();
+            ProductViewModel = new ProductViewModel();
             OrderViewModel = new OrderViewModel();
             CustomersViewModel = new CustomersViewModel();
 
@@ -134,22 +137,40 @@ namespace Clothing_Store_POS.Pages.Home
         // Cart actions
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
+            var result = true;
             var button = sender as Button;
             var product = button?.CommandParameter as Product;
             Debug.WriteLine($"Adding product to cart: {product.Name}");
 
-            if (product != null) {
-                var existingCartItem = CartItems.FirstOrDefault(item => item.Product.Id == product.Id);
+            if (product == null)
+            {
+                Debug.WriteLine("Invalid product");
+                return;
+            }
 
-                if (existingCartItem != null)
+            var existingCartItem = CartItems.FirstOrDefault(item => item.Product.Id == product.Id);
+
+            if (existingCartItem != null)
+            {
+                result = existingCartItem.IncreaseQuantity();
+
+                if (product.Stock == existingCartItem.Quantity)
                 {
-                    existingCartItem.IncreaseQuantity();
+                    button.Content = "Out of Stock";
+                    button.IsEnabled = false;
                 }
-                else
-                {
-                    CartItems.Add(new CartItemViewModel(product, 1));
-                }
-                OnPropertyChanged(nameof(CartItems));
+            }
+            else
+            {
+                CartItems.Add(new CartItemViewModel(product, 1));
+            }
+            OnPropertyChanged(nameof(CartItems));
+
+            // After add to cart product having stock equals 1, set `out of stock`
+            if (result == false || product.Stock == 1)
+            {
+                button.Content = "Out of Stock";
+                button.IsEnabled = false;
             }
         }
 
@@ -175,6 +196,8 @@ namespace Clothing_Store_POS.Pages.Home
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
             {
                 CartItems.Remove(cartItem);
+                ProductsViewModel.CurrentPage = 1;
+                _ = ProductsViewModel.LoadProducts();
             }
         }
 
@@ -392,6 +415,7 @@ namespace Clothing_Store_POS.Pages.Home
                         DiscountPercentage = cartItem.DiscountPercentage
                     };
                     OrderViewModel.AddOrderItem(orderItem);
+                    ProductViewModel.UpdateStockById(cartItem.Product.Id, cartItem.Quantity);
                 }
             };
 
@@ -431,6 +455,7 @@ namespace Clothing_Store_POS.Pages.Home
                         DiscountPercentage = cartItem.DiscountPercentage
                     };
                     OrderViewModel.AddOrderItem(orderItem);
+                    ProductViewModel.UpdateStockById(cartItem.Product.Id, cartItem.Quantity);
                 }
 
                 var invoiceModel = InvoiceModel.CreateInvoiceModelFromOrderId(newOrderId);

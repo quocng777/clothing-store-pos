@@ -13,7 +13,9 @@
     <Page.Resources>
         <converters:ThumnailPathConverter x:Key="ImageConverter" />
         <converters:PriceToVNDConverter x:Key="PriceToVNDConverter" />
-        
+        <converters:StockToContentConverter x:Key="StockToContentConverter"/>
+        <converters:StockToIsEnabledConverter x:Key="StockToIsEnabledConverter"/>
+
         <!--Product Card Template-->
         <DataTemplate x:Key="ProductCardTemplate" x:DataType="local:Product">
             <ItemContainer AutomationProperties.Name="{x:Bind Name}" Width="200" >
@@ -43,8 +45,11 @@
                             </Grid>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-                                <Button HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
-                                        Content="Add to cart" CommandParameter="{x:Bind}"/>
+                                <Button x:Name="AddToCartButton" HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+                                        Content="{x:Bind Stock, Converter={StaticResource StockToContentConverter}, Mode=OneWay}"
+                                        IsEnabled="{x:Bind Stock, Converter={StaticResource StockToIsEnabledConverter}, Mode=OneWay}" CommandParameter="{x:Bind}">
+                                </Button>
+                                            
                             </StackPanel>
                         </Grid>
                     </StackPanel>

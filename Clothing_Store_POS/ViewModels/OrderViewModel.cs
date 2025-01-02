@@ -15,6 +15,7 @@ namespace Clothing_Store_POS.ViewModels
     {
         private readonly OrderDAO _orderDAO;
         private readonly OrderItemDAO _orderItemDAO;
+        private readonly ProductViewModel _productViewModel;
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public float DiscountPercentage { get; set; }
