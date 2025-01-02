@@ -11,6 +11,7 @@
 
     <Page.Resources>
         <converter:ThumnailPathConverter x:Key="ImageConverter" />
+        <converter:PriceToVNDConverter x:Key="PriceToVNDConverter" />
     </Page.Resources>
 
     <StackPanel Padding="16" Margin="16,0,16,0">
@@ -58,17 +59,18 @@
             </StackPanel>
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="1">
                 <TextBlock Text="Price"/>
-                <TextBox 
-                    Text="{x:Bind ProductViewModel.Price, Mode=TwoWay}"
+                <TextBox x:Name="PriceTextBox"
+                    Text="{x:Bind ProductViewModel.Price, Mode=OneWay, Converter={StaticResource PriceToVNDConverter}}"
                     AutomationProperties.Name="multi-line TextBox"
-                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
+                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                    TextChanged="PriceTextBox_TextChanged"/>
                 <TextBlock x:Name="PriceErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="2">
                 <TextBlock Text="Size"/>
-                <TextBox 
-                    Text="{x:Bind ProductViewModel.Size, Mode=TwoWay}"
+                <TextBox x:Name="SizeTextBox"
+                    Text="{x:Bind ProductViewModel.Size, Mode=OneWay}"
                     AutomationProperties.Name="multi-line TextBox"
                     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
                 <TextBlock x:Name="SizeErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
@@ -76,8 +78,8 @@
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="1" Grid.Row="2">
                 <TextBlock Text="Stock"/>
-                <TextBox 
-                    Text="{x:Bind ProductViewModel.Stock, Mode=TwoWay}"
+                <TextBox x:Name="StockTextBox"
+                    Text="{x:Bind ProductViewModel.Stock, Mode=OneWay}"
                     AutomationProperties.Name="multi-line TextBox"
                     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
                 <TextBlock x:Name="StockErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
@@ -85,8 +87,8 @@
 
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="3">
                 <TextBlock Text="Sale"/>
-                <TextBox 
-                    Text="{x:Bind ProductViewModel.Sale, Mode=TwoWay}"
+                <TextBox x:Name="SaleTextBox"
+                    Text="{x:Bind ProductViewModel.Sale, Mode=OneWay}"
                     AutomationProperties.Name="multi-line TextBox"
                     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
                 <TextBlock x:Name="SaleErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
@@ -100,6 +102,7 @@
                   DisplayMemberPath="Name"
                   PlaceholderText="Select a category"
                   SelectionChanged="CategoriesBox_SelectionChanged"
+                  Loaded="CategoriesComboBox_Loaded"
                 />
                 <TextBlock x:Name="CategoryErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>
             </StackPanel>
@@ -115,7 +118,7 @@
             <Image Width="200" Height="150" Grid.Column="1" Grid.Row="4" x:Name="SelectedImage" Source="{x:Bind ProductViewModel.Thumbnail, Converter={StaticResource ImageConverter}}"/>
 
             <StackPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center" Spacing="32">
-                <Button Content="Cancel" Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100" Click="CancleEditBtn_Click"/>
+                <Button Content="Cancel" Background="{StaticResource SystemFillColorNeutralBrush}" MinWidth="100" Click="CancelEditBtn_Click"/>
                 <Button Background="{StaticResource AccentFillColorDefaultBrush}" Content="Continue" MinWidth="100" Click="ContinueBtn_Click" />
             </StackPanel>
         </Grid>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,14 +16,20 @@ namespace Clothing_Store_POS.Converters
         {
             string imagePath = value as string;
 
-            try
+            if (imagePath != null && File.Exists(imagePath))
             {
-                var bitmapImage = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
-                return bitmapImage;
-            }
-            catch (Exception)
+                try
+                {
+                    var bitmapImage = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                    return bitmapImage;
+                }
+                catch (Exception)
+                {
+                    return new BitmapImage(new Uri("ms-appx:///Assets/product-default.png", UriKind.Absolute));
+                }
+            } 
+            else
             {
-                // Handle invalid image paths gracefully by returning a default image
                 return new BitmapImage(new Uri("ms-appx:///Assets/product-default.png", UriKind.Absolute));
             }
         }
