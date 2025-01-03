@@ -31,6 +31,8 @@ namespace Clothing_Store_POS.Pages.Products
             _fileService = new FileService();
             _productDAO = new ProductDAO();
             _productViewModel = new ProductViewModel();
+            this.NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)

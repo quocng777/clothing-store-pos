@@ -7,11 +7,11 @@
              xmlns:vms="using:Clothing_Store_POS.ViewModels"
              xmlns:model="using:Clothing_Store_POS.Models"
              xmlns:converters="using:Clothing_Store_POS.Converters"
-             xmlns:statisticpages="using:Clothing_Store_POS.Pages.Statistics"
+             xmlns:local="using:Clothing_Store_POS.Pages.Statistics"
              mc:Ignorable="d">
     <Page.Resources>
         <converters:PriceToVNDConverter x:Key="PriceToVNDConverter" />
-        <statisticpages:TopItemTemplateSelector x:Key="TopItemTemplateSelector" 
+        <local:TopItemTemplateSelector x:Key="TopItemTemplateSelector" 
                                                 DefaultProductTemplate="{StaticResource DefaultProductTemplate}" 
                                                 FirstPositionProductTemplate="{StaticResource FirstPositionProductTemplate}"
                                                 DefaultUserTemplate="{StaticResource DefaultUserTemplate}"
