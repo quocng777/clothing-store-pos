@@ -56,7 +56,7 @@ namespace Clothing_Store_POS.ViewModels
             return this._productDAO.AddProduct(product);
         }
 
-        private String SaveThumbnailImage(String path)
+        public String SaveThumbnailImage(String path)
         {
             string origin = path;
             string desFolderPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Images");
