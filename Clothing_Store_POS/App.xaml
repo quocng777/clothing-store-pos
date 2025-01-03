@@ -13,6 +13,7 @@
             <!-- Other app resources here -->
             <x:Double x:Key="ContentDialogMaxWidth">800</x:Double>
             <x:Double x:Key="ContentDialogMaxHeight">1000</x:Double>
+            <FontFamily x:Key="PacificoFont">ms-appx:///Assets/Fonts/Pacifico-Regular.ttf#Pacifico</FontFamily>
         </ResourceDictionary>
         
     </Application.Resources>

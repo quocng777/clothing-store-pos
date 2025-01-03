@@ -9,49 +9,76 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="36">
-            <StackPanel Spacing="20" Background="{StaticResource CardBackgroundFillColorDefault}" MaxWidth="400" Height="400" Padding="40" CornerRadius="24" VerticalAlignment="Center">
-                <TextBlock x:Name="LoginErrorText" 
-                    Foreground="Red" 
-                    FontSize="14" 
-                    Visibility="Collapsed" 
-                    Text="Invalid username or password. Please try again." 
-                    Margin="0,10,0,0" />
-                <StackPanel MaxWidth="300" Spacing="12">
-                    <TextBlock Text="Username"/>
-                    <TextBox x:Name="UsernameTextBox" AutomationProperties.Name="TextBox"
-                TextWrapping="Wrap" IsSpellCheckEnabled="True"
-                SelectionHighlightColor="Green" KeyDown="TextBox_KeyDown"/>
-                    <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
-                </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                <StackPanel MaxWidth="300" Spacing="12">
-                    <TextBlock Text="Password"/>
-                    <PasswordBox x:Name="PasswordBox" Width="300" AutomationProperties.Name="Simple PasswordBox"
-                                 KeyDown="TextBox_KeyDown"/>
-                    <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
-                </StackPanel>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Remember Me Checkbox -->
-                    <CheckBox x:Name="RememberMeCheckBox" Content="Remember me" Grid.Column="0" HorizontalAlignment="Left" />
-
-                    <!-- Forgot Password Link -->
-                    <HyperlinkButton Content="Forgot Password" Grid.Column="1" HorizontalAlignment="Right" Click="ForgotPass_Click"/>
-                </Grid>
-
-                <Button Style="{StaticResource AccentButtonStyle}" Content="Login" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" Click="Login_Click" />
-                <!--<TextBlock FontSize="10" Foreground="Gray" Margin="0 10 0 0">If you forgot your password. Please contact to the admin.</TextBlock>-->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                <Image Source="/Assets/logo.png" Width="100"/>
+                <TextBlock Text="Clothing Store TQT" 
+           x:Name="AppTitle"
+           FontSize="56"
+           FontWeight="Bold" 
+           HorizontalAlignment="Center" 
+           Foreground="{ThemeResource AccentFillColorSelectedTextBackgroundBrush}"
+           VerticalAlignment="Center"
+           FontFamily="{StaticResource PacificoFont}"
+           Margin="40">
+                </TextBlock>
             </StackPanel>
-            <StackPanel VerticalAlignment="Center">
-                <Image Source="/Assets/clothing_shop_login.svg" Width="300"/>
+
+            <StackPanel Grid.Row="1" Margin="40">
+                <TextBlock Text="Welcome back! Please log in to continue." 
+                   HorizontalAlignment="Center"
+                   Foreground="{ThemeResource AccentFillColorSelectedTextBackgroundBrush}"
+                   FontSize="20"
+                   FontFamily="{StaticResource PacificoFont}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="36" Margin="8">
+                    <StackPanel Spacing="20" Background="{StaticResource CardBackgroundFillColorDefault}" MaxWidth="400" Height="400" Padding="40" CornerRadius="24" VerticalAlignment="Center">
+                        <TextBlock x:Name="LoginErrorText" 
+                            Foreground="Red" 
+                            FontSize="14" 
+                            Visibility="Collapsed" 
+                            Text="Invalid username or password. Please try again." 
+                            Margin="0,10,0,0" />
+                        <StackPanel MaxWidth="300" Spacing="12">
+                            <TextBlock Text="Username"/>
+                            <TextBox x:Name="UsernameTextBox" AutomationProperties.Name="multi-line TextBox"
+                                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
+                                    SelectionHighlightColor="Green"/>
+                            <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                        </StackPanel>
+
+                        <StackPanel MaxWidth="300" Spacing="12">
+                            <TextBlock Text="Password"/>
+                            <PasswordBox x:Name="PasswordBox" Width="300" AutomationProperties.Name="Simple PasswordBox"/>
+                            <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
+                        </StackPanel>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Remember Me Checkbox -->
+                            <CheckBox x:Name="RememberMeCheckBox" Content="Remember me" Grid.Column="0" HorizontalAlignment="Left" />
+
+                            <!-- Forgot Password Link -->
+                            <HyperlinkButton Content="Forgot Password" Grid.Column="1" HorizontalAlignment="Right" Click="ForgotPass_Click"/>
+                        </Grid>
+
+                        <Button Style="{StaticResource AccentButtonStyle}" Content="Login" HorizontalAlignment="Center" Margin="0 16 0 0" MinWidth="100" Click="Login_Click" />
+                        <TextBlock FontSize="10" Foreground="Gray" Margin="0 10 0 0" TextAlignment="Center">If you don't have an account. Please contact to the admin.</TextBlock>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Center">
+                        <Image Source="/Assets/clothing_shop_login.svg" Width="300"/>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Grid>
         <Grid x:Name="Overlay" Background="#AA000000" Visibility="Collapsed">
             <ProgressRing Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
