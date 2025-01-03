@@ -28,6 +28,9 @@
     <None Remove="Pages\Auth\ResetPasswordPage.xaml" />
     <None Remove="Pages\Auth\SignUpPage.xaml" />
     <None Remove="Pages\Auth\VerifyResetPasswordTokenPage.xaml" />
+    <None Remove="Pages\Categories\CategoryPage.xaml" />
+    <None Remove="Pages\Categories\CreateCategoryPage.xaml" />
+    <None Remove="Pages\Categories\EditCategoryPage.xaml" />
     <None Remove="Pages\Customers\CreateCustomerPage.xaml" />
     <None Remove="Pages\Customers\CustomerDetailPage.xaml" />
     <None Remove="Pages\Customers\CustomerPage.xaml" />
@@ -59,6 +62,7 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.1.240916" />
     <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
     <PackageReference Include="itext7" Version="9.0.0" />
     <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.0.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc4.5" />
@@ -72,6 +76,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0-rc.2" />
@@ -110,6 +115,15 @@
     <None Update="Assets\sample_image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Pages\Categories\CreateCategoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Categories\EditCategoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\Categories\CategoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\Statistics\OverviewStatistics.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +197,9 @@
     <Page Update="Pages\Auth\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Notifications\" />
   </ItemGroup>
 
   <!--

@@ -9,6 +9,7 @@ namespace Clothing_Store_POS.ViewModels
     public class CartItemViewModel : INotifyPropertyChanged
     {
         public Product Product { get; set; }
+        private int _productStock {  get; set; }
 
         private int _quantity;
         public int Quantity
@@ -24,7 +25,6 @@ namespace Clothing_Store_POS.ViewModels
                 }
             }
         }
-
         public double OriginalPrice => this.Product.Price * this.Quantity;
 
         // Discount options
@@ -72,11 +72,19 @@ namespace Clothing_Store_POS.ViewModels
         {
             this.Product = product;
             this.Quantity = quantity;
+            _productStock = product.Stock;
         }
 
-        public void IncreaseQuantity()
+        // [1; 10]
+        public bool IncreaseQuantity()
         {
-            this.Quantity++;
+            if (_productStock > 0 && this.Quantity < 10 && this.Quantity < _productStock) 
+            {
+                this.Quantity++;
+                return true;
+            }
+
+            return false;
         }
 
         public void DecreaseQuantity()

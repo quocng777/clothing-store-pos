@@ -14,7 +14,7 @@ namespace Clothing_Store_POS.ViewModels
     public class UsersViewModel : INotifyPropertyChanged
     {
         private readonly UserDAO _userDAO;
-        //private FileService _fileService;
+        private FileService _fileService;
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
         public string Keyword { get; set; }
@@ -25,7 +25,7 @@ namespace Clothing_Store_POS.ViewModels
         {
             _userDAO = new UserDAO();
             CurrentPage = 1;
-            //_fileService = new FileService();
+            _fileService = new FileService();
         }
 
         public async Task<List<User>> LoadUsers()

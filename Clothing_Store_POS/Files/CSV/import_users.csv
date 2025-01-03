@@ -1,0 +1,4 @@
+fullname,username,password,email,user_role,is_active
+admin1,admin1,Passw0rd!,admin1@gmail.com,admin,True
+admin2,admin2,Passw0rd!,admin2@gmail.com,admin,True
+

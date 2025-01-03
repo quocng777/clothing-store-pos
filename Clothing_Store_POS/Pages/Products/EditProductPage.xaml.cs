@@ -25,12 +25,14 @@ namespace Clothing_Store_POS.Pages.Products
         {
             this.InitializeComponent();
             ProductViewModel = new ProductViewModel();
-            CategoriesViewModel = new CategoriesViewModel();
         }
 
-        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        protected override async void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            this.CategoriesViewModel = new CategoriesViewModel();
+            await CategoriesViewModel.InitializeAsync();
 
             if (e.Parameter is Product product)
             {

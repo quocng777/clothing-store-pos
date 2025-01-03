@@ -46,14 +46,17 @@
                         <StackPanel MaxWidth="300" Spacing="12">
                             <TextBlock Text="Username"/>
                             <TextBox x:Name="UsernameTextBox" AutomationProperties.Name="multi-line TextBox"
-                                    TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"
-                                    SelectionHighlightColor="Green"/>
+                                    TextWrapping="Wrap" IsSpellCheckEnabled="True"
+                                    SelectionHighlightColor="Green" KeyDown="HandleLogin_KeyDown"/>
+
                             <TextBlock x:Name="UsernameErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                         </StackPanel>
 
                         <StackPanel MaxWidth="300" Spacing="12">
                             <TextBlock Text="Password"/>
-                            <PasswordBox x:Name="PasswordBox" Width="300" AutomationProperties.Name="Simple PasswordBox"/>
+
+                            <PasswordBox x:Name="PasswordBox" Width="300" AutomationProperties.Name="Simple PasswordBox"
+                                         KeyDown="HandleLogin_KeyDown"/>
                             <TextBlock x:Name="PasswordErrorText" Visibility="Collapsed" Foreground="Red" FontSize="12">Error</TextBlock>
                         </StackPanel>
 

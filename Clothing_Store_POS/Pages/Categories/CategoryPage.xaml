@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="Clothing_Store_POS.Pages.Customers.CustomerPage"
+    x:Class="Clothing_Store_POS.Pages.Categories.CategoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Clothing_Store_POS.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:local="using:Clothing_Store_POS.Models">
+    Loaded="LoadCategories">
 
     <StackPanel Padding="16" Margin="16,0,16,0">
-        <TextBlock Text="Customer Management" FontWeight="SemiBold" FontSize="28"/>
+        <TextBlock Text="Category Management" FontWeight="SemiBold" FontSize="28"/>
 
-        <StackPanel Margin="0,24,0,24" Orientation="Horizontal" Spacing="16">
-            <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Add new customer" Click="AddBtn_Click" />
-            <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Send email" Click="SendMailBtn_Click" />
+        <StackPanel Margin="0 24" Orientation="Horizontal">
+            <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Add new category" Click="AddBtn_Click" />
             <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Export CSV" Click="ExportCSV_Click" />
             <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Import CSV" Click="ImportCSV_Click" />
         </StackPanel>
 
         <StackPanel Margin="0 0 0 20" Orientation="Horizontal" Spacing="10">
             <TextBox AutomationProperties.Name="simple TextBox"
-                 Text="{x:Bind ViewModel.Keyword, Mode=TwoWay}"
-                 MaxWidth="300" 
-                 HorizontalAlignment="Left" 
-                 MinWidth="200"
-                 PlaceholderText="Search!"/>
-            <Button x:Name="ClearButton" Content="x" Width="30" Grid.Column="1" Visibility="Collapsed" Click="DelTextBtn_Click" />
+             Text="{Binding Keyword, Mode=TwoWay}"
+             MaxWidth="300" 
+             HorizontalAlignment="Left" 
+             MinWidth="200"
+             PlaceholderText="Search"/>
 
             <Button CommandParameter="{Binding}" Click="SearchBtn_Click">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -34,64 +33,51 @@
             </Button>
         </StackPanel>
 
-        <ListView ItemsSource="{x:Bind ViewModel.Customers}" 
+        <ListView Name="listCategories" ItemsSource="{Binding}" 
                   Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
                   CornerRadius="12"
                   IsItemClickEnabled="True"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                  BorderThickness="1"
-                  ItemClick="Customer_ItemClick"
-                  SelectionMode="Single">        
+                  BorderThickness="1">
             <ListView.Header>
-                <Grid Padding="20" ColumnSpacing="16" Background="{StaticResource AcrylicBackgroundFillColorBaseBrush}">
+                <Grid Padding="20"
+                      ColumnSpacing="16"
+                      Background="{StaticResource AcrylicBackgroundFillColorBaseBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.5*" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Id"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Name"
-                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="2" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Email" 
-                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="3" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Phone"
-                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="4"
+                    <TextBlock Grid.Column="0" 
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Actions"
+                               Text="Id" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" 
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Name"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="2"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Actions" 
                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Grid>
             </ListView.Header>
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:Customer">
+                <DataTemplate x:DataType="local:Category">
                     <Grid Padding="20,12,20,12" ColumnSpacing="16" Margin="-12,0,-12,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{x:Bind Id}"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+                        <TextBlock Grid.Column="0"
+                                   Text="{x:Bind Id}" 
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <TextBlock Grid.Column="1"
-                                   Text="{x:Bind Name}" 
-                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Column="2"
-                                   Text="{x:Bind Email}"
-                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Column="3"
-                                   Text="{x:Bind Phone}"
+                                   Text="{x:Bind Name}"
                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                        <StackPanel Orientation="Horizontal" Grid.Column="4" Spacing="12" 
+                        <StackPanel Orientation="Horizontal" Grid.Column="5" Spacing="12"
                                     VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button CommandParameter="{Binding}" Click="DeleteBtn_Click"
                                     Background="Transparent" BorderBrush="Transparent">
@@ -99,8 +85,7 @@
                                     <SymbolIcon  Width="18" Symbol="Delete" Foreground="{StaticResource SystemFillColorCriticalBrush}"/>
                                 </StackPanel>
                             </Button>
-                            <Button CommandParameter="{Binding}" Click="EditBtn_Click" 
-                                    Background="Transparent" BorderBrush="Transparent">
+                            <Button  CommandParameter="{Binding}" Click="EditBtn_Click" Background="Transparent" BorderBrush="Transparent">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <SymbolIcon Symbol="Edit" Foreground="{StaticResource SystemColorHotlightColor}"/>
                                 </StackPanel>
@@ -115,9 +100,9 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0" Spacing="8">
             <Button Content="Previous" Click="PreviousPage_Click" />
             <TextBlock Text="Page" VerticalAlignment="Center"/>
-            <TextBlock Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" Margin="4,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding CurrentPage, Mode=OneWay}" Margin="4,0" VerticalAlignment="Center"/>
             <TextBlock Text="/" VerticalAlignment="Center"/>
-            <TextBlock Text="{x:Bind ViewModel.TotalPages, Mode=OneWay}" Margin="4,0" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding TotalPages, Mode=OneWay}" Margin="4,0" VerticalAlignment="Center"/>
             <Button Content="Next" Click="NextPage_Click" />
         </StackPanel>
     </StackPanel>

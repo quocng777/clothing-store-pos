@@ -1,5 +1,7 @@
 ﻿using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Pages.Auth;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -8,6 +10,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using Microsoft.Windows.AppNotifications;
 using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;

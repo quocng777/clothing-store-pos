@@ -129,7 +129,7 @@ namespace Clothing_Store_POS.Pages.Users
 
         public void CancelBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Frame.Navigate(typeof(ProductPage));
+            Frame.Navigate(typeof(UserPage));
         }
 
         private async void CancleEditBtn_Click(object sender, RoutedEventArgs e)

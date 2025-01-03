@@ -2,6 +2,7 @@ using Clothing_Store_POS.Config;
 using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Pages.Products;
+using Clothing_Store_POS.Pages.Users;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -22,68 +23,71 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Clothing_Store_POS.Pages.Users
+namespace Clothing_Store_POS.Pages.Categories
 {
-    public sealed partial class UserPage : Page
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class CategoryPage : Page
     {
-        private UsersViewModel _viewModel { get; }
+        private CategoriesViewModel _viewModel { get; }
         private FileService _fileService;
-        ObservableCollection<User> _users;
+        ObservableCollection<Category> _categories;
         public string Keyword { get; set; } = string.Empty;
 
-        public UserPage()
+        public CategoryPage()
         {
             this.InitializeComponent();
-            _viewModel = new UsersViewModel();
+            _viewModel = new CategoriesViewModel();
             _fileService = new FileService();
 
             // DataContext help UserPage auto find attribute of UserViewModel
             this.DataContext = _viewModel;
         }
 
-        private async void LoadUsers(object sender, RoutedEventArgs e)
+        private async void LoadCategories(object sender, RoutedEventArgs e)
         {
-            var tempList = await _viewModel.LoadUsers();
-            _users = new ObservableCollection<User>(tempList);
+            var tempList = await _viewModel.LoadCategories();
+            _categories = new ObservableCollection<Category>(tempList);
 
-            listUsers.ItemsSource = _users;
+            listCategories.ItemsSource = _categories;
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateUserPage));
+            Frame.Navigate(typeof(CreateCategoryPage));
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var user = button?.CommandParameter as User;
+            var category = button?.CommandParameter as Category;
 
-            Frame.Navigate(typeof(EditUserPage), user);
+            Frame.Navigate(typeof(EditCategoryPage), category);
         }
 
         private async void SearchBtn_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.CurrentPage = 1;
-            var tempList = await _viewModel.LoadUsers();
-            _users = new ObservableCollection<User>(tempList);
+            var tempList = await _viewModel.LoadCategories();
+            _categories = new ObservableCollection<Category>(tempList);
 
-            listUsers.ItemsSource = _users;
+            listCategories.ItemsSource = _categories;
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var user = button?.CommandParameter as User;
+            var category = button?.CommandParameter as Category;
 
             var warningDialog = new ContentDialog
             {
                 Title = "Delete User",
-                Content = $"Are you sure you want to delete this user ({user.UserName})? This action cannot be undone.",
+                Content = $"Are you sure you want to delete this user ({category.Name})? This action cannot be undone.",
                 PrimaryButtonText = "Delete",
                 CloseButtonText = "Cancel",
                 DefaultButton = ContentDialogButton.Close,
-                XamlRoot = this.XamlRoot 
+                XamlRoot = this.XamlRoot
             };
 
             var result = await warningDialog.ShowAsync();
@@ -91,7 +95,7 @@ namespace Clothing_Store_POS.Pages.Users
             if (result == ContentDialogResult.Primary)
             {
                 // Delete user 
-                await _viewModel.DeleteUser(user.Id);
+                await _viewModel.DeleteCategory(category.Id);
 
                 var successDialog = new ContentDialog
                 {
@@ -104,7 +108,7 @@ namespace Clothing_Store_POS.Pages.Users
 
                 await successDialog.ShowAsync();
 
-                LoadUsers(null, null);
+                LoadCategories(null, null);
             }
         }
 
@@ -113,7 +117,7 @@ namespace Clothing_Store_POS.Pages.Users
             if (_viewModel.CurrentPage > 1)
             {
                 _viewModel.CurrentPage--;
-                LoadUsers(null, null);
+                LoadCategories(null, null);
             }
         }
 
@@ -122,7 +126,7 @@ namespace Clothing_Store_POS.Pages.Users
             if (_viewModel.CurrentPage < _viewModel.TotalPages)
             {
                 _viewModel.CurrentPage++;
-                LoadUsers(null, null);
+                LoadCategories(null, null);
             }
         }
 
@@ -148,7 +152,7 @@ namespace Clothing_Store_POS.Pages.Users
                 return;
             }
 
-            var records = _fileService.ImportCsv<UserDTO>(file.Path.ToString());
+            var records = _fileService.ImportCsv<Category>(file.Path.ToString());
 
             if (records == null)
             {
@@ -166,9 +170,9 @@ namespace Clothing_Store_POS.Pages.Users
                 return;
             }
 
-            foreach (var user in records)
+            foreach (var category in records)
             {
-                await _viewModel.AddUser(user);
+                await _viewModel.AddCategory(category);
             }
 
             var successDialog = new ContentDialog
@@ -182,17 +186,14 @@ namespace Clothing_Store_POS.Pages.Users
 
             await successDialog.ShowAsync();
 
-            Frame.Navigate(typeof(UserPage));
+            Frame.Navigate(typeof(CategoryPage));
         }
 
         private async void ExportCSV_Click(object sender, RoutedEventArgs e)
         {
-            var listUsers = _users.ToList();
+            var listCategories = _categories.ToList();
 
-            // delete passwordHash
-            listUsers.ForEach(u => u.PasswordHash = "_");
-
-            _fileService.ExportCsv<User>(listUsers, "export_users.csv");
+            _fileService.ExportCsv<Category>(listCategories, "export_categories.csv");
 
             var successDialog = new ContentDialog
             {

@@ -10,6 +10,7 @@ using System.ComponentModel;
 using Clothing_Store_POS.DAOs;
 using System.IO;
 using Microsoft.UI.Xaml.Controls;
+using Clothing_Store_POS.Config;
 using System.Diagnostics;
 
 namespace Clothing_Store_POS.ViewModels
@@ -56,7 +57,7 @@ namespace Clothing_Store_POS.ViewModels
             return this._productDAO.AddProduct(product);
         }
 
-        private String SaveThumbnailImage(String path)
+        public String SaveThumbnailImage(String path)
         {
             string origin = path;
             string desFolderPath = Path.Combine(AppContext.BaseDirectory, "Assets", "Images");
@@ -90,6 +91,24 @@ namespace Clothing_Store_POS.ViewModels
                 savedProduct.Thumbnail = SaveThumbnailImage(Thumbnail);
             }
 
+            _productDAO.UpdateProduct(savedProduct);
+        }
+
+        public void UpdateStockById(int id, int quantity)
+        {
+            var savedProduct = _productDAO.findProductById(id);
+            if (savedProduct == null)
+            {
+                throw new Exception("Product not found");
+            }
+
+            savedProduct.Stock -= quantity;
+
+            if (savedProduct.Stock < 10)
+            {
+                string message = $"{savedProduct.Name} is almost out of stock! Only {savedProduct.Stock} items remaining!";
+                NotificationService.ShowNotification("WARNING OUT OF STOCK", message);
+            }
             _productDAO.UpdateProduct(savedProduct);
         }
 
