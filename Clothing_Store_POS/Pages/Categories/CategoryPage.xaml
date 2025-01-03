@@ -13,7 +13,9 @@
         <TextBlock Text="Category Management" FontWeight="SemiBold" FontSize="28"/>
 
         <StackPanel Margin="0 24" Orientation="Horizontal">
-            <Button Style="{StaticResource AccentButtonStyle}" Content="Add new category" Click="AddBtn_Click" />
+            <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Add new category" Click="AddBtn_Click" />
+            <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Export CSV" Click="ExportCSV_Click" />
+            <Button Margin="0,0,10,0" Style="{StaticResource AccentButtonStyle}" Content="Import CSV" Click="ImportCSV_Click" />
         </StackPanel>
 
         <StackPanel Margin="0 0 0 20" Orientation="Horizontal" Spacing="10">

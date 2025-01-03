@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper.Configuration.Attributes;
 
 namespace Clothing_Store_POS.Models
 {
@@ -13,14 +14,19 @@ namespace Clothing_Store_POS.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
+        [Ignore]
         public int Id { get; set; }
 
         [Column("name")]
+        [Name("name")]
         public string Name { get; set; }
+
         [Column("email")]
+        [Name("email")]
         public string Email { get; set; }
 
         [Column("phone")]
+        [Name("phone")]
         public string Phone { get; set; }
 
     }

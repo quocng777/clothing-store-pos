@@ -1,4 +1,7 @@
+using Clothing_Store_POS.Config;
+using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
+using Clothing_Store_POS.Pages.Categories;
 using Clothing_Store_POS.Pages.Products;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
@@ -28,11 +31,15 @@ namespace Clothing_Store_POS.Pages.Customers
     public sealed partial class CustomerPage : Page
     {
         public CustomersViewModel ViewModel { get; }
+        private FileService _fileService;
+        private CustomerDAO _customerDAO;
 
         public CustomerPage()
         {
             this.InitializeComponent();
             ViewModel = new CustomersViewModel();
+            _fileService = new FileService();
+            _customerDAO = new CustomerDAO();
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -114,6 +121,83 @@ namespace Clothing_Store_POS.Pages.Customers
             var customer = e.ClickedItem as Customer;
 
             Frame.Navigate(typeof(CustomerDetailPage), customer);
+        }
+
+        private async void ImportCSV_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a file picker
+            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+
+            // See the sample code below for how to make the window accessible from the App class.
+            var window = (Application.Current as App).MainWindow;
+
+            // Retrieve the window handle (HWND) of the current WinUI 3 window.
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+
+            // Initialize the file picker with the window handle (HWND).
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+
+            openPicker.FileTypeFilter.Add(".csv");
+
+            Windows.Storage.StorageFile file = await openPicker.PickSingleFileAsync();
+            if (file == null)
+            {
+                return;
+            }
+
+            var records = _fileService.ImportCsv<Customer>(file.Path.ToString());
+
+            if (records == null)
+            {
+                var errorDialog = new ContentDialog
+                {
+                    Title = "Import CSV",
+                    Content = "Cannot import CSV file!",
+                    CloseButtonText = "OK"
+                };
+
+                errorDialog.XamlRoot = this.XamlRoot;
+
+                await errorDialog.ShowAsync();
+
+                return;
+            }
+
+            foreach (var customer in records)
+            {
+                _customerDAO.AddCustomer(customer);
+            }
+
+            var successDialog = new ContentDialog
+            {
+                Title = "Import CSV",
+                Content = "Import successfully",
+                CloseButtonText = "OK"
+            };
+
+            successDialog.XamlRoot = this.XamlRoot;
+
+            await successDialog.ShowAsync();
+
+            Frame.Navigate(typeof(CustomerPage));
+        }
+
+        private async void ExportCSV_Click(object sender, RoutedEventArgs e)
+        {
+            var listCustomers = ViewModel.Customers.ToList();
+
+            _fileService.ExportCsv<Customer>(listCustomers, "export_customers.csv");
+
+            var successDialog = new ContentDialog
+            {
+                Title = "Export CSV",
+                Content = "Please check csv file in Files folder",
+                CloseButtonText = "OK"
+            };
+
+            successDialog.XamlRoot = this.XamlRoot;
+
+            await successDialog.ShowAsync();
         }
     }
 }
