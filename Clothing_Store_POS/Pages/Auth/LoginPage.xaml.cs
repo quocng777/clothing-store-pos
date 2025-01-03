@@ -3,7 +3,6 @@ using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -35,7 +34,7 @@ namespace Clothing_Store_POS.Pages.Auth
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
             {
-                UsernameErrorText.Visibility = Visibility.Collapsed;
+                UsernameErrorText.Visibility = Visibility.Collapsed;    
                 PasswordErrorText.Visibility = Visibility.Collapsed;
                 LoginErrorText.Visibility = Visibility.Collapsed;
             }
@@ -104,15 +103,6 @@ namespace Clothing_Store_POS.Pages.Auth
         private void ForgotPass_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ForgotPasswordPage));
-        }
-
-        private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                e.Handled = true;
-                Login_Click(sender, e);
-            }
         }
     }
 }
