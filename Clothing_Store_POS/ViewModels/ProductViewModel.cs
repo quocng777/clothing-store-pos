@@ -10,6 +10,7 @@ using System.ComponentModel;
 using Clothing_Store_POS.DAOs;
 using System.IO;
 using Microsoft.UI.Xaml.Controls;
+using Clothing_Store_POS.Config;
 
 namespace Clothing_Store_POS.ViewModels
 {
@@ -102,6 +103,11 @@ namespace Clothing_Store_POS.ViewModels
 
             savedProduct.Stock -= quantity;
 
+            if (savedProduct.Stock < 10)
+            {
+                string message = $"{savedProduct.Name} is almost out of stock! Only {savedProduct.Stock} items remaining!";
+                NotificationService.ShowNotification("WARNING OUT OF STOCK", message);
+            }
             _productDAO.UpdateProduct(savedProduct);
         }
 
