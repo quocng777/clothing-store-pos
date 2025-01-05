@@ -48,7 +48,7 @@ namespace Clothing_Store_POS.ViewModels
         {
             this._productDAO = new ProductDAO();
             CurrentPage = 1;
-            PerPage = 10;
+            PerPage = 6;
             Products = new ObservableCollection<Product>();
             PageNumbers = new ObservableCollection<int>();
             SelectedCategoryIds = new List<int>();
@@ -100,7 +100,6 @@ namespace Clothing_Store_POS.ViewModels
             Products.Clear();
             foreach (var product in pagedResult.Items)
             {
-                Debug.WriteLine($"Product {product.Name} - {product.Stock}");
                 Products.Add(product);
             }
         }

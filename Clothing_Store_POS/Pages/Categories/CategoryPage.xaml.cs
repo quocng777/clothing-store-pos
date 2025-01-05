@@ -1,24 +1,11 @@
 using Clothing_Store_POS.Config;
-using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
-using Clothing_Store_POS.Pages.Products;
-using Clothing_Store_POS.Pages.Users;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,6 +36,10 @@ namespace Clothing_Store_POS.Pages.Categories
         {
             base.OnNavigatedTo(e);
 
+            if (e.Parameter is int page)
+            {
+                _viewModel.CurrentPage = page;
+            }
             LoadCategories(null, null);
         }
 
@@ -62,7 +53,7 @@ namespace Clothing_Store_POS.Pages.Categories
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateCategoryPage));
+            Frame.Navigate(typeof(CreateCategoryPage), _viewModel.CurrentPage);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
@@ -70,7 +61,7 @@ namespace Clothing_Store_POS.Pages.Categories
             var button = sender as Button;
             var category = button?.CommandParameter as Category;
 
-            Frame.Navigate(typeof(EditCategoryPage), category);
+            Frame.Navigate(typeof(EditCategoryPage), new { Category = category, Page = _viewModel.CurrentPage });
         }
 
         private async void SearchBtn_Click(object sender, RoutedEventArgs e)

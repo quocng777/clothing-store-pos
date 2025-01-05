@@ -20,6 +20,7 @@ namespace Clothing_Store_POS.Pages.Products
     {
         public CategoriesViewModel CategoriesViewModel ;
         public ProductViewModel ProductViewModel;
+        private int _fromPage = 1;
 
         public CreateProductPage()
         {
@@ -31,6 +32,10 @@ namespace Clothing_Store_POS.Pages.Products
         {
             base.OnNavigatedTo(e);
 
+            if (e.Parameter is int fromPage)
+            {
+                _fromPage = fromPage;
+            }
             this.CategoriesViewModel = new CategoriesViewModel();
             await CategoriesViewModel.InitializeAsync();
         }
@@ -199,16 +204,18 @@ namespace Clothing_Store_POS.Pages.Products
         private void ContinueCreatingBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             ProductViewModel.Clear();
+            CategoriesComboBox.SelectedIndex = -1;
+            SelectedImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/sample_image.jpg"));
         }
 
         private void CancelDialogBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Frame.Navigate(typeof(ProductPage));
+            Frame.Navigate(typeof(ProductPage), _fromPage);
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ProductPage));
+            Frame.Navigate(typeof(ProductPage), _fromPage);
         }
 
         private async void CancelBtn_Click(object sender, RoutedEventArgs e)

@@ -47,6 +47,11 @@ namespace Clothing_Store_POS.Pages.Customers
         {
             base.OnNavigatedTo(e);
 
+            if (e.Parameter is int page)
+            {
+                ViewModel.CurrentPage = page;
+            }
+
             _ = ViewModel.LoadCustomers();
         }
 
@@ -80,12 +85,12 @@ namespace Clothing_Store_POS.Pages.Customers
             var button = sender as Button;
             var customer = button?.CommandParameter as Customer;
 
-            Frame.Navigate(typeof(EditCustomerPage), customer);
+            Frame.Navigate(typeof(EditCustomerPage), new { Customer = customer, Page = ViewModel.CurrentPage });
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateCustomerPage));
+            Frame.Navigate(typeof(CreateCustomerPage), ViewModel.CurrentPage);
         }
 
 
@@ -120,15 +125,14 @@ namespace Clothing_Store_POS.Pages.Customers
 
         private void SendMailBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SendMailPage));
+            Frame.Navigate(typeof(SendMailPage), ViewModel.CurrentPage);
         }
 
         private void Customer_ItemClick(object sender, ItemClickEventArgs e)
         {
-
             var customer = e.ClickedItem as Customer;
 
-            Frame.Navigate(typeof(CustomerDetailPage), customer);
+            Frame.Navigate(typeof(CustomerDetailPage), new { Customer = customer, Page = ViewModel.CurrentPage });
         }
 
         private async void ImportCSV_Click(object sender, RoutedEventArgs e)

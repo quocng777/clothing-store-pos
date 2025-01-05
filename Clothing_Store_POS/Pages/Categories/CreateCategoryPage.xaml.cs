@@ -29,12 +29,22 @@ namespace Clothing_Store_POS.Pages.Categories
     {
         private CategoriesViewModel _viewModel { get; }
         public Category CurrentCategory { get; set; }
+        private int _fromPage = 1;
 
         public CreateCategoryPage()
         {
             this.InitializeComponent();
             CurrentCategory = new Category();
             _viewModel = new CategoriesViewModel();
+        }
+
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter is int fromPage)
+            {
+                _fromPage = fromPage;
+            }
         }
 
         private async void ContinueBtn_Click(object sender, RoutedEventArgs e)
@@ -65,12 +75,12 @@ namespace Clothing_Store_POS.Pages.Categories
 
             await successDialog.ShowAsync();
 
-            Frame.Navigate(typeof(CategoryPage));
+            Frame.Navigate(typeof(CategoryPage), _fromPage);
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CategoryPage));
+            Frame.Navigate(typeof(CategoryPage), _fromPage);
         }
     }
 }

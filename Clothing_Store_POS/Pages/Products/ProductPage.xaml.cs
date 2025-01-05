@@ -39,7 +39,6 @@ namespace Clothing_Store_POS.Pages.Products
             base.OnNavigatedTo(e);
             if (e.Parameter is int page)
             {
-                Debug.WriteLine("Navigated to ProductPage with page: " + page);
                 ViewModel.CurrentPage = page;
             }
 
@@ -81,12 +80,12 @@ namespace Clothing_Store_POS.Pages.Products
             var button = sender as Button;
             var product = button?.CommandParameter as Product;
 
-            Frame.Navigate(typeof(EditProductPage), product);
+            Frame.Navigate(typeof(EditProductPage), new { Product = product, Page = ViewModel.CurrentPage });
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CreateProductPage));
+            Frame.Navigate(typeof(CreateProductPage), ViewModel.CurrentPage);
         }
 
         private void PreviousPage_Click(object sender, RoutedEventArgs e)

@@ -1,21 +1,11 @@
-using Clothing_Store_POS.DAOs;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,6 +19,7 @@ namespace Clothing_Store_POS.Pages.Customers
     {
         public CustomerViewModel ViewModel;
         public OrdersViewModel OrdersViewModel { get; set; }
+        private int _fromPage = 1;
 
         public CustomerDetailPage()
         {
@@ -38,16 +29,50 @@ namespace Clothing_Store_POS.Pages.Customers
 
         protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
         {
+            //base.OnNavigatedTo(e);
+
+            //if (e.Parameter is Customer customer)
+            //{
+            //    this.ViewModel.Id = customer.Id;
+            //    this.ViewModel.Name = customer.Name;
+            //    this.ViewModel.Email = customer.Email;
+            //    this.ViewModel.Phone = customer.Phone;
+
+            //    OrdersViewModel = new OrdersViewModel(customer.Id);
+            //}
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is Customer customer)
+            if (e.Parameter != null)
             {
-                this.ViewModel.Id = customer.Id;
-                this.ViewModel.Name = customer.Name;
-                this.ViewModel.Email = customer.Email;
-                this.ViewModel.Phone = customer.Phone;
+                try
+                {
+                    dynamic parameters = e.Parameter;
+                    var customer = parameters.Customer as Customer;
+                    var currentPage = parameters.Page as int?;
 
-                OrdersViewModel = new OrdersViewModel(customer.Id);
+                    if (customer != null)
+                    {
+                        ViewModel.Id = customer.Id;
+                        ViewModel.Name = customer.Name;
+                        ViewModel.Email = customer.Email;
+                        ViewModel.Phone = customer.Phone;
+
+                        OrdersViewModel = new OrdersViewModel(customer.Id);
+                    }
+
+                    if (currentPage != null)
+                    {
+                        _fromPage = currentPage.Value;
+                    }
+                }
+                catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+                {
+                    Debug.WriteLine($"Error accessing dynamic properties: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unexpected error: {ex.Message}");
+                }
             }
         }
 
@@ -69,7 +94,7 @@ namespace Clothing_Store_POS.Pages.Customers
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CustomerPage));
+            Frame.Navigate(typeof(CustomerPage), _fromPage);
         }
 
         private async void PrintBtn_Click(object sender, RoutedEventArgs e)

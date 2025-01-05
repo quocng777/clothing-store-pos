@@ -2,20 +2,8 @@ using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,12 +14,22 @@ namespace Clothing_Store_POS.Pages.Users
     {
         private UsersViewModel _viewModel { get; }
         public UserDTO CurrentUser { get; set; }
+        private int _fromPage = 1;
 
         public CreateUserPage()
         {
             this.InitializeComponent();
             CurrentUser = new UserDTO();
             _viewModel = new UsersViewModel();
+        }
+
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter is int fromPage)
+            {
+                _fromPage = fromPage;
+            }
         }
 
         private async void ContinueBtn_Click(object sender, RoutedEventArgs e)
@@ -105,12 +103,12 @@ namespace Clothing_Store_POS.Pages.Users
 
             await successDialog.ShowAsync();
 
-            Frame.Navigate(typeof(UserPage));
+            Frame.Navigate(typeof(UserPage), _fromPage);
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage));
+            Frame.Navigate(typeof(UserPage), _fromPage);
         }
     }
 }

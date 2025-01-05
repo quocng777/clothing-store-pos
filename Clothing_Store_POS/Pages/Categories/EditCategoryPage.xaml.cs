@@ -30,6 +30,8 @@ namespace Clothing_Store_POS.Pages.Categories
     {
         public CategoriesViewModel _viewModel { get; }
         public Category CurrentCategory { get; set; }
+        private int _fromPage = 1;
+
         public EditCategoryPage()
         {
             this.InitializeComponent();
@@ -41,16 +43,36 @@ namespace Clothing_Store_POS.Pages.Categories
         {
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is Category category)
+            if (e.Parameter != null)
             {
-                this.CurrentCategory.Id = category.Id;
-                this.CurrentCategory.Name = category.Name;
+                try
+                {
+                    dynamic parameters = e.Parameter;
+
+                    var category = parameters.Category as Category;
+                    var currentPage = parameters.Page as int?;
+
+                    if (category != null)
+                    {
+                        this.CurrentCategory.Id = category.Id;
+                        this.CurrentCategory.Name = category.Name;
+                    }
+
+                    if (currentPage != null)
+                    {
+                        _fromPage = currentPage.Value;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error accessing dynamic properties: {ex.Message}");
+                }
             }
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CategoryPage));
+            Frame.Navigate(typeof(CategoryPage), _fromPage);
         }
 
         private async void ContinueBtn_Click(object sender, RoutedEventArgs e)
@@ -81,12 +103,12 @@ namespace Clothing_Store_POS.Pages.Categories
 
             await successDialog.ShowAsync();
 
-            Frame.Navigate(typeof(CategoryPage));
+            Frame.Navigate(typeof(CategoryPage), _fromPage);
         }
 
         public void CancelBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Frame.Navigate(typeof(CategoryPage));
+            Frame.Navigate(typeof(CategoryPage), _fromPage);
         }
 
         private async void CancleEditBtn_Click(object sender, RoutedEventArgs e)

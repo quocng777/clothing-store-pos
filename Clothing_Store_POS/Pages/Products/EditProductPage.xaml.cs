@@ -1,6 +1,7 @@
 using Clothing_Store_POS.Converters;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.ViewModels;
+using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -21,6 +22,8 @@ namespace Clothing_Store_POS.Pages.Products
     {
         public ProductViewModel ProductViewModel { get; set; }
         public CategoriesViewModel CategoriesViewModel { get; set; }
+        private int _fromPage = 1;
+
         public EditProductPage()
         {
             this.InitializeComponent();
@@ -34,19 +37,43 @@ namespace Clothing_Store_POS.Pages.Products
             this.CategoriesViewModel = new CategoriesViewModel();
             await CategoriesViewModel.InitializeAsync();
 
-            if (e.Parameter is Product product)
+            if (e.Parameter != null)
             {
-                Debug.WriteLine($"Navigated to EditProductPage with product: {product.Name}");
-                this.ProductViewModel.Id = product.Id;
-                this.ProductViewModel.Name = product.Name;
-                this.ProductViewModel.Price = product.Price;
-                this.ProductViewModel.CategoryId = product.CategoryId;
-                this.ProductViewModel.Size = product.Size;
-                this.ProductViewModel.Stock = product.Stock;
-                this.ProductViewModel.Sale = product.Sale;
-                this.ProductViewModel.Thumbnail = product.Thumbnail;
+                try
+                {
+                    dynamic parameters = e.Parameter;
 
-                CategoriesComboBox.SelectedValue = ProductViewModel.CategoryId;
+                    var product = parameters.Product as Product;
+                    var currentPage = parameters.Page as int?;
+
+                    if (product != null)
+                    {
+                        Debug.WriteLine($"Navigated to EditProductPage with product: {product.Name}");
+                        this.ProductViewModel.Id = product.Id;
+                        this.ProductViewModel.Name = product.Name;
+                        this.ProductViewModel.Price = product.Price;
+                        this.ProductViewModel.CategoryId = product.CategoryId;
+                        this.ProductViewModel.Size = product.Size;
+                        this.ProductViewModel.Stock = product.Stock;
+                        this.ProductViewModel.Sale = product.Sale;
+                        this.ProductViewModel.Thumbnail = product.Thumbnail;
+
+                        CategoriesComboBox.SelectedValue = ProductViewModel.CategoryId;
+                    }
+
+                    if (currentPage != null)
+                    {
+                        _fromPage = currentPage.Value;
+                    }
+                }
+                catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+                {
+                    Debug.WriteLine($"Error accessing dynamic properties: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unexpected error: {ex.Message}");
+                }
             }
         }
 
@@ -218,12 +245,12 @@ namespace Clothing_Store_POS.Pages.Products
 
         public void CancelDialogBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Frame.Navigate(typeof(ProductPage));
+            Frame.Navigate(typeof(ProductPage), _fromPage);
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ProductPage));
+            Frame.Navigate(typeof(ProductPage), _fromPage);
         }
 
         private async void CancelEditBtn_Click(object sender, RoutedEventArgs e)

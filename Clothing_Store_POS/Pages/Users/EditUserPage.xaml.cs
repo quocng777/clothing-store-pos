@@ -1,21 +1,10 @@
 using Clothing_Store_POS.Models;
-using Clothing_Store_POS.Pages.Products;
 using Clothing_Store_POS.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +15,8 @@ namespace Clothing_Store_POS.Pages.Users
     {
         public UsersViewModel _viewModel { get; }
         public UserDTO CurrentUser { get; set; }
+        private int _fromPage = 1;
+
         public EditUserPage()
         {
             this.InitializeComponent();
@@ -37,20 +28,39 @@ namespace Clothing_Store_POS.Pages.Users
         {
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is User user)
+            if (e.Parameter != null)
             {
-                this.CurrentUser.Id = user.Id;
-                this.CurrentUser.FullName = user.FullName;
-                this.CurrentUser.UserName = user.UserName;
-                this.CurrentUser.Email = user.Email;
-                this.CurrentUser.Role = user.Role;
-                this.CurrentUser.IsActive = user.IsActive;
-            }   
+                try
+                {
+                    dynamic parameters = e.Parameter;
+                    var user = parameters.User as User;
+                    var currentPage = parameters.Page as int?;
+
+                    if (user != null)
+                    {
+                        CurrentUser.Id = user.Id;
+                        CurrentUser.FullName = user.FullName;
+                        CurrentUser.UserName = user.UserName;
+                        CurrentUser.Email = user.Email;
+                        CurrentUser.Role = user.Role;
+                        CurrentUser.IsActive = user.IsActive;
+                    }
+
+                    if (currentPage != null)
+                    {
+                        _fromPage = currentPage.Value;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(UserPage));
+            Frame.Navigate(typeof(UserPage), _fromPage);
         }
         
         private async void ContinueBtn_Click(object sender, RoutedEventArgs e)
@@ -124,12 +134,12 @@ namespace Clothing_Store_POS.Pages.Users
 
             await successDialog.ShowAsync();
 
-            Frame.Navigate(typeof(UserPage));
+            Frame.Navigate(typeof(UserPage), _fromPage);
         }
 
         public void CancelBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Frame.Navigate(typeof(UserPage));
+            Frame.Navigate(typeof(UserPage), _fromPage);
         }
 
         private async void CancleEditBtn_Click(object sender, RoutedEventArgs e)

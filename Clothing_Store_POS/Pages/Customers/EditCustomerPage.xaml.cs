@@ -27,6 +27,8 @@ namespace Clothing_Store_POS.Pages.Customers
     public sealed partial class EditCustomerPage : Page
     {
         public CustomerViewModel ViewModel;
+        private int _fromPage = 1;
+
         public EditCustomerPage()
         {
             this.InitializeComponent();
@@ -37,12 +39,35 @@ namespace Clothing_Store_POS.Pages.Customers
         {
             base.OnNavigatedTo(e);
 
-            if (e.Parameter is Customer customer)
+            if (e.Parameter != null)
             {
-                this.ViewModel.Id = customer.Id;
-                this.ViewModel.Name = customer.Name;
-                this.ViewModel.Email = customer.Email;
-                this.ViewModel.Phone = customer.Phone;
+                try
+                {
+                    dynamic parameters = e.Parameter;
+                    var customer = parameters.Customer as Customer;
+                    var currentPage = parameters.Page as int?;
+
+                    if (customer != null)
+                    {
+                        ViewModel.Id = customer.Id;
+                        ViewModel.Name = customer.Name;
+                        ViewModel.Email = customer.Email;
+                        ViewModel.Phone = customer.Phone;
+                    }
+
+                    if (currentPage != null)
+                    {
+                        _fromPage = currentPage.Value;
+                    }
+                }
+                catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+                {
+                    Debug.WriteLine($"Error accessing dynamic properties: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unexpected error: {ex.Message}");
+                }
             }
         }
 
@@ -69,7 +94,7 @@ namespace Clothing_Store_POS.Pages.Customers
 
             savingDialog.XamlRoot = this.XamlRoot;
 
-            savingDialog.ShowAsync();
+            _ = savingDialog.ShowAsync();
 
 
             ViewModel.Update();
@@ -90,7 +115,6 @@ namespace Clothing_Store_POS.Pages.Customers
             dialog.SecondaryButtonClick += CancelBtn_Click;
 
             await dialog.ShowAsync();
-
         }
 
         private void ContinueCreatingBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -100,12 +124,12 @@ namespace Clothing_Store_POS.Pages.Customers
 
         private void CancelBtn_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Frame.Navigate(typeof(CustomerPage));
+            Frame.Navigate(typeof(CustomerPage), _fromPage);
         }
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(CustomerPage));
+            Frame.Navigate(typeof(CustomerPage), _fromPage);
 
         }
 

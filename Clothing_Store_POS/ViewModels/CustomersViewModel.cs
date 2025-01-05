@@ -43,7 +43,7 @@ namespace Clothing_Store_POS.ViewModels
         {
             this._customerDAO = new CustomerDAO();
             CurrentPage = 1;
-            PerPage = 10;
+            PerPage = 6;
             Customers = new ObservableCollection<Customer>();
         }
 
