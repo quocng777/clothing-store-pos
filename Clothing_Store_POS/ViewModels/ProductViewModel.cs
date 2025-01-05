@@ -79,6 +79,8 @@ namespace Clothing_Store_POS.ViewModels
                 throw new Exception("Product not found");
             }
 
+            Debug.WriteLine($"Current ProductViewModel {Name} {CategoryId} {Size} {Stock} {Sale}");
+
             savedProduct.Name = this.Name;
             savedProduct.CategoryId = this.CategoryId;
             savedProduct.Price = this.Price;

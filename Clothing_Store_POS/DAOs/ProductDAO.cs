@@ -34,7 +34,7 @@ namespace Clothing_Store_POS.DAOs
             return _context.Products.ToList();
         }
 
-        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword, List<int> categoryIds = null)
+        public async Task<PagedResult<Product>> GetListProducts(int pageNumber, int pageSize, string keyword, List<int> categoryIds = null, bool useNoTracking = false)
         {
             var query = _context.Products.AsQueryable();
 
@@ -50,6 +50,11 @@ namespace Clothing_Store_POS.DAOs
                     .Where(p => EF.Functions.ILike(p.Name, $"%{keyword}%") || EF.Functions.ILike(p.Id.ToString(), $"%{keyword}%"));
             }
             
+            if (useNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
             int totalItems = await query.CountAsync();
             
             var products = await query

@@ -45,12 +45,11 @@ namespace Clothing_Store_POS.ViewModels
             CurrentPage = 1;
             PerPage = 10;
             Customers = new ObservableCollection<Customer>();
-            _ = LoadCustomers();
         }
 
         public async Task LoadCustomers()
         {
-            var pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword);
+            var pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword, true);
             TotalPages = pagedResult.TotalPages;
             if (CurrentPage > TotalPages)
             {

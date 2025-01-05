@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -40,6 +41,13 @@ namespace Clothing_Store_POS.Pages.Customers
             ViewModel = new CustomersViewModel();
             _fileService = new FileService();
             _customerDAO = new CustomerDAO();
+        }
+
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _ = ViewModel.LoadCustomers();
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)

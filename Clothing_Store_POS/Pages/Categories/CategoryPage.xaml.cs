@@ -45,6 +45,13 @@ namespace Clothing_Store_POS.Pages.Categories
             this.DataContext = _viewModel;
         }
 
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            LoadCategories(null, null);
+        }
+
         private async void LoadCategories(object sender, RoutedEventArgs e)
         {
             var tempList = await _viewModel.LoadCategories();

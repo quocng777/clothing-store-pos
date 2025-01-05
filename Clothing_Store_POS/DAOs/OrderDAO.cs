@@ -31,7 +31,7 @@ namespace Clothing_Store_POS.DAOs
             return _context.Orders.ToList();
         }
 
-        public Task<PagedResult<Order>> GetListOrders(int pageNumber, int pageSize, string keyword)
+        public Task<PagedResult<Order>> GetListOrders(int pageNumber, int pageSize, string keyword, bool useNoTracking = false)
         {
             var query = _context.Orders.AsQueryable();
 
@@ -41,7 +41,11 @@ namespace Clothing_Store_POS.DAOs
                     .Where(o => o.Id.ToString().Contains(keyword) 
                     || o.Customer.Name.Contains(keyword)
                     || o.User.UserName.Contains(keyword));
+            }
 
+            if (useNoTracking)
+            {
+                query = query.AsNoTracking();
             }
 
             int totalItems = query.Count();

@@ -44,7 +44,6 @@ namespace Clothing_Store_POS.ViewModels
             PerPage = 10;
             Orders = new ObservableCollection<OrderViewModel>();
             PageNumbers = new ObservableCollection<int>();
-            _ = LoadOrders();
         }
 
         public OrdersViewModel(int customerId)

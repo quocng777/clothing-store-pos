@@ -28,7 +28,7 @@ namespace Clothing_Store_POS.DAOs
             return users;
         }
 
-        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize, string keyword)
+        public async Task<PagedResult<User>> GetListUsers(int pageNumber, int pageSize, string keyword, bool useNoTracking = false)
         {
             var query = _context.Users.AsQueryable();
 
@@ -36,6 +36,11 @@ namespace Clothing_Store_POS.DAOs
             {
                 query = query
                     .Where(u => EF.Functions.ILike(u.Email, $"%{keyword}%") || EF.Functions.ILike(u.Id.ToString(), $"%{keyword}%"));
+            }
+
+            if (useNoTracking)
+            {
+                query = query.AsNoTracking();
             }
 
             // Count total users

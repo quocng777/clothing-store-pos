@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -31,8 +32,23 @@ namespace Clothing_Store_POS.Pages.Products
             _fileService = new FileService();
             _productDAO = new ProductDAO();
             _productViewModel = new ProductViewModel();
-            this.NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+        }
 
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter is int page)
+            {
+                Debug.WriteLine("Navigated to ProductPage with page: " + page);
+                ViewModel.CurrentPage = page;
+            }
+
+            _ = LoadData();
+        }
+
+        private async Task LoadData()
+        {
+            await ViewModel.LoadProducts();
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)

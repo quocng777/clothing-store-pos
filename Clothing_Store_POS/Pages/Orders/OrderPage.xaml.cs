@@ -25,6 +25,13 @@ namespace Clothing_Store_POS.Pages.Orders
             OrdersViewModel = new OrdersViewModel();
         }
 
+        protected override void OnNavigatedTo(Microsoft.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _ = OrdersViewModel.LoadOrders();
+        }
+
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;

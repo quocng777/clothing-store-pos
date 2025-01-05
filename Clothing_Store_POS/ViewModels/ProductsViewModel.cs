@@ -52,7 +52,6 @@ namespace Clothing_Store_POS.ViewModels
             Products = new ObservableCollection<Product>();
             PageNumbers = new ObservableCollection<int>();
             SelectedCategoryIds = new List<int>();
-            _ = LoadProducts();
         }
 
         public void DeleteAProduct(int productId)
@@ -77,9 +76,9 @@ namespace Clothing_Store_POS.ViewModels
             Products.Remove(product);
         }
 
-        public async Task LoadProducts()
+        public async Task LoadProducts(bool useNoTracking = false)
         {
-            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds);
+            var pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds, useNoTracking);
             TotalPages = pagedResult.TotalPages;
             TotalItems = pagedResult.TotalItems;
 
@@ -101,6 +100,7 @@ namespace Clothing_Store_POS.ViewModels
             Products.Clear();
             foreach (var product in pagedResult.Items)
             {
+                Debug.WriteLine($"Product {product.Name} - {product.Stock}");
                 Products.Add(product);
             }
         }

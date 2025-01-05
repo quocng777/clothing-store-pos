@@ -70,7 +70,7 @@
             <StackPanel MaxWidth="300" Spacing="12" Grid.Column="0" Grid.Row="2">
                 <TextBlock Text="Size"/>
                 <TextBox x:Name="SizeTextBox"
-                    Text="{x:Bind ProductViewModel.Size, Mode=OneWay}"
+                    Text="{x:Bind ProductViewModel.Size, Mode=TwoWay}"
                     AutomationProperties.Name="multi-line TextBox"
                     TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True"/>
                 <TextBlock x:Name="SizeErrorText" Visibility="Collapsed" Foreground="{StaticResource SystemFillColorCriticalBrush}" FontSize="12">Error</TextBlock>

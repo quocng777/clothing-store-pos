@@ -3,10 +3,13 @@ using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Invoice;
 using Clothing_Store_POS.ViewModels;
+using iText.Kernel.Pdf.Canvas.Parser.ClipperLib;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,11 +17,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.UI.Dispatching;
 using System.Threading.Tasks;
 using System.Web;
-using Microsoft.UI.Xaml.Navigation;
-using LiveChartsCore.Kernel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -70,13 +70,13 @@ namespace Clothing_Store_POS.Pages.Home
             _paymentHandler.PaymentReceived += OnPaymentReceived;
             ProductsViewModel = new ProductsViewModel();
             ProductViewModel = new ProductViewModel();
+            CategoriesViewModel = new CategoriesViewModel();
             OrderViewModel = new OrderViewModel();
             CustomersViewModel = new CustomersViewModel();
 
             CartItems = [];
             CartItems.CollectionChanged += CartItems_CollectionChanged;
             this.InitializeComponent();
-            //this.DataContext = this;
 
             PerPageComboBox.SelectedIndex = 0;
             CurrentPageComboBox.SelectedIndex = 0;
@@ -85,12 +85,18 @@ namespace Clothing_Store_POS.Pages.Home
             Task.Run(() => _paymentHandler.StartHttpListener());
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        private async Task LoadData()
+        {
+            await CategoriesViewModel.LoadAllCategories();
+            await ProductsViewModel.LoadProducts(true);
+            await CustomersViewModel.LoadCustomers();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            CategoriesViewModel = new CategoriesViewModel();
-            await CategoriesViewModel.InitializeAsync();
+            _ = LoadData();
         }
 
         private void OnPaymentReceived(string queryString)
@@ -174,7 +180,6 @@ namespace Clothing_Store_POS.Pages.Home
             }
         }
 
-        // handle cart items
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
@@ -423,6 +428,7 @@ namespace Clothing_Store_POS.Pages.Home
 
             CartItems.Clear();
             OrderViewModel.Note = "";
+            _ = LoadData();
         }
 
         private async void SaveAndPrintOrder_Click(object sender, RoutedEventArgs e)
@@ -466,6 +472,7 @@ namespace Clothing_Store_POS.Pages.Home
 
             CartItems.Clear();
             OrderViewModel.Note = "";
+            _ = LoadData();
         }
 
         // category filter
