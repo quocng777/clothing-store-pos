@@ -189,6 +189,10 @@ namespace Clothing_Store_POS.Pages.Home
             else
             {
                 CartItems.Add(new CartItemViewModel(product, 1));
+                if (product.Stock == 1)
+                {
+                    ProductsViewModel.Products.FirstOrDefault(p => p.Id == product.Id).IsEnabled = false;
+                }
             }
             OnPropertyChanged(nameof(CartItems));
         }

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -33,9 +34,20 @@ namespace Clothing_Store_POS
     public partial class App : Application
     {
         public static Frame MainFrame { get; private set; }
+        private static Mutex _mutex;
+        private static bool _isFirstInstance;
 
         public App()
         {
+
+            _mutex = new Mutex(true, "ClothingStoreAppId", out _isFirstInstance);
+
+            if (!_isFirstInstance)
+            {
+                ActivateExistingWindow();
+                Environment.Exit(0);
+            }
+
             // connection to the database
             AppFactory.AppDBContext = new AppDBContext();
             this.InitializeComponent();
@@ -44,15 +56,30 @@ namespace Clothing_Store_POS
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            if (m_window == null)
+            {
+                m_window = new MainWindow();
 
-            MainFrame = new Frame();
-            m_window.Content = MainFrame;
+                MainFrame = new Frame();
+                m_window.Content = MainFrame;
 
-            // Default Page
-            MainFrame.Navigate(typeof(LoginPage));
+                // Default Page
+                MainFrame.Navigate(typeof(LoginPage));
 
-            m_window.Activate();
+                m_window.Activate();
+            }
+            else
+            {
+                m_window.Activate();
+            }
+        }
+
+        private void ActivateExistingWindow()
+        {
+            if (m_window != null)
+            {
+                m_window.Activate();
+            }
         }
 
         private Window m_window;
