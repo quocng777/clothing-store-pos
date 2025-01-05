@@ -11,40 +11,70 @@ namespace Clothing_Store_POS.Helper
     public class PaymentHandler
     {
         public event Action<string> PaymentReceived;
+        private HttpListener listener;
+        private bool isListening;
 
         public void StartHttpListener()
         {
-            HttpListener listener = new HttpListener();
+            listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:5000/callback/");
             listener.Start();
+            isListening = true;
             Console.WriteLine("Listening for VNPay callback...");
 
-            while (true)
+            while (isListening)
             {
-                HttpListenerContext context = listener.GetContext();
-                HttpListenerRequest request = context.Request;
-
-                string queryString = request.Url.Query;
-
-                HttpListenerResponse response = context.Response;
-                string responseString;
-                var queryParameters = HttpUtility.ParseQueryString(queryString);
-                string responseCode = queryParameters["vnp_ResponseCode"];
-
-                if(responseCode == "00")
+                try
                 {
-                    responseString = getSuccessHtml();
-                }
-                else
-                {
-                    responseString = getFailedHtml();
-                }
-                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-                response.ContentLength64 = buffer.Length;
-                response.OutputStream.Write(buffer, 0, buffer.Length);
-                response.OutputStream.Close();
+                    HttpListenerContext context = listener.GetContext();
+                    HttpListenerRequest request = context.Request;
 
-                PaymentReceived?.Invoke(queryString);
+                    string queryString = request.Url.Query;
+
+                    HttpListenerResponse response = context.Response;
+                    string responseString;
+                    var queryParameters = HttpUtility.ParseQueryString(queryString);
+                    string responseCode = queryParameters["vnp_ResponseCode"];
+
+                    if (responseCode == "00")
+                    {
+                        responseString = getSuccessHtml();
+                    }
+                    else
+                    {
+                        responseString = getFailedHtml();
+                    }
+                    byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+                    response.ContentLength64 = buffer.Length;
+                    response.OutputStream.Write(buffer, 0, buffer.Length);
+                    response.OutputStream.Close();
+
+                    PaymentReceived?.Invoke(queryString);
+                } 
+                catch (HttpListenerException ex)
+                {
+                    if (isListening)
+                    {
+                        Console.WriteLine($"HttpListenerException: {ex.Message}");
+                    }
+                    break;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine($"InvalidOperationException: {ex.Message}");
+                    break;
+                }
+            }
+        }
+
+        public void StopHttpListener()
+        {
+            if (listener != null && listener.IsListening)
+            {
+                isListening = false;
+                listener.Stop();
+                listener.Close();
+                Console.WriteLine("VNPay stopped");
             }
         }
 

@@ -2,6 +2,7 @@
 using Clothing_Store_POS.Helper;
 using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Invoice;
+using Clothing_Store_POS.Services.Payment;
 using Clothing_Store_POS.ViewModels;
 using iText.Kernel.Pdf.Canvas.Parser.ClipperLib;
 using Microsoft.UI.Dispatching;
@@ -66,7 +67,7 @@ namespace Clothing_Store_POS.Pages.Home
 
         public HomePage()
         {
-            _paymentHandler = new PaymentHandler();
+            _paymentHandler = VNPayService.Instance.PaymentHandler;
             _paymentHandler.PaymentReceived += OnPaymentReceived;
             ProductsViewModel = new ProductsViewModel();
             ProductViewModel = new ProductViewModel();
@@ -138,6 +139,8 @@ namespace Clothing_Store_POS.Pages.Home
                     contentDialog.XamlRoot = this.Content.XamlRoot;
 
                     var result = await contentDialog.ShowAsync();
+
+                    SaveOrder_Click(null, null);
                 });
              
             }

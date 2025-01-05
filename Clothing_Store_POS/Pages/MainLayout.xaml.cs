@@ -21,6 +21,7 @@ using Clothing_Store_POS.Pages.Orders;
 using Clothing_Store_POS.Config;
 using Clothing_Store_POS.Pages.Statistics;
 using Clothing_Store_POS.Pages.Categories;
+using Clothing_Store_POS.Services.Payment;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -71,6 +72,7 @@ namespace Clothing_Store_POS.Pages
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
+            VNPayService.Instance.PaymentHandler.StopHttpListener();
             Frame.Navigate(typeof(LoginPage));
         }
 
