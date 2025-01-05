@@ -89,7 +89,27 @@ namespace Clothing_Store_POS.Pages.Home
         {
             await CategoriesViewModel.LoadAllCategories();
             await ProductsViewModel.LoadProducts(true);
-            await CustomersViewModel.LoadCustomers();
+            
+            foreach (var cartItem in CartItems)
+            {
+                var product = ProductsViewModel.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
+                if (product != null)
+                {
+                    cartItem.Product = product;
+
+                    if (cartItem.Quantity >= product.Stock)
+                    {
+                        cartItem.Quantity = product.Stock;
+                    }
+
+                    product.IsEnabled = cartItem.Quantity < product.Stock;
+                } 
+                else
+                {
+                    CartItems.Remove(cartItem);
+                }
+            }
+            await CustomersViewModel.LoadCustomers(true);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -143,9 +163,8 @@ namespace Clothing_Store_POS.Pages.Home
         // Cart actions
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
-            var result = true;
             var button = sender as Button;
-            var product = button?.CommandParameter as Product;
+            var product = button?.CommandParameter as ProductViewModel;
             Debug.WriteLine($"Adding product to cart: {product.Name}");
 
             if (product == null)
@@ -158,12 +177,13 @@ namespace Clothing_Store_POS.Pages.Home
 
             if (existingCartItem != null)
             {
-                result = existingCartItem.IncreaseQuantity();
-
-                if (product.Stock == existingCartItem.Quantity)
+                if (existingCartItem.Quantity < existingCartItem.Product.Stock)
                 {
-                    button.Content = "Out of Stock";
-                    button.IsEnabled = false;
+                    existingCartItem.Quantity++;
+                }
+                if (existingCartItem.Quantity == existingCartItem.Product.Stock)
+                {
+                    ProductsViewModel.Products.FirstOrDefault(p => p.Id == product.Id).IsEnabled = false;
                 }
             }
             else
@@ -171,20 +191,20 @@ namespace Clothing_Store_POS.Pages.Home
                 CartItems.Add(new CartItemViewModel(product, 1));
             }
             OnPropertyChanged(nameof(CartItems));
-
-            // After add to cart product having stock equals 1, set `out of stock`
-            if (result == false || product.Stock == 1)
-            {
-                button.Content = "Out of Stock";
-                button.IsEnabled = false;
-            }
         }
 
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
             {
-                cartItem.IncreaseQuantity();
+                if (cartItem.Quantity < cartItem.Product.Stock)
+                {
+                    cartItem.Quantity++;
+                } 
+                if (cartItem.Quantity == cartItem.Product.Stock)
+                {
+                    ProductsViewModel.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id).IsEnabled = false;
+                }
             }
         }
 
@@ -192,7 +212,14 @@ namespace Clothing_Store_POS.Pages.Home
         {
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
             {
-                cartItem.DecreaseQuantity();
+                if(cartItem.Quantity > 1)
+                {
+                    cartItem.Quantity--;
+                }
+                if (cartItem.Quantity == cartItem.Product.Stock - 1)
+                {
+                    ProductsViewModel.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id).IsEnabled = true;
+                }
             }
         }
 

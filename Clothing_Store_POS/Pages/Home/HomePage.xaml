@@ -17,7 +17,7 @@
         <converters:StockToIsEnabledConverter x:Key="StockToIsEnabledConverter"/>
 
         <!--Product Card Template-->
-        <DataTemplate x:Key="ProductCardTemplate" x:DataType="local:Product">
+        <DataTemplate x:Key="ProductCardTemplate" x:DataType="viewmodels:ProductViewModel">
             <ItemContainer AutomationProperties.Name="{x:Bind Name}" Width="200" >
                 <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     CornerRadius="8" BorderThickness="1">
@@ -46,8 +46,8 @@
 
                             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                                 <Button x:Name="AddToCartButton" HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
-                                        Content="{x:Bind Stock, Converter={StaticResource StockToContentConverter}, Mode=OneWay}"
-                                        IsEnabled="{x:Bind Stock, Converter={StaticResource StockToIsEnabledConverter}, Mode=OneWay}" CommandParameter="{x:Bind}">
+                                        Content="{x:Bind IsEnabled, Converter={StaticResource StockToContentConverter}, Mode=OneWay}"
+                                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" CommandParameter="{x:Bind}">
                                 </Button>
                                             
                             </StackPanel>

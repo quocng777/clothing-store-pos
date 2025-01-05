@@ -52,7 +52,7 @@ namespace Clothing_Store_POS.Pages.Customers
                 ViewModel.CurrentPage = page;
             }
 
-            _ = ViewModel.LoadCustomers();
+            _ = ViewModel.LoadCustomers(false);
         }
 
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -99,7 +99,7 @@ namespace Clothing_Store_POS.Pages.Customers
             if (ViewModel.CurrentPage > 1)
             {
                 ViewModel.CurrentPage--;
-                ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+                _ = ViewModel.LoadCustomers();
             }
         }
 
@@ -108,19 +108,19 @@ namespace Clothing_Store_POS.Pages.Customers
             if (ViewModel.CurrentPage < ViewModel.TotalPages)
             {
                 ViewModel.CurrentPage++;
-                ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+                _ = ViewModel.LoadCustomers();
             }
         }
 
         private void SearchBtn_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+            _ = ViewModel.LoadCustomers();
         }
 
         private void DelTextBtn_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Keyword = "";
-            ViewModel.LoadCustomers(ViewModel.CurrentPage, 6);
+            _ = ViewModel.LoadCustomers();
         }
 
         private void SendMailBtn_Click(object sender, RoutedEventArgs e)

@@ -43,20 +43,13 @@ namespace Clothing_Store_POS.Pages.Products
                 {
                     dynamic parameters = e.Parameter;
 
-                    var product = parameters.Product as Product;
+                    var product = parameters.Product as ProductViewModel;
                     var currentPage = parameters.Page as int?;
 
                     if (product != null)
                     {
                         Debug.WriteLine($"Navigated to EditProductPage with product: {product.Name}");
-                        this.ProductViewModel.Id = product.Id;
-                        this.ProductViewModel.Name = product.Name;
-                        this.ProductViewModel.Price = product.Price;
-                        this.ProductViewModel.CategoryId = product.CategoryId;
-                        this.ProductViewModel.Size = product.Size;
-                        this.ProductViewModel.Stock = product.Stock;
-                        this.ProductViewModel.Sale = product.Sale;
-                        this.ProductViewModel.Thumbnail = product.Thumbnail;
+                        this.ProductViewModel = product;
 
                         CategoriesComboBox.SelectedValue = ProductViewModel.CategoryId;
                     }

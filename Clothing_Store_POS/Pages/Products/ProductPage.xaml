@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:local="using:Clothing_Store_POS.Models"
+    xmlns:viewmodel="using:Clothing_Store_POS.ViewModels"
     xmlns:converters="using:Clothing_Store_POS.Converters">
 
     <Page.Resources>
@@ -71,7 +72,7 @@
 
             <!-- Item Template -->
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:Product">
+                <DataTemplate x:DataType="viewmodel:ProductViewModel">
                     <Grid Padding="20,12,20,12" ColumnSpacing="16" Margin="-12,0,-12,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*" />

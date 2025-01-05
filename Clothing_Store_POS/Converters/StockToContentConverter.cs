@@ -11,9 +11,10 @@ namespace Clothing_Store_POS.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is int stock)
+            if (value is bool isEnabled)
             {
-                return stock > 0 ? "Add to cart" : "Out of stock";
+                //return stock > 0 ? "Add to cart" : "Out of stock";
+                return isEnabled ? "Add to cart" : "Out of stock";
             }
 
             return "Add to cart";

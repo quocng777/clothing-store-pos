@@ -47,13 +47,14 @@ namespace Clothing_Store_POS.ViewModels
             Customers = new ObservableCollection<Customer>();
         }
 
-        public async Task LoadCustomers()
+        public async Task LoadCustomers(bool useNoTracking = false)
         {
-            var pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword, true);
+            var pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword, useNoTracking);
             TotalPages = pagedResult.TotalPages;
             if (CurrentPage > TotalPages)
             {
                 CurrentPage = TotalPages;
+                pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword, useNoTracking);
             }
 
             // update products
@@ -68,7 +69,7 @@ namespace Clothing_Store_POS.ViewModels
             if (CurrentPage < TotalPages)
             {
                 CurrentPage++;
-                _ = LoadCustomers();
+                _ = LoadCustomers(false);
             }
         }
 
@@ -77,7 +78,7 @@ namespace Clothing_Store_POS.ViewModels
             if (CurrentPage > 1)
             {
                 CurrentPage--;
-                _ = LoadCustomers();
+                _ = LoadCustomers(false);
             }
         }
 
@@ -107,19 +108,6 @@ namespace Clothing_Store_POS.ViewModels
 
             _customerDAO.DeleteCustomerById(customerId);
             Customers.Remove(customer);
-        }
-
-        public async void LoadCustomers(int pageNumber = 1, int pageSize = 10)
-        {
-            var pagedResult = await _customerDAO.GetCustomers(pageNumber, pageSize, Keyword);
-            TotalPages = pagedResult.TotalPages;
-            CurrentPage = pageNumber;
-
-            Customers.Clear();
-            foreach (var customer in pagedResult.Items)
-            {
-                Customers.Add(customer);
-            }
         }
     }
 }

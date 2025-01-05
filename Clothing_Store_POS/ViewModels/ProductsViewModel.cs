@@ -14,7 +14,7 @@ namespace Clothing_Store_POS.ViewModels
     public class ProductsViewModel : INotifyPropertyChanged
     {
         public readonly ProductDAO _productDAO;
-        public ObservableCollection<Product> Products { get; set; }
+        public ObservableCollection<ProductViewModel> Products { get; set; }
         public ObservableCollection<int> PageNumbers { get; set; }
         public List<int> SelectedCategoryIds { get; set; }
         public int TotalPages { get; set; }
@@ -49,7 +49,7 @@ namespace Clothing_Store_POS.ViewModels
             this._productDAO = new ProductDAO();
             CurrentPage = 1;
             PerPage = 6;
-            Products = new ObservableCollection<Product>();
+            Products = new ObservableCollection<ProductViewModel>();
             PageNumbers = new ObservableCollection<int>();
             SelectedCategoryIds = new List<int>();
         }
@@ -57,7 +57,7 @@ namespace Clothing_Store_POS.ViewModels
         public void DeleteAProduct(int productId)
         {
 
-            Product product = null;
+            ProductViewModel product = null;
             foreach (var p in Products)
             {
                 if (p.Id == productId)
@@ -85,7 +85,7 @@ namespace Clothing_Store_POS.ViewModels
             if (CurrentPage > TotalPages)
             {
                 CurrentPage = 1;
-                pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds);
+                pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds, useNoTracking);
                 TotalPages = pagedResult.TotalPages;
             }
 
@@ -100,7 +100,20 @@ namespace Clothing_Store_POS.ViewModels
             Products.Clear();
             foreach (var product in pagedResult.Items)
             {
-                Products.Add(product);
+                ProductViewModel productViewModel = new ProductViewModel()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    CategoryId = product.CategoryId,
+                    Category = product.Category,
+                    Thumbnail = product.Thumbnail,
+                    Sale = product.Sale,
+                    Size = product.Size,
+                    Stock = product.Stock,
+                    IsEnabled = product.Stock > 0
+                };
+                Products.Add(productViewModel);
             }
         }
 

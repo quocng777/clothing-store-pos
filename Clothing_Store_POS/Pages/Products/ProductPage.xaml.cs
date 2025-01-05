@@ -53,7 +53,7 @@ namespace Clothing_Store_POS.Pages.Products
         private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button?.CommandParameter as Product;
+            var product = button?.CommandParameter as ProductViewModel;
 
             Debug.WriteLine($"Deleting product: {product.Name} with ID: {product.Id}");
 
@@ -78,7 +78,7 @@ namespace Clothing_Store_POS.Pages.Products
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var product = button?.CommandParameter as Product;
+            var product = button?.CommandParameter as ProductViewModel;
 
             Frame.Navigate(typeof(EditProductPage), new { Product = product, Page = ViewModel.CurrentPage });
         }
@@ -166,7 +166,17 @@ namespace Clothing_Store_POS.Pages.Products
 
         private async void ExportCSV_Click(object sender, RoutedEventArgs e)
         {
-            var listProducts = ViewModel.Products.ToList();
+            var listProducts = ViewModel.Products.Select(p => new Product
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                CategoryId = p.CategoryId,
+                Size = p.Size,
+                Stock = p.Stock,
+                Sale = p.Sale,
+                Thumbnail = p.Thumbnail
+            }).ToList();
 
             _fileService.ExportCsv<Product>(listProducts, "export_products.csv");
 

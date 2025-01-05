@@ -12,6 +12,7 @@ using System.IO;
 using Microsoft.UI.Xaml.Controls;
 using Clothing_Store_POS.Config;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Clothing_Store_POS.ViewModels
 {
@@ -23,6 +24,7 @@ namespace Clothing_Store_POS.ViewModels
         {
             this._productDAO = new ProductDAO();
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
@@ -32,6 +34,7 @@ namespace Clothing_Store_POS.ViewModels
         public float Sale { get; set; }
         public string Thumbnail { get; set; }
         public Category Category { get; set; }
+        public bool IsEnabled { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
