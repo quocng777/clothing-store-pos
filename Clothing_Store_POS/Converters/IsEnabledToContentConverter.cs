@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Clothing_Store_POS.Converters
 {
-    public class StockToIsEnabledConverter : IValueConverter
+    public class IsEnabledToContentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is int stock)
+            if (value is bool isEnabled)
             {
-                return stock > 0;
+                //return stock > 0 ? "Add to cart" : "Out of stock";
+                return isEnabled ? "Add to cart" : "Out of stock";
             }
-            return false;
+
+            return "Add to cart";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

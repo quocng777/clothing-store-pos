@@ -13,8 +13,8 @@
     <Page.Resources>
         <converters:ThumnailPathConverter x:Key="ImageConverter" />
         <converters:PriceToVNDConverter x:Key="PriceToVNDConverter" />
-        <converters:StockToContentConverter x:Key="StockToContentConverter"/>
-        <converters:StockToIsEnabledConverter x:Key="StockToIsEnabledConverter"/>
+        <converters:IsEnabledToContentConverter x:Key="StockToContentConverter"/>
+        <converters:IsEnabledToContentConverter x:Key="IsEnabledToContentConverter"/>
 
         <!--Product Card Template-->
         <DataTemplate x:Key="ProductCardTemplate" x:DataType="viewmodels:ProductViewModel">
@@ -46,7 +46,7 @@
 
                             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
                                 <Button x:Name="AddToCartButton" HorizontalAlignment="Center" Click="AddToCart_Click" Margin="4,0,8,0" Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
-                                        Content="{x:Bind IsEnabled, Converter={StaticResource StockToContentConverter}, Mode=OneWay}"
+                                        Content="{x:Bind IsEnabled, Converter={StaticResource IsEnabledToContentConverter}, Mode=OneWay}"
                                         IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" CommandParameter="{x:Bind}">
                                 </Button>
                                             

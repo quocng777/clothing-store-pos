@@ -228,8 +228,11 @@ namespace Clothing_Store_POS.Pages.Home
             if (sender is Button button && button.CommandParameter is CartItemViewModel cartItem)
             {
                 CartItems.Remove(cartItem);
-                ProductsViewModel.CurrentPage = 1;
-                _ = ProductsViewModel.LoadProducts();
+                var targetProduct = ProductsViewModel.Products.FirstOrDefault(p => p.Id == cartItem.Product.Id);
+                if (targetProduct != null)
+                {
+                    targetProduct.IsEnabled = true;
+                }
             }
         }
 
