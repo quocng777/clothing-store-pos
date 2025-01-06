@@ -32,7 +32,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-
+        
         <ListView Name="listUsers" ItemsSource="{Binding}" 
                   Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
                   CornerRadius="12"

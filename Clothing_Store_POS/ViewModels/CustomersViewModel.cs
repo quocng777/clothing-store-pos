@@ -15,6 +15,7 @@ namespace Clothing_Store_POS.ViewModels
         public readonly CustomerDAO _customerDAO;
         public ObservableCollection<Customer> Customers { get; set; }
         public int TotalPages { get; set; }
+        public int TotalItems { get; set; }
         public string Keyword { get; set; }
 
         private int _currentPage;
@@ -51,10 +52,12 @@ namespace Clothing_Store_POS.ViewModels
         {
             var pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword, useNoTracking);
             TotalPages = pagedResult.TotalPages;
+            TotalItems = pagedResult.TotalItems;
             if (CurrentPage > TotalPages)
             {
                 CurrentPage = TotalPages;
                 pagedResult = await _customerDAO.GetCustomers(CurrentPage, PerPage, Keyword, useNoTracking);
+                TotalItems = pagedResult.TotalItems;
             }
 
             // update products
@@ -108,6 +111,7 @@ namespace Clothing_Store_POS.ViewModels
 
             _customerDAO.DeleteCustomerById(customerId);
             Customers.Remove(customer);
+            TotalItems--;
         }
     }
 }

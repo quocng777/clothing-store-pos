@@ -74,6 +74,7 @@ namespace Clothing_Store_POS.ViewModels
 
             _productDAO.DeleteProductById(productId);
             Products.Remove(product);
+            TotalItems--;
         }
 
         public async Task LoadProducts(bool useNoTracking = false)
