@@ -55,7 +55,7 @@ namespace Clothing_Store_POS.Config
         {
             if(optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Database=pos_db;Username=postgres;Password=123456");
+                optionsBuilder.UseNpgsql("Host=localhost;Database=pos_db;Username=admin;Password=admin123");
             }
         }
 
