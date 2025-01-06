@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,11 +11,16 @@ namespace Clothing_Store_POS.Helper
 {
     public class PaymentHandler
     {
+        private static HttpListener listener = null;
         public event Action<string> PaymentReceived;
 
         public void StartHttpListener()
         {
-            HttpListener listener = new HttpListener();
+            if(listener != null)
+            {
+                return;
+            } 
+            listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:5000/callback/");
             listener.Start();
             Console.WriteLine("Listening for VNPay callback...");
