@@ -18,7 +18,10 @@ MSSV: 21120317-21120331-21120359
 - Nhập và xuất file csv (milestone 2)
 - Quản lý đơn hàng, xóa, xem chi tiết, phân trang, tìm kiếm (milestone 2)
 - Thống kê số liệu cơ bản (milestone 2)
--
+- Thống kê theo thời gian (milestone 3)
+- Tích hợp ví điện tử (milestone 3)
+- Quản lý doanh mục (milestone 3)
+- Push notification khi sản phẩm gần hết hàng (milestone 3)
 
 ## Hướng dẫn cách dùng
 
@@ -76,9 +79,9 @@ MSSV: 21120317-21120331-21120359
    | 21120317   | Chức năng liên quan quản lý khách hàng, gửi email cho khách hàng (milestone 2)                      | Hoàn thành | 5h                 |
    | 21120331   | Chức năng tạo đơn với khách hàng, xuất hóa đơn, quản lý đơn hàng, thống kê số liệu (milestone 2)    | Hoàn thành | 5h                 |
    | 21120359   | Quên mật khẩu, phân quyền, nhập và xuất file csv (đã cài hàm nhưng chưa có giao diện) (milestone 2) | Hoàn thành | 5h                 |
-   | 21120317   | Tích hợp thanh toán bằng ví điện tử vào thanh toán đơn hàng (milestone 3)                           | Hoàn thành | 4h                 |
-   | 21120331   | Thông kê thông tin theo thời gian, thêm tính năng note cho từng đơn hàng (milestone 3)              | Hoàn thành | 4h                 |
-   | 21120359   | Quản lí danh mục, push notification khi product gần hết hàng, UI cho import/export CSV              | Hoàn thành | 4h                 |
+   | 21120317   | Tích hợp thanh toán bằng ví điện tử vào thanh toán đơn hàng (milestone 3) | Hoàn thành | 4h                 |
+   | 21120331   | Thông kê thông tin theo thời gian, thêm tính năng note cho từng đơn hàng (milestone 3)    | Hoàn thành | 4h                 |
+   | 21120359   | Quản lí danh mục, push notification khi product gần hết hàng, UI cho import/export CSV (milestone 3) | Hoàn thành | 4h                 |
 
 ## VIDEO DEMO
 
