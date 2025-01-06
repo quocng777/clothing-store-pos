@@ -22,7 +22,7 @@ MSSV: 21120317-21120331-21120359
 ## Hướng dẫn cách dùng
 
 1. Sử dụng lệnh docker-compose up để start postgres database.
-2. Mở project trong Visual Code để khởi chạy ứng dụng.
+2. Mở project trong Visual Studio để khởi chạy ứng dụng.
 
 ## Một vài hình ảnh giao diện ứng dụng (cập nhập thêm milestone 2)
 
@@ -46,7 +46,9 @@ MSSV: 21120317-21120331-21120359
 3. Xử lý nhập xuất file csv (milestone 2)
 4. Xử lý tạo và xuất file pdf (milestone 2)
 5. Tìm hiểu thư viện LiveCharts2 để vẽ đồ thị (milestone 2)
-6. Tìm hiểu và xử lý gửi email thông qua email service
+6. Tìm hiểu và xử lý gửi email thông qua email service (milestone 2)
+7. Tích hợp với ví điện tử VNPay (milestone 3)
+8. Tạo http listener trong ứng dụng WinUI 3 (milestone 3)
 
 ## Kiến trúc phần mềm
 
@@ -66,17 +68,22 @@ MSSV: 21120317-21120331-21120359
    | 21120317   | Chức năng liên quan quản lý khách hàng, gửi email cho khách hàng (milestone 2)                      | Hoàn thành | 5h                 |
    | 21120331   | Chức năng tạo đơn với khách hàng, xuất hóa đơn, quản lý đơn hàng, thống kê số liệu (milestone 2)    | Hoàn thành | 5h                 |
    | 21120359   | Quên mật khẩu, phân quyền, nhập và xuất file csv (đã cài hàm nhưng chưa có giao diện) (milestone 2) | Hoàn thành | 5h                 |
+   | 21120317   | Tích hợp thanh toán bằng ví điện tử vào thanh toán đơn hàng | (milestone 3)                      | Hoàn thành | 4h                 |
+   | 21120331   | Thông kê thông tin theo thời gian, thêm tính năng note cho từng đơn hàng (milestone 3)    | Hoàn thành | 4h                 |
+   | 21120359   | Quản lí danh mục, push notification khi product gần hết hàng, UI cho import/export CSV | Hoàn thành | 4h                 |
 
 ## VIDEO DEMO
 
-Link: [Youtube](https://youtu.be/ewFVTqwSe_Q)
+Link milestone 2: [Youtube](https://youtu.be/ewFVTqwSe_Q)
+Link milestone 3: [Youtube](https://youtu.be/rUD4UR8IiRA)
+
 
 ## Đảm bảo chất lượng
 
 1. Tạo các nhánh feature để thực hiện các chức năng\
    Link github: https://github.com/quocng777/clothing-store-pos/branches
-2. Phải thực hiện unit test ở local.
-3. Tạo các pull request để review code, trước khi merge vào nhánh main
+2. Tạo các pull request để review code, trước khi merge vào nhánh main
+3. Tạo file google sheeet quản lý và theo dõi một số tese case để kiểm thử các chức năng cơ bản của ứng dụng (manual testing)
 
 ## Account Test
 
