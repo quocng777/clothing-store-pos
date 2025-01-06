@@ -28,7 +28,7 @@ MSSV: 21120317-21120331-21120359
 1. Sử dụng lệnh docker-compose up để start postgres database.
 2. Mở project trong Visual Studio để khởi chạy ứng dụng.
 
-## Một vài hình ảnh giao diện ứng dụng (cập nhập thêm milestone 2)
+## Một vài hình ảnh giao diện ứng dụng
 
 1. Đăng nhập
    ![alt text](app-resource/login-page.png)
