@@ -18,6 +18,7 @@ MSSV: 21120317-21120331-21120359
 - Nhập và xuất file csv (milestone 2)
 - Quản lý đơn hàng, xóa, xem chi tiết, phân trang, tìm kiếm (milestone 2)
 - Thống kê số liệu cơ bản (milestone 2)
+-
 
 ## Hướng dẫn cách dùng
 
@@ -28,15 +29,19 @@ MSSV: 21120317-21120331-21120359
 
 1. Đăng nhập
    ![alt text](app-resource/login-page.png)
-2. Chỉnh sửa sản phẩm
+2. Danh sách sản phẩm
+   ![alt text](app-resource/product-page.png)
+3. Chỉnh sửa sản phẩm
    ![alt text](app-resource/edit-product-page.png)
-3. Quản lý đơn hàng
+4. Quản lý đơn hàng
    ![alt text](app-resource/order-page.png)
-4. Gửi email
+5. Gửi email
    ![alt text](app-resource/send-email.png)
-5. Quản lý số liệu
-   ![alt text](app-resource/statis-page.png)
-6. Chi tiết khách hàng
+6. Quản lý số liệu (1)
+   ![alt text](app-resource/stat1.png)
+7. Quản lý số liệu (2)
+   ![alt text](app-resource/stat2.png)
+8. Chi tiết khách hàng
    ![alt text](app-resource/detail-customer.png)
 
 ## Advanced topic
@@ -49,11 +54,14 @@ MSSV: 21120317-21120331-21120359
 6. Tìm hiểu và xử lý gửi email thông qua email service (milestone 2)
 7. Tích hợp với ví điện tử VNPay (milestone 3)
 8. Tạo http listener trong ứng dụng WinUI 3 (milestone 3)
+9. Tìm hiểu push app notification (milestone3)
 
 ## Kiến trúc phần mềm
 
 1. Sử dụng mô hình MVVM
 2. Sử dụng các DAOs để giao tiếp và định nghĩa các phương thức giao tiếp với database
+3. Mô tả cấu trúc database
+   ![alt text](app-resource/database.png)
 
 ## Quá trình làm việc nhóm (Updated for milestone 2)
 
@@ -68,22 +76,22 @@ MSSV: 21120317-21120331-21120359
    | 21120317   | Chức năng liên quan quản lý khách hàng, gửi email cho khách hàng (milestone 2)                      | Hoàn thành | 5h                 |
    | 21120331   | Chức năng tạo đơn với khách hàng, xuất hóa đơn, quản lý đơn hàng, thống kê số liệu (milestone 2)    | Hoàn thành | 5h                 |
    | 21120359   | Quên mật khẩu, phân quyền, nhập và xuất file csv (đã cài hàm nhưng chưa có giao diện) (milestone 2) | Hoàn thành | 5h                 |
-   | 21120317   | Tích hợp thanh toán bằng ví điện tử vào thanh toán đơn hàng | (milestone 3)                      | Hoàn thành | 4h                 |
-   | 21120331   | Thông kê thông tin theo thời gian, thêm tính năng note cho từng đơn hàng (milestone 3)    | Hoàn thành | 4h                 |
-   | 21120359   | Quản lí danh mục, push notification khi product gần hết hàng, UI cho import/export CSV | Hoàn thành | 4h                 |
+   | 21120317   | Tích hợp thanh toán bằng ví điện tử vào thanh toán đơn hàng (milestone 3)                           | Hoàn thành | 4h                 |
+   | 21120331   | Thông kê thông tin theo thời gian, thêm tính năng note cho từng đơn hàng (milestone 3)              | Hoàn thành | 4h                 |
+   | 21120359   | Quản lí danh mục, push notification khi product gần hết hàng, UI cho import/export CSV              | Hoàn thành | 4h                 |
 
 ## VIDEO DEMO
 
-Link milestone 2: [Youtube](https://youtu.be/ewFVTqwSe_Q)
+Link milestone 2: [Youtube](https://youtu.be/ewFVTqwSe_Q)\
 Link milestone 3: [Youtube](https://youtu.be/rUD4UR8IiRA)
-
 
 ## Đảm bảo chất lượng
 
 1. Tạo các nhánh feature để thực hiện các chức năng\
    Link github: https://github.com/quocng777/clothing-store-pos/branches
 2. Tạo các pull request để review code, trước khi merge vào nhánh main
-3. Tạo file google sheeet quản lý và theo dõi một số tese case để kiểm thử các chức năng cơ bản của ứng dụng (manual testing)
+3. Tạo file google sheeet quản lý và theo dõi một số tese case để kiểm thử các chức năng cơ bản của ứng dụng (manual testing)\
+   Folder: [Testing](Testing/)
 
 ## Account Test
 
