@@ -75,6 +75,7 @@ namespace Clothing_Store_POS.ViewModels
 
             _orderDAO.DeleteOrderById(orderId);
             Orders.Remove(order);
+            TotalItems--;
         }
 
         public async Task LoadOrders()

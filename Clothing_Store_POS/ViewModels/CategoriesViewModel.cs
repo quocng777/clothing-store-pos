@@ -16,7 +16,9 @@ namespace Clothing_Store_POS.ViewModels
         private readonly CategoryDAO _categoryDAO;
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public int TotalItems { get; set; }
         public string Keyword { get; set; }
+
         public ObservableCollection<CategoryViewModel> CategoryViewModels { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,6 +55,7 @@ namespace Clothing_Store_POS.ViewModels
             int pageSize = 6;
             var pagedResult = await _categoryDAO.GetListCategories(CurrentPage, pageSize, Keyword);
             TotalPages = pagedResult.TotalPages;
+            TotalItems = pagedResult.TotalItems;
 
             return pagedResult.Items;
         }

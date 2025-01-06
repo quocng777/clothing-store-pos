@@ -34,6 +34,10 @@
             </Button>
         </StackPanel>
 
+        <TextBlock Margin="4" FontSize="12">
+            Showing <Run Text="{x:Bind ViewModel.Customers.Count, Mode=OneWay}" /> of <Run Text="{x:Bind ViewModel.TotalItems, Mode=OneWay}" /> customers
+        </TextBlock>
+
         <ListView ItemsSource="{x:Bind ViewModel.Customers}" 
                   Background="{StaticResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
                   CornerRadius="12"
