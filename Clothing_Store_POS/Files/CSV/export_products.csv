@@ -1,0 +1,7 @@
+name,price,category_id,size,color,stock,sale,thumbnail
+Áo thun nam,250000,1,M,,19,0.1,D:\24_25_HK1\Windows\Project\Repo\clothing-store-pos\Clothing_Store_POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppX\Assets\Images\1736066461182.png
+Quần jeans nữ,350000,2,S,,7,0.2,
+Giày thể thao,800000,3,L,,0,0.15,D:\24_25_HK1\Windows\Project\Repo\clothing-store-pos\Clothing_Store_POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppX\Assets\Images\1736083330651.png
+Mũ thể thao,150000,4,,,94,0,
+Áo khoác,600000,1,L,,25,0.05,https://redbikemarketing.com/wp-content/uploads/2019/06/product.png
+B,123666,5,S,,25,25,D:\24_25_HK1\Windows\Project\Repo\clothing-store-pos\Clothing_Store_POS\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\AppX\Assets\Images\1736084821060.png
