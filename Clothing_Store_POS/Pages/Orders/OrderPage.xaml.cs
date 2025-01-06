@@ -40,10 +40,10 @@ namespace Clothing_Store_POS.Pages.Orders
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Warning";
+            dialog.Title = "Warning Delete Order";
             dialog.PrimaryButtonText = "Continue";
             dialog.CloseButtonText = "Cancel";
-            dialog.Content = $"Do you really want to delete the order #{order.Id}?";
+            dialog.Content = $"Do you really want to delete the order #{order.Id}?\n\nThis action cannot be undone!";
 
             dialog.PrimaryButtonClick += (s, args) =>
             {

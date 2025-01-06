@@ -67,10 +67,10 @@ namespace Clothing_Store_POS.Pages.Customers
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Warning";
+            dialog.Title = "Warning Delete Customer";
             dialog.PrimaryButtonText = "Continue";
             dialog.CloseButtonText = "Cancel";
-            dialog.Content = $"Do you really want to delete {customer.Name}?";
+            dialog.Content = $"Do you really want to delete '{customer.Name}'? All orders of this user will be deleted too.\n\nThis action cannot be undone!";
 
             dialog.PrimaryButtonClick += async (s, args) =>
             {

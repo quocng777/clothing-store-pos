@@ -87,6 +87,7 @@ namespace Clothing_Store_POS.ViewModels
                 CurrentPage = 1;
                 pagedResult = await _productDAO.GetListProducts(CurrentPage, PerPage, Keyword, SelectedCategoryIds, useNoTracking);
                 TotalPages = pagedResult.TotalPages;
+                TotalItems = pagedResult.TotalItems;
             }
 
             // update page numbers

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS categories (
 ALTER TABLE products
 ADD CONSTRAINT FK_Products_Categories
 FOREIGN KEY (category_id)
-REFERENCES categories(id);
+REFERENCES categories(id) ON DELETE CASCADE;
 
 CREATE TABLE IF NOT EXISTS users  (
     id SERIAL PRIMARY KEY,               

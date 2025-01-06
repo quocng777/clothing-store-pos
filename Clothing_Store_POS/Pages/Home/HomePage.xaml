@@ -106,7 +106,7 @@
             </ListView>
 
             <TextBlock FontSize="12" Margin="16,0,0,8">
-                <Run Text="{x:Bind ProductsViewModel.TotalItems}"/> products
+                <Run Text="{x:Bind ProductsViewModel.TotalItems, Mode=OneWay}"/> products
             </TextBlock>
 
             <ItemsView HorizontalAlignment="Center"

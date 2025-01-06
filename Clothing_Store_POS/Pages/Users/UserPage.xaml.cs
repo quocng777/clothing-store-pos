@@ -77,11 +77,11 @@ namespace Clothing_Store_POS.Pages.Users
 
             var warningDialog = new ContentDialog
             {
-                Title = "Delete User",
-                Content = $"Are you sure you want to delete this user ({user.UserName})? This action cannot be undone.",
+                Title = "Warning Delete User",
+                Content = $"Are you sure you want to delete this user '{user.UserName}'? All orders created by this user will be deleted too.\n\nThis action cannot be undone!",
                 PrimaryButtonText = "Delete",
                 CloseButtonText = "Cancel",
-                DefaultButton = ContentDialogButton.Close,
+                DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = this.XamlRoot 
             };
 
