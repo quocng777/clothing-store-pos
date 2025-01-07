@@ -71,10 +71,18 @@ namespace Clothing_Store_POS.Helper
         {
             if (listener != null && listener.IsListening)
             {
-                isListening = false;
-                listener.Stop();
-                listener.Close();
-                Console.WriteLine("VNPay stopped");
+                try
+                {
+                    isListening = false;
+                    listener.Stop();
+                    listener.Close();
+                    listener = null;
+                    Console.WriteLine("VNPay listener stopped.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error stopping listener: {ex.Message}");
+                }
             }
         }
 

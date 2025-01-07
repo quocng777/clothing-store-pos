@@ -74,7 +74,7 @@ namespace Clothing_Store_POS.ViewModels
 
             _productDAO.DeleteProductById(productId);
             Products.Remove(product);
-            TotalItems--;
+            TotalItems--;   
         }
 
         public async Task LoadProducts(bool useNoTracking = false)
@@ -124,7 +124,7 @@ namespace Clothing_Store_POS.ViewModels
             if (CurrentPage < TotalPages)
             {
                 CurrentPage++;
-                _ = LoadProducts();
+                _ = LoadProducts(true);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Clothing_Store_POS.ViewModels
             if (CurrentPage > 1)
             {
                 CurrentPage--;
-                _ = LoadProducts();
+                _ = LoadProducts(true);
             }
         }
 

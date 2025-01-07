@@ -1,4 +1,5 @@
-﻿using Clothing_Store_POS.Models;
+﻿using Clothing_Store_POS.Converters;
+using Clothing_Store_POS.Models;
 using Clothing_Store_POS.Services.Statistics;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView.Extensions;
@@ -66,9 +67,9 @@ namespace Clothing_Store_POS.ViewModels
                     series.DataLabelsSize = 15;
                     series.DataLabelsPaint = new SolidColorPaint(SKColors.Black);
 
-                    series.DataLabelsFormatter = point => $"{point.Coordinate.PrimaryValue:C}";
+                    series.DataLabelsFormatter = point => PriceToVNDConverter.ConvertToVND(point.Coordinate.PrimaryValue);
 
-                    series.ToolTipLabelFormatter = point => $"{point.Coordinate.PrimaryValue:C}";
+                    series.ToolTipLabelFormatter = point => PriceToVNDConverter.ConvertToVND(point.Coordinate.PrimaryValue);
                 });
         }
 

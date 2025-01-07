@@ -356,7 +356,7 @@ namespace Clothing_Store_POS.Pages.Home
                 int perPage = int.Parse(selectedValue);
                 ProductsViewModel.PerPage = perPage;
                 ProductsViewModel.CurrentPage = 1;
-                _ = ProductsViewModel.LoadProducts();
+                _ = ProductsViewModel.LoadProducts(true);
             }
         }
 
@@ -377,7 +377,7 @@ namespace Clothing_Store_POS.Pages.Home
                 if (ProductsViewModel.PageNumbers.Contains(selectedValue))
                 {
                     ProductsViewModel.CurrentPage = selectedValue;
-                    _ = ProductsViewModel.LoadProducts();
+                    _ = ProductsViewModel.LoadProducts(true);
                 }
             }
         }
@@ -388,14 +388,14 @@ namespace Clothing_Store_POS.Pages.Home
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 ProductsViewModel.Keyword = SearchTextBox.Text;
-                _ = ProductsViewModel.LoadProducts();
+                _ = ProductsViewModel.LoadProducts(true);
             }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             ProductsViewModel.CurrentPage = 1;
-            _ = ProductsViewModel.LoadProducts();
+            _ = ProductsViewModel.LoadProducts(true);
         }
 
         // save
@@ -522,7 +522,7 @@ namespace Clothing_Store_POS.Pages.Home
                     ProductsViewModel.SelectedCategoryIds.Add(selectedCategory.Id);
                 }
 
-                _ = ProductsViewModel.LoadProducts();
+                _ = ProductsViewModel.LoadProducts(true);
             }
         }
 
@@ -535,7 +535,7 @@ namespace Clothing_Store_POS.Pages.Home
                     ProductsViewModel.SelectedCategoryIds.Remove(selectedCategory.Id);
                 }
 
-                _ = ProductsViewModel.LoadProducts();
+                _ = ProductsViewModel.LoadProducts(true);
             }
         }
 
