@@ -578,7 +578,7 @@ namespace Clothing_Store_POS.Pages.Home
         private void OnlinePay_Click(object sender, RoutedEventArgs e)
         { 
             
-            string queryString = VNPayHelper.CreatePaymentUrl(TotalAmount);
+            string queryString = VNPayHelper.CreatePaymentUrl((int)TotalAmount);
             Process.Start(new ProcessStartInfo
             {
                 FileName = queryString,
